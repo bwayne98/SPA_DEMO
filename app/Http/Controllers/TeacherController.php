@@ -9,7 +9,7 @@ class TeacherController extends Controller
 {
     public function index(){
         
-        return Teacher::all('id','chName','enName','birth');
+        return Teacher::all('chName','enName','birth');
 ;
     }
 }

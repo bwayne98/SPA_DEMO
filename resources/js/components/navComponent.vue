@@ -1,10 +1,12 @@
 <template>
-<div id="nav" class="bg-gray-100 bg-opacity-50">
-    <div id="nav-bar" class=" flex justify-center text-xl shadow backdrop-filter backdrop-blur-lg">
-        <div id="nav-bar-detail" class=" flex justify-between w-3/5 text-center p-8 pb-0 items-baseline" >
+<div id="nav" class="bg-gray-100 bg-opacity-50 relative" >
+    <i id="nav-control" class='bx bx-left-indent bx-lg absolute top-0 cursor-pointer' @click="addShow()"></i>
+    <div id="nav-bar" class=" flex justify-center text-xl shadow backdrop-filter backdrop-blur-lg ">
+        
+        <div id="nav-bar-detail" class=" flex justify-between w-2/3 text-center p-8 pb-0 items-baseline" >
             <div id="nav-bar-icon" class=" pb-0 relative">
                 <router-link to="/index" class="hover:text-gray-300"><i class='bx bxs-home bx-md cursor-pointer'>  Home </i> </router-link>
-                <i id="nav-control" class='bx bx-left-indent bx-lg absolute top-0 cursor-pointer' @click="addShow()"></i>
+                
             </div>
             <ul id="nav-menu" class="flex justify-around ">
                 <li class="min-w-max relative px-2 py-0 cursor-pointer rounded-t-md hover:bg-gray-400 hover:text-white" style="min-width: 100px">Teachers

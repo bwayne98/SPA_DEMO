@@ -17,12 +17,12 @@
                         </tr>
                     </thead>
                     <tbody class="rounded-md">
-                        <tr v-for="t in teachers" :key="t.id" class="hover:bg-gray-100 ">
-                            <td class="py-2 px-4"> {{t.id}} </td>
+                        <tr v-for="(t , index) in teachers" :key="'teacher' + index" class="hover:bg-gray-100 ">
+                            <td class="py-2 px-4"> {{index + 1}} </td>
                             <td class="py-2 px-4"> {{t.chName}} {{t.enName}} </td>
                             <td class="py-2 px-4"> {{t.birth}} </td>
                             <td class="py-2 px-4">
-                                <button @click="listRemov(t.id)" class="m-1 px-2 bg-white rounded-full shadow">Detail</button>
+                                <button @click="listRemov(t.chName,t.enName)" class="m-1 px-2 bg-white rounded-full shadow">Detail</button>
                             </td>                   
                         </tr>
                     </tbody>
@@ -53,13 +53,12 @@ export default {
             }
             console.log(this.text);
         },
-        listRemov(id){ 
+        listRemov(chName,enName){ 
             
-            let n = this.teachers.filter(function(e){
-                return e.id != id;
+            this.teachers = this.teachers.filter(function(item){
+                return item.chName !== chName && item.enName !== enName;
             });
             //console.log(n)
-            this.teachers = n;
         }
     },
 

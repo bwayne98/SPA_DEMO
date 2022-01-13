@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <router-view name="nav"></router-view>
         <router-view></router-view>
         <p>rooo = {{ rooo }}</p>

@@ -548,8 +548,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 15rem;
 }
 
-.w-3\/5 {
-  width: 60%;
+.w-2\/3 {
+  width: 66.666667%;
 }
 
 .w-full {
@@ -856,6 +856,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 * {
     padding: 0;
     margin: 0;
+    
 }
 
 #nav-menu li:hover ul {
@@ -877,6 +878,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 }
 
 @media (max-width:1100px) {
+
 
 #nav-menu li:hover {
     padding: 3px
@@ -910,20 +912,19 @@ Ensure the default browser behavior of the `hidden` attribute.
     margin-top:5px
 }
 
-
-
 #nav {
     top: 0;
     position: absolute;
     height: 100%;
     width: 100%;
-    left: 100%;
+    right:-100%;
     background-color: rgb(0,0 ,0 , 0);
     transition: all 0.4s ease;
 }
 
 #nav.show {
-    left: 40%;
+    right:-40%;
+    transition: all 0.4s ease;
 }
 
 #nav-bar {
@@ -932,7 +933,9 @@ Ensure the default browser behavior of the `hidden` attribute.
     
     flex-direction: column;
     justify-content: left ;
+    
 }
+
 
 #nav-bar-icon {
     margin-bottom:20px;
@@ -950,10 +953,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 }
 
-#nav-control {
+#nav #nav-control {
     opacity: 1;
     pointer-events: all;
-    left :-60%;
+    top: 2%;
+    left: -50px;
     transition: all 0.3s ease; 
 }
 

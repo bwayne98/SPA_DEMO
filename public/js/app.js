@@ -5331,12 +5331,10 @@ __webpack_require__.r(__webpack_exports__);
 
       console.log(this.text);
     },
-    listRemov: function listRemov(id) {
-      var n = this.teachers.filter(function (e) {
-        return e.id != id;
+    listRemov: function listRemov(chName, enName) {
+      this.teachers = this.teachers.filter(function (item) {
+        return item.chName !== chName && item.enName !== enName;
       }); //console.log(n)
-
-      this.teachers = n;
     }
   },
   mounted: function mounted() {
@@ -5449,6 +5447,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -28921,13 +28921,16 @@ var render = function () {
               _c(
                 "tbody",
                 { staticClass: "rounded-md" },
-                _vm._l(_vm.teachers, function (t) {
+                _vm._l(_vm.teachers, function (t, index) {
                   return _c(
                     "tr",
-                    { key: t.id, staticClass: "hover:bg-gray-100 " },
+                    {
+                      key: "teacher" + index,
+                      staticClass: "hover:bg-gray-100 ",
+                    },
                     [
                       _c("td", { staticClass: "py-2 px-4" }, [
-                        _vm._v(" " + _vm._s(t.id) + " "),
+                        _vm._v(" " + _vm._s(index + 1) + " "),
                       ]),
                       _vm._v(" "),
                       _c("td", { staticClass: "py-2 px-4" }, [
@@ -28948,7 +28951,7 @@ var render = function () {
                               "m-1 px-2 bg-white rounded-full shadow",
                             on: {
                               click: function ($event) {
-                                return _vm.listRemov(t.id)
+                                return _vm.listRemov(t.chName, t.enName)
                               },
                             },
                           },
@@ -29185,13 +29188,23 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "bg-gray-100 bg-opacity-50", attrs: { id: "nav" } },
+    { staticClass: "bg-gray-100 bg-opacity-50 relative", attrs: { id: "nav" } },
     [
+      _c("i", {
+        staticClass: "bx bx-left-indent bx-lg absolute top-0 cursor-pointer",
+        attrs: { id: "nav-control" },
+        on: {
+          click: function ($event) {
+            return _vm.addShow()
+          },
+        },
+      }),
+      _vm._v(" "),
       _c(
         "div",
         {
           staticClass:
-            " flex justify-center text-xl shadow backdrop-filter backdrop-blur-lg",
+            " flex justify-center text-xl shadow backdrop-filter backdrop-blur-lg ",
           attrs: { id: "nav-bar" },
         },
         [
@@ -29199,7 +29212,7 @@ var render = function () {
             "div",
             {
               staticClass:
-                " flex justify-between w-3/5 text-center p-8 pb-0 items-baseline",
+                " flex justify-between w-2/3 text-center p-8 pb-0 items-baseline",
               attrs: { id: "nav-bar-detail" },
             },
             [
@@ -29224,17 +29237,6 @@ var render = function () {
                       ),
                     ]
                   ),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass:
-                      "bx bx-left-indent bx-lg absolute top-0 cursor-pointer",
-                    attrs: { id: "nav-control" },
-                    on: {
-                      click: function ($event) {
-                        return _vm.addShow()
-                      },
-                    },
-                  }),
                 ],
                 1
               ),
