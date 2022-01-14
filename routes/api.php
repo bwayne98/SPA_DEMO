@@ -22,6 +22,6 @@ use App\Http\Controllers\pageController;
 // });
 
 Route::post('/newuser',[pageController::class,"newuser"]);
-Route::post('/login',[pageController::class,"login"]);
-Route::get('/login',[pageController::class,"getUser"]);
+// Route::post('/login',[pageController::class,"login"]);
+// Route::get('/login',[pageController::class,"getUser"]);
 Route::get('/teachers', [TeacherController::class, "index"]);

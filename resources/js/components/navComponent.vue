@@ -155,10 +155,10 @@ export default {
     },
   },
 
-  mounted() {
-    axios.get("api/login").then((res) => {
-      console.log(res);
-    });
-  },
+  // mounted() {
+  //   axios.get("api/login").then((res) => {
+  //     console.log(res);
+  //   });
+  // },
 };
 </script>

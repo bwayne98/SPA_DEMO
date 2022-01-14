@@ -42,10 +42,10 @@ export const routes = [
     component: newuser,
     name: "newuser"
 },
-{   path: '/login', 
-    component: login,
-    name: "newuser"
-},
+// {   path: '/login', 
+//     component: login,
+//     name: "newuser"
+// },
 {   path: '*', 
     redirect: "/index"
 },
