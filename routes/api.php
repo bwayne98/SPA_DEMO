@@ -17,9 +17,9 @@ use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\pageController;
 
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::post('/newuser',[pageController::class,"newuser"]);
 Route::post('/login',[pageController::class,"login"]);

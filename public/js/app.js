@@ -5256,13 +5256,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
-    console.log('Component mounted.');
+    console.log("Component mounted.");
   }
 });
 
@@ -5398,8 +5394,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['register'],
+  props: ["register"],
   data: function data() {
     return {
       form: {
@@ -5423,9 +5444,9 @@ __webpack_require__.r(__webpack_exports__);
     getLogin: function getLogin() {
       var _this = this;
 
-      axios.post('api/login', this.form).then(function (res) {
+      axios.post("api/login", this.form).then(function (res) {
         if (res) {
-          _this.$router.push('/index');
+          _this.$router.push("/index");
         } else {
           console.log("error");
         }
@@ -5486,6 +5507,108 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5500,7 +5623,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    axios.get('api/login').then(function (res) {
+    axios.get("api/login").then(function (res) {
       console.log(res);
     });
   }
@@ -5758,6 +5881,7 @@ try {
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.withCredentials = true;
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -28826,15 +28950,11 @@ var staticRenderFns = [
         _c("div", { staticClass: "col-md-12" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
-              _vm._v(
-                "\n                    Example Component\n                "
-              ),
+              _vm._v("Example Component"),
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              ),
+              _vm._v("I'm an example component."),
             ]),
           ]),
         ]),
@@ -29014,14 +29134,16 @@ var render = function () {
     "div",
     {
       staticClass:
-        "flex flex-col flex-nowrap justify-center w-screen h-screen items-center bg-gray-100",
+        "\n    flex flex-col flex-nowrap\n    justify-center\n    w-screen\n    h-screen\n    items-center\n    bg-gray-100\n  ",
     },
     [
       _vm.register
         ? _c("div", { staticClass: "text-center" }, [
             _c("h1", { staticClass: "text-xl m-5 font-light" }, [
               _vm._v(
-                " " + _vm._s(_vm.register) + " is now registed, Please Login ! "
+                "\n      " +
+                  _vm._s(_vm.register) +
+                  " is now registed, Please Login !\n    "
               ),
             ]),
           ])
@@ -29115,14 +29237,14 @@ var render = function () {
                       "button",
                       {
                         staticClass:
-                          " bg-blue-300 mt-2 px-2 py-1 rounded-xl hover:bg-blue-200",
+                          "bg-blue-300 mt-2 px-2 py-1 rounded-xl hover:bg-blue-200",
                         on: {
                           click: function ($event) {
                             return _vm.getLogin()
                           },
                         },
                       },
-                      [_vm._v("Submit")]
+                      [_vm._v("\n            Submit\n          ")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -29131,7 +29253,7 @@ var render = function () {
                         staticClass: "mx-2 hover:text-pink-400",
                         attrs: { to: "/newuser" },
                       },
-                      [_vm._v(" Register ")]
+                      [_vm._v("\n            Register\n          ")]
                     ),
                   ],
                   1
@@ -29158,7 +29280,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "text-left left-2 mx-1" }, [
-      _c("label", { staticClass: "text-left ", attrs: { for: "password" } }, [
+      _c("label", { staticClass: "text-left", attrs: { for: "password" } }, [
         _vm._v("Password"),
       ]),
     ])
@@ -29204,7 +29326,7 @@ var render = function () {
         "div",
         {
           staticClass:
-            " flex justify-center text-xl shadow backdrop-filter backdrop-blur-lg ",
+            "\n      flex\n      justify-center\n      text-xl\n      shadow\n      backdrop-filter backdrop-blur-lg\n    ",
           attrs: { id: "nav-bar" },
         },
         [
@@ -29212,16 +29334,13 @@ var render = function () {
             "div",
             {
               staticClass:
-                " flex justify-between w-2/3 text-center p-8 pb-0 items-baseline",
+                "flex justify-between w-2/3 text-center p-8 pb-0 items-baseline",
               attrs: { id: "nav-bar-detail" },
             },
             [
               _c(
                 "div",
-                {
-                  staticClass: " pb-0 relative",
-                  attrs: { id: "nav-bar-icon" },
-                },
+                { staticClass: "pb-0 relative", attrs: { id: "nav-bar-icon" } },
                 [
                   _c(
                     "router-link",
@@ -29233,7 +29352,7 @@ var render = function () {
                       _c(
                         "i",
                         { staticClass: "bx bxs-home bx-md cursor-pointer" },
-                        [_vm._v("  Home ")]
+                        [_vm._v(" Home ")]
                       ),
                     ]
                   ),
@@ -29244,7 +29363,7 @@ var render = function () {
               _c(
                 "ul",
                 {
-                  staticClass: "flex justify-around ",
+                  staticClass: "flex justify-around",
                   attrs: { id: "nav-menu" },
                 },
                 [
@@ -29252,23 +29371,23 @@ var render = function () {
                     "li",
                     {
                       staticClass:
-                        "min-w-max relative px-2 py-0 cursor-pointer rounded-t-md hover:bg-gray-400 hover:text-white",
+                        "\n            min-w-max\n            relative\n            px-2\n            py-0\n            cursor-pointer\n            rounded-t-md\n            hover:bg-gray-400 hover:text-white\n          ",
                       staticStyle: { "min-width": "100px" },
                     },
                     [
-                      _vm._v("Teachers\r\n                    "),
+                      _vm._v("\n          Teachers\n          "),
                       _c(
                         "ul",
                         {
                           staticClass:
-                            " absolute w-full opacity-0 pointer-events-none shadow rounded-b-sm bg-gray-100 bg-opacity-90 text-black",
+                            "\n              absolute\n              w-full\n              opacity-0\n              pointer-events-none\n              shadow\n              rounded-b-sm\n              bg-gray-100 bg-opacity-90\n              text-black\n            ",
                         },
                         [
                           _c(
                             "li",
                             {
                               staticClass:
-                                "hover:bg-gray-400 hover:text-white rounded-t-sm ",
+                                "hover:bg-gray-400 hover:text-white rounded-t-sm",
                             },
                             [
                               _c(
@@ -29284,7 +29403,7 @@ var render = function () {
                             "li",
                             {
                               staticClass:
-                                "hover:bg-gray-400 hover:text-white rounded-sm ",
+                                "hover:bg-gray-400 hover:text-white rounded-sm",
                             },
                             [
                               _c(
@@ -29304,23 +29423,23 @@ var render = function () {
                     "li",
                     {
                       staticClass:
-                        "min-w-max relative px-2 py-0 cursor-pointer rounded-t-md hover:bg-gray-400 hover:text-white",
+                        "\n            min-w-max\n            relative\n            px-2\n            py-0\n            cursor-pointer\n            rounded-t-md\n            hover:bg-gray-400 hover:text-white\n          ",
                       staticStyle: { "min-width": "100px" },
                     },
                     [
-                      _vm._v("Students\r\n                    "),
+                      _vm._v("\n          Students\n          "),
                       _c(
                         "ul",
                         {
                           staticClass:
-                            " absolute w-full opacity-0 pointer-events-none shadow rounded-b-sm bg-gray-100 bg-opacity-90 text-black",
+                            "\n              absolute\n              w-full\n              opacity-0\n              pointer-events-none\n              shadow\n              rounded-b-sm\n              bg-gray-100 bg-opacity-90\n              text-black\n            ",
                         },
                         [
                           _c(
                             "li",
                             {
                               staticClass:
-                                "hover:bg-gray-400 hover:text-white rounded-t-sm ",
+                                "hover:bg-gray-400 hover:text-white rounded-t-sm",
                             },
                             [
                               _c(
@@ -29336,7 +29455,7 @@ var render = function () {
                             "li",
                             {
                               staticClass:
-                                "hover:bg-gray-400 hover:text-white rounded-sm ",
+                                "hover:bg-gray-400 hover:text-white rounded-sm",
                             },
                             [
                               _c(
@@ -29356,23 +29475,23 @@ var render = function () {
                     "li",
                     {
                       staticClass:
-                        "min-w-max relative px-2 py-0 cursor-pointer rounded-t-md hover:bg-gray-400 hover:text-white",
+                        "\n            min-w-max\n            relative\n            px-2\n            py-0\n            cursor-pointer\n            rounded-t-md\n            hover:bg-gray-400 hover:text-white\n          ",
                       staticStyle: { "min-width": "100px" },
                     },
                     [
-                      _vm._v("Classes\r\n                    "),
+                      _vm._v("\n          Classes\n          "),
                       _c(
                         "ul",
                         {
                           staticClass:
-                            " absolute w-full opacity-0 pointer-events-none shadow rounded-b-sm bg-gray-100 bg-opacity-90 text-black",
+                            "\n              absolute\n              w-full\n              opacity-0\n              pointer-events-none\n              shadow\n              rounded-b-sm\n              bg-gray-100 bg-opacity-90\n              text-black\n            ",
                         },
                         [
                           _c(
                             "li",
                             {
                               staticClass:
-                                "hover:bg-gray-400 hover:text-white rounded-t-sm ",
+                                "hover:bg-gray-400 hover:text-white rounded-t-sm",
                             },
                             [
                               _c(
@@ -29388,7 +29507,7 @@ var render = function () {
                             "li",
                             {
                               staticClass:
-                                "hover:bg-gray-400 hover:text-white rounded-sm ",
+                                "hover:bg-gray-400 hover:text-white rounded-sm",
                             },
                             [
                               _c(

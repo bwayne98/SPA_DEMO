@@ -12,12 +12,14 @@ class pageController extends Controller
 {
 
 
-    public function index(){
-        
+    public function index()
+    {
+
         return view("welcome");
     }
 
-    public function newuser(Request $request){
+    public function newuser(Request $request)
+    {
         $user = new User;
         $user->name = $request->account;
         $user->email = $request->account;
@@ -27,9 +29,10 @@ class pageController extends Controller
         return true;
     }
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
 
-       
+
         // $request->validate([
         //     'account' => ['required', 'email'],
         //     'password' => ['required'],
@@ -40,18 +43,18 @@ class pageController extends Controller
             "password" => $request->password
         ];
 
-        
-        if (Auth::attempt($credentials,true)) {
+
+        if (Auth::attempt($credentials, true)) {
             // $credentials->session();
 
             return true;
         };
 
         return false;
-
     }
 
-    public function getUser(){
+    public function getUser()
+    {
         return Auth::user()->name;
     }
 }
