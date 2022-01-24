@@ -520,6 +520,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 0px;
 }
 
+.block {
+  display: block;
+}
+
 .flex {
   display: flex;
 }
@@ -556,12 +560,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   width: 100%;
 }
 
-.min-w-max {
-  min-width: -webkit-max-content;
-  min-width: -moz-max-content;
-  min-width: max-content;
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -594,10 +592,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   justify-content: space-between;
 }
 
-.justify-around {
-  justify-content: space-around;
-}
-
 .divide-y > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-y-reverse: 0;
   border-top-width: calc(1px * calc(1 - var(--tw-divide-y-reverse)));
@@ -617,17 +611,8 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-radius: 0.375rem;
 }
 
-.rounded-sm {
-  border-radius: 0.125rem;
-}
-
 .rounded-full {
   border-radius: 9999px;
-}
-
-.rounded-t-md {
-  border-top-left-radius: 0.375rem;
-  border-top-right-radius: 0.375rem;
 }
 
 .rounded-b-sm {
@@ -635,14 +620,25 @@ Ensure the default browser behavior of the `hidden` attribute.
   border-bottom-left-radius: 0.125rem;
 }
 
-.rounded-t-sm {
-  border-top-left-radius: 0.125rem;
-  border-top-right-radius: 0.125rem;
+.border-t-2 {
+  border-top-width: 2px;
 }
 
-.bg-green-200 {
+.border-l-2 {
+  border-left-width: 2px;
+}
+
+.border-solid {
+  border-style: solid;
+}
+
+.border-transparent {
+  border-color: transparent;
+}
+
+.bg-sky-800 {
   --tw-bg-opacity: 1;
-  background-color: rgb(187 247 208 / var(--tw-bg-opacity));
+  background-color: rgb(7 89 133 / var(--tw-bg-opacity));
 }
 
 .bg-gray-100 {
@@ -670,16 +666,20 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-opacity-60 {
-  --tw-bg-opacity: 0.6;
+.bg-opacity-10 {
+  --tw-bg-opacity: 0.1;
+}
+
+.bg-opacity-40 {
+  --tw-bg-opacity: 0.4;
 }
 
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
 
-.bg-opacity-90 {
-  --tw-bg-opacity: 0.9;
+.bg-opacity-60 {
+  --tw-bg-opacity: 0.6;
 }
 
 .bg-opacity-30 {
@@ -725,9 +725,9 @@ Ensure the default browser behavior of the `hidden` attribute.
   padding-bottom: 0.25rem;
 }
 
-.py-0 {
-  padding-top: 0px;
-  padding-bottom: 0px;
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .px-1 {
@@ -738,11 +738,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-}
-
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
 }
 
 .py-4 {
@@ -822,10 +817,6 @@ Ensure the default browser behavior of the `hidden` attribute.
           text-decoration-line: underline;
 }
 
-.opacity-0 {
-  opacity: 0;
-}
-
 .shadow {
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
@@ -848,27 +839,58 @@ Ensure the default browser behavior of the `hidden` attribute.
           backdrop-filter: var(--tw-backdrop-filter);
 }
 
-.backdrop-filter {
-  -webkit-backdrop-filter: var(--tw-backdrop-filter);
-          backdrop-filter: var(--tw-backdrop-filter);
-}
-
 * {
     padding: 0;
-    margin: 0;
+    margin: 0
+}
+
+#nav-menu li ul{
+    left: 0;
+    top: 1rem;
+    opacity: 0;
     
 }
 
+#nav-bar-icon a i:hover ,#log-out:hover{
+    color: white;
+    background-image: linear-gradient(135deg, #af4261, #af4261, #000000 );
+    /*文字遮罩*/
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+}
+
+#log-out:hover{
+    color: white;
+    background-image: linear-gradient(135deg, #000000, #af4261, #af4261 );
+    /*文字遮罩*/
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+}
+
+
+#nav-menu li:hover {
+    border-top-color: rgb(71,85,105,0.3);
+}
+
 #nav-menu li:hover ul {
+    top: 1.4em;
     opacity: 100%;
     pointer-events: all;
-    margin-left: -8px;
 }
 
 #nav-menu li, #nav-menu li ul{
-    transition: all 0.3s ease;
+    transition: all 0.2s ease-in;
 }
+
+#nav-menu li ul li:hover {
+    background-image: linear-gradient(to left, rgb(172, 167, 167) 0%,transparent 3%,transparent 97%,rgb(172, 167, 167));
+    background-repeat: none;
+    background-color: rgb(243, 244, 246, 80)
+}
+
 #nav-menu li ul li {
+    padding-top: 2px;
+    padding-bottom: 2px;
     transition: all 0.2s ease;
 }
 
@@ -881,61 +903,95 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 
 #nav-menu li:hover {
-    padding: 3px
+    /* padding: 3px; */
+    border-top-color: rgb(71,85,105,0);
+    border-left-color: rgb(71,85,105,0.3);
+
 }
 
 
 #nav-menu li {
     text-align: left;
-    margin-top :5px;
+    margin-top :10px;
     margin-bottom: 5px;
-    border-radius: 0.375rem;
 }
 
 #nav-menu li ul li {
+    width: 100px;
     text-align: left;
-    margin-bottom: 0;
-    margin-top :0
+    margin: 0;
+    padding : 3px;
+    padding-left: 8px;
+}
+
+#nav-menu li ul li:hover {
+    background-image: linear-gradient(to right, rgb(172, 167, 167) 0%,transparent 3%);
+    background-repeat: none;
+    background-color: rgb(243, 244, 246, 0)
 }
 
 #nav-menu li ul {
     text-align: left;
-    position: relative;
-    opacity: 100%;
-    pointer-events: all;
     left:8px;
+    height: 0;
+    position: relative;
     background-color: rgb(0,0 ,0 , 0);
     box-shadow: none;
 }
 
+#nav-menu li ul{
+    display: none;
+}
+
+#nav-menu li.show ul{
+    display: block;
+    height: auto;
+    top: auto;
+    opacity: 100%;
+    pointer-events: all;
+}
+
 #log-out {
-    margin-top:5px
+    margin-top:10px
 }
 
 #nav {
+    position: fixed;
     top: 0;
-    position: absolute;
+    /* position: absolute; */
     height: 100%;
-    width: 100%;
-    right:-100%;
+    width:60%;
+    right:-60%;
     background-color: rgb(0,0 ,0 , 0);
     transition: all 0.4s ease;
 }
 
+#nav.show li{
+    right:0;
+    transition: all 0.2s ease;
+}
+
 #nav.show {
-    right:-40%;
-    transition: all 0.4s ease;
+    right:0;
+    transition: all 0.6s ease;
 }
 
 #nav-bar {
+    opacity: 0;
     height: 100%;
-    width: 100%;
-    
+    width: 100%;    
     flex-direction: column;
     justify-content: left ;
-    
+    pointer-events: none;
+    transition: opacity 0.6s ease;
 }
 
+#nav.show #nav-bar{
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity 0.8s ease;
+    visibility: visible;
+}
 
 #nav-bar-icon {
     margin-bottom:20px;
@@ -945,6 +1001,7 @@ Ensure the default browser behavior of the `hidden` attribute.
 #nav-bar-detail {
     flex-direction: column;
     width: 100%;
+    flex-wrap: nowrap;
 }
 
 #nav-menu {
@@ -972,11 +1029,6 @@ Ensure the default browser behavior of the `hidden` attribute.
   background-color: rgb(191 219 254 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-gray-400:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(156 163 175 / var(--tw-bg-opacity));
-}
-
 .hover\:bg-gray-100:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
@@ -990,11 +1042,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .hover\:text-gray-300:hover {
   --tw-text-opacity: 1;
   color: rgb(209 213 219 / var(--tw-text-opacity));
-}
-
-.hover\:text-white:hover {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .active\:bg-blue-800:active {

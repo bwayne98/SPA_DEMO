@@ -1,164 +1,132 @@
 <template>
-  <div id="nav" class="bg-gray-100 bg-opacity-50 relative">
-    <i
-      id="nav-control"
-      class="bx bx-left-indent bx-lg absolute top-0 cursor-pointer"
-      @click="addShow()"
-    ></i>
-    <div
-      id="nav-bar"
-      class="
-        flex
-        justify-center
-        text-xl
-        shadow
-        backdrop-filter backdrop-blur-lg
-      "
-    >
-      <div
-        id="nav-bar-detail"
-        class="flex justify-between w-2/3 text-center p-8 pb-0 items-baseline"
-      >
-        <div id="nav-bar-icon" class="pb-0 relative">
-          <router-link to="/index" class="hover:text-gray-300"
-            ><i class="bx bxs-home bx-md cursor-pointer"> Home </i>
-          </router-link>
+<div id="nav" class="bg-gray-100 bg-opacity-40 relative" :class="{ show: nav }">
+    <i id="nav-control" class="bx bx-left-indent bx-lg absolute top-0 cursor-pointer" @click="addShow()"></i>
+    <div id="nav-bar" class="flex justify-center text-xl shadow backdrop-blur-lg">
+        <div id="nav-bar-detail" class="flex justify-between w-2/3 text-center p-8 pb-0 items-baseline">
+            <div id="nav-bar-icon" class="block pb-0 relative">
+                <router-link to="/" tag="a"><i class="bx bxs-home text-3xl cursor-pointer"> Home </i>
+                </router-link>
+            </div>
+            <ul id="nav-menu" class="flex">
+                <li class="
+              relative
+              px-4
+              mx-2
+              cursor-pointer
+              border-solid border-t-2 border-l-2 border-transparent
+            " :class="{ show: menu[0] }" @click="menuShow(index[0])">
+                    師資管理
+                    <ul class="
+                bg-gray-100 bg-opacity-50
+                absolute
+                w-full
+                pointer-events-none
+                shadow
+                rounded-b-sm
+                text-black
+              ">
+                        <router-link :to="'/teachers'" >
+                            <li @click="addShow()" >老師名單</li>
+                        </router-link>
+                        <router-link :to="'/newteacher'">
+                            <li @click="addShow()">New</li>
+                        </router-link>
+                    </ul>
+                </li>
+                <li class="
+              relative
+              px-4
+              mx-2
+              cursor-pointer
+              border-solid border-t-2 border-l-2 border-transparent
+            " :class="{ show: menu[1] }" @click="menuShow(index[1])">
+                    學生管理
+                    <ul class="
+                     bg-gray-100 bg-opacity-60
+                absolute
+                w-full
+                pointer-events-none
+                shadow
+                rounded-b-sm
+                text-black
+              ">
+                        <router-link :to="'/teachers'">
+                            <li @click="addShow()">Search</li>
+                        </router-link>
+                        <router-link :to="'/newteacher'">
+                            <li @click="addShow()">New</li>
+                        </router-link>
+                    </ul>
+                </li>
+                <li class="
+              relative
+              px-4
+              mx-2
+              cursor-pointer
+              border-solid border-t-2 border-l-2 border-transparent
+            " :class="{ show: menu[2] }" @click="menuShow(index[2])">
+                    課程管理
+                    <ul class="
+                     bg-gray-100 bg-opacity-60
+                absolute
+                w-full
+                pointer-events-none
+                shadow
+                rounded-b-sm
+                text-black
+              ">
+                        <router-link :to="'/teachers'">
+                            <li @click="addShow()">Search</li>
+                        </router-link>
+                        <router-link :to="'/newteacher'">
+                            <li @click="addShow()">New</li>
+                        </router-link>
+                    </ul>
+                </li>
+            </ul>
+            <div>
+                <button id="log-out" class="px-2 flex items-center hover:text-gray-300">
+                    <i class="bx bx-log-out bx-sm" style=""></i><span class="px-1"> 登出 ( {{ user }} )</span>
+                </button>
+            </div>
         </div>
-        <ul id="nav-menu" class="flex justify-around">
-          <li
-            class="
-              min-w-max
-              relative
-              px-2
-              py-0
-              cursor-pointer
-              rounded-t-md
-              hover:bg-gray-400 hover:text-white
-            "
-            style="min-width: 100px"
-          >
-            Teachers
-            <ul
-              class="
-                absolute
-                w-full
-                opacity-0
-                pointer-events-none
-                shadow
-                rounded-b-sm
-                bg-gray-100 bg-opacity-90
-                text-black
-              "
-            >
-              <li class="hover:bg-gray-400 hover:text-white rounded-t-sm">
-                <router-link :to="'/teachers'">Search</router-link>
-              </li>
-              <li class="hover:bg-gray-400 hover:text-white rounded-sm">
-                <router-link :to="'/newteacher'">New</router-link>
-              </li>
-            </ul>
-          </li>
-          <li
-            class="
-              min-w-max
-              relative
-              px-2
-              py-0
-              cursor-pointer
-              rounded-t-md
-              hover:bg-gray-400 hover:text-white
-            "
-            style="min-width: 100px"
-          >
-            Students
-            <ul
-              class="
-                absolute
-                w-full
-                opacity-0
-                pointer-events-none
-                shadow
-                rounded-b-sm
-                bg-gray-100 bg-opacity-90
-                text-black
-              "
-            >
-              <li class="hover:bg-gray-400 hover:text-white rounded-t-sm">
-                <router-link :to="'/teachers'">Search</router-link>
-              </li>
-              <li class="hover:bg-gray-400 hover:text-white rounded-sm">
-                <router-link :to="'/newteacher'">New</router-link>
-              </li>
-            </ul>
-          </li>
-          <li
-            class="
-              min-w-max
-              relative
-              px-2
-              py-0
-              cursor-pointer
-              rounded-t-md
-              hover:bg-gray-400 hover:text-white
-            "
-            style="min-width: 100px"
-          >
-            Classes
-            <ul
-              class="
-                absolute
-                w-full
-                opacity-0
-                pointer-events-none
-                shadow
-                rounded-b-sm
-                bg-gray-100 bg-opacity-90
-                text-black
-              "
-            >
-              <li class="hover:bg-gray-400 hover:text-white rounded-t-sm">
-                <router-link :to="'/teachers'">Search</router-link>
-              </li>
-              <li class="hover:bg-gray-400 hover:text-white rounded-sm">
-                <router-link :to="'/newteacher'">New</router-link>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        <div>
-          <button
-            id="log-out"
-            class="px-2 flex items-center hover:text-gray-300"
-          >
-            <i class="bx bx-log-out bx-sm" style=""></i
-            ><span class="px-1"> LogOut ({{ user }})</span>
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      nums: [1, 2, 3, 4],
-      user: "",
-    };
-  },
-
-  methods: {
-    addShow() {
-      var navbar = document.getElementById("nav");
-      navbar.classList.toggle("show");
+    data() {
+        return {
+            nums: [1, 2, 3, 4],
+            user: "0",
+            nav: false,
+            menu: [false, false, false],
+            index: [0, 1, 2],
+            test: 0,
+        };
     },
-  },
 
-  // mounted() {
-  //   axios.get("api/login").then((res) => {
-  //     console.log(res);
-  //   });
-  // },
+    //側邊欄顯示
+    methods: {
+        addShow() {
+            this.nav = !this.nav;
+            this.$set(this.menu, 0, false);
+            this.$set(this.menu, 1, false);
+            this.$set(this.menu, 2, false);
+        },
+        menuShow(index) {
+            this.$set(this.menu, index, !this.menu[index]);
+            //array不會自動偵測  要使用$set(目標array, 索引index, 欲修改的值value)
+        },
+    },
+
+    //獲取登入資訊
+    // async mounted() {
+    //   await axios.get("login").then((res) => {
+    //     console.log(res);
+    //     this.user = res.data;
+    //   });
+    // },
 };
 </script>

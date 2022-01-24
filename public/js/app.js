@@ -5435,7 +5435,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: {
-        account: "",
+        email: "",
         password: ""
       },
       dataBase: {
@@ -5444,23 +5444,18 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  mounted: function mounted() {
-    if (sessionStorage.getItem("Login")) {
-      this.login = true;
-    }
-
-    console.log(this.register);
-  },
+  // mounted() {
+  //   if (sessionStorage.getItem("Login")) {
+  //     this.login = true;
+  //   }
+  //   console.log(this.register);
+  // },
   methods: {
     getLogin: function getLogin() {
-      var _this = this;
-
-      axios.post("api/login", this.form).then(function (res) {
-        if (res) {
-          _this.$router.push("/index");
-        } else {
-          console.log("error");
-        }
+      axios.post("/login", this.form).then(function (res) {
+        console.log(res);
+      })["catch"](function (err) {
+        console.log(err);
       });
     }
   }
@@ -5575,66 +5570,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       nums: [1, 2, 3, 4],
-      user: ""
+      user: "0",
+      nav: false,
+      menu: [false, false, false],
+      index: [0, 1, 2],
+      test: 0
     };
   },
+  //側邊欄顯示
   methods: {
     addShow: function addShow() {
-      var navbar = document.getElementById("nav");
-      navbar.classList.toggle("show");
+      this.nav = !this.nav;
+      this.$set(this.menu, 0, false);
+      this.$set(this.menu, 1, false);
+      this.$set(this.menu, 2, false);
+    },
+    menuShow: function menuShow(index) {
+      this.$set(this.menu, index, !this.menu[index]); //array不會自動偵測  要使用$set(目標array, 索引index, 欲修改的值value)
     }
-  } // mounted() {
-  //   axios.get("api/login").then((res) => {
+  } //獲取登入資訊
+  // async mounted() {
+  //   await axios.get("login").then((res) => {
   //     console.log(res);
+  //     this.user = res.data;
   //   });
   // },
 
@@ -5811,6 +5773,82 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/students.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/students.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      students: {},
+      teacherId: 4,
+      text: ""
+    };
+  },
+  methods: {
+    teacherSearch: function teacherSearch() {
+      if (this.text === "") {
+        alert("無法查詢");
+      }
+
+      console.log(this.text);
+    }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/student').then(function (response) {
+      //console.log(response.data);
+      _this.students = response.data;
+    });
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/index.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/index.vue?vue&type=script&lang=js& ***!
@@ -5891,17 +5929,6 @@ var app = new Vue({
               });
 
             case 2:
-              _context.next = 4;
-              return axios__WEBPACK_IMPORTED_MODULE_3___default().post('/login', {
-                email: "destin.wuckert@example.org",
-                password: "password"
-              }).then(function (res) {
-                axios__WEBPACK_IMPORTED_MODULE_3___default().get('user');
-              })["catch"](function (err) {
-                console.log(err);
-              });
-
-            case 4:
             case "end":
               return _context.stop();
           }
@@ -5934,8 +5961,8 @@ try {
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'; // window.axios.defaults.xsrfCookieName = "XSRF-TOKEN";
 // window.axios.defaults.xsrfHeaderName = "X-XSRF-Token";
+// window.axios.defaults.headers.common['Authorization'] = `Bearer ${ token }`;
 
-window.axios.defaults.headers.common['Authorization'] = 'Bearer ${access_token}';
 window.axios.defaults.withCredentials = true;
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -5965,14 +5992,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "routes": () => (/* binding */ routes),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue");
 /* harmony import */ var _components_newTeacher_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/newTeacher.vue */ "./resources/js/components/newTeacher.vue");
 /* harmony import */ var _components_Teachers_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Teachers.vue */ "./resources/js/components/Teachers.vue");
-/* harmony import */ var _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/navComponent.vue */ "./resources/js/components/navComponent.vue");
-/* harmony import */ var _components_login_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/login.vue */ "./resources/js/components/login.vue");
-/* harmony import */ var _components_newuser_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/newuser.vue */ "./resources/js/components/newuser.vue");
+/* harmony import */ var _components_students_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/students.vue */ "./resources/js/components/students.vue");
+/* harmony import */ var _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/navComponent.vue */ "./resources/js/components/navComponent.vue");
+/* harmony import */ var _components_login_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/login.vue */ "./resources/js/components/login.vue");
+/* harmony import */ var _components_newuser_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/newuser.vue */ "./resources/js/components/newuser.vue");
 
  // 引用頁面的 Component
 
@@ -5981,45 +6009,53 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
  // 使用 Vue Router
 
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_7__["default"]); // Route 設定
+vue__WEBPACK_IMPORTED_MODULE_7__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_8__["default"]); // Route 設定
 
 var routes = [{
-  path: '/index',
+  path: '/',
   components: {
     "default": _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    nav: _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    nav: _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   name: 'index'
 }, {
   path: '/newteacher',
   components: {
     "default": _components_newTeacher_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    nav: _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    nav: _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   name: 'newteacher'
 }, {
   path: '/teachers',
   components: {
     "default": _components_Teachers_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    nav: _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    nav: _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   name: 'teachers'
 }, {
+  path: '/students',
+  components: {
+    "default": _components_students_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    nav: _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+  },
+  name: 'students'
+}, {
   path: '/newuser',
-  component: _components_newuser_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+  component: _components_newuser_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
   name: "newuser"
-}, // {   path: '/login', 
-//     component: login,
-//     name: "newuser"
+}, {
+  path: '/auth/login',
+  component: _components_login_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+  name: "login"
+} // {   path: '*', 
+//     redirect: "/index"
 // },
-{
-  path: '*',
-  redirect: "/index"
-}]; // 建立 Vue Router instance
+]; // 建立 Vue Router instance
 
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_7__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_8__["default"]({
   mode: 'history',
   routes: routes
 });
@@ -29471,6 +29507,45 @@ component.options.__file = "resources/js/components/newuser.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/students.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/students.vue ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _students_vue_vue_type_template_id_1050fae3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./students.vue?vue&type=template&id=1050fae3& */ "./resources/js/components/students.vue?vue&type=template&id=1050fae3&");
+/* harmony import */ var _students_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./students.vue?vue&type=script&lang=js& */ "./resources/js/components/students.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _students_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _students_vue_vue_type_template_id_1050fae3___WEBPACK_IMPORTED_MODULE_0__.render,
+  _students_vue_vue_type_template_id_1050fae3___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/students.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/index.vue":
 /*!********************************!*\
   !*** ./resources/js/index.vue ***!
@@ -29606,6 +29681,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/students.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/students.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_students_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./students.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/students.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_students_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/index.vue?vue&type=script&lang=js&":
 /*!*********************************************************!*\
   !*** ./resources/js/index.vue?vue&type=script&lang=js& ***!
@@ -29720,6 +29811,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_newuser_vue_vue_type_template_id_a980cd20___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_newuser_vue_vue_type_template_id_a980cd20___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./newuser.vue?vue&type=template&id=a980cd20& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newuser.vue?vue&type=template&id=a980cd20&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/students.vue?vue&type=template&id=1050fae3&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/students.vue?vue&type=template&id=1050fae3& ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_students_vue_vue_type_template_id_1050fae3___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_students_vue_vue_type_template_id_1050fae3___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_students_vue_vue_type_template_id_1050fae3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./students.vue?vue&type=template&id=1050fae3& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/students.vue?vue&type=template&id=1050fae3&");
 
 
 /***/ }),
@@ -30001,19 +30109,19 @@ var render = function () {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.form.account,
-                        expression: "form.account",
+                        value: _vm.form.email,
+                        expression: "form.email",
                       },
                     ],
                     staticClass: "my-2 px-2 py-1 rounded-md w-60",
-                    attrs: { type: "text", name: "account", id: "account" },
-                    domProps: { value: _vm.form.account },
+                    attrs: { type: "text", name: "email", id: "account" },
+                    domProps: { value: _vm.form.email },
                     on: {
                       input: function ($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.form, "account", $event.target.value)
+                        _vm.$set(_vm.form, "email", $event.target.value)
                       },
                     },
                   }),
@@ -30059,6 +30167,7 @@ var render = function () {
                           "bg-blue-300 mt-2 px-2 py-1 rounded-xl hover:bg-blue-200",
                         on: {
                           click: function ($event) {
+                            $event.preventDefault()
                             return _vm.getLogin()
                           },
                         },
@@ -30091,7 +30200,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "text-left left-2 mx-1" }, [
-      _c("label", { attrs: { for: "account" } }, [_vm._v("Account")]),
+      _c("label", { attrs: { for: "email" } }, [_vm._v("Account")]),
     ])
   },
   function () {
@@ -30129,7 +30238,11 @@ var render = function () {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "bg-gray-100 bg-opacity-50 relative", attrs: { id: "nav" } },
+    {
+      staticClass: "bg-gray-100 bg-opacity-40 relative",
+      class: { show: _vm.nav },
+      attrs: { id: "nav" },
+    },
     [
       _c("i", {
         staticClass: "bx bx-left-indent bx-lg absolute top-0 cursor-pointer",
@@ -30144,8 +30257,7 @@ var render = function () {
       _c(
         "div",
         {
-          staticClass:
-            "\n      flex\n      justify-center\n      text-xl\n      shadow\n      backdrop-filter backdrop-blur-lg\n    ",
+          staticClass: "flex justify-center text-xl shadow backdrop-blur-lg",
           attrs: { id: "nav-bar" },
         },
         [
@@ -30159,190 +30271,191 @@ var render = function () {
             [
               _c(
                 "div",
-                { staticClass: "pb-0 relative", attrs: { id: "nav-bar-icon" } },
+                {
+                  staticClass: "block pb-0 relative",
+                  attrs: { id: "nav-bar-icon" },
+                },
                 [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "hover:text-gray-300",
-                      attrs: { to: "/index" },
-                    },
-                    [
-                      _c(
-                        "i",
-                        { staticClass: "bx bxs-home bx-md cursor-pointer" },
-                        [_vm._v(" Home ")]
-                      ),
-                    ]
-                  ),
+                  _c("router-link", { attrs: { to: "/", tag: "a" } }, [
+                    _c(
+                      "i",
+                      { staticClass: "bx bxs-home text-3xl cursor-pointer" },
+                      [_vm._v(" Home ")]
+                    ),
+                  ]),
                 ],
                 1
               ),
               _vm._v(" "),
-              _c(
-                "ul",
-                {
-                  staticClass: "flex justify-around",
-                  attrs: { id: "nav-menu" },
-                },
-                [
-                  _c(
-                    "li",
-                    {
-                      staticClass:
-                        "\n            min-w-max\n            relative\n            px-2\n            py-0\n            cursor-pointer\n            rounded-t-md\n            hover:bg-gray-400 hover:text-white\n          ",
-                      staticStyle: { "min-width": "100px" },
+              _c("ul", { staticClass: "flex", attrs: { id: "nav-menu" } }, [
+                _c(
+                  "li",
+                  {
+                    staticClass:
+                      "\r\n              relative\r\n              px-4\r\n              mx-2\r\n              cursor-pointer\r\n              border-solid border-t-2 border-l-2 border-transparent\r\n            ",
+                    class: { show: _vm.menu[0] },
+                    on: {
+                      click: function ($event) {
+                        return _vm.menuShow(_vm.index[0])
+                      },
                     },
-                    [
-                      _vm._v("\n          Teachers\n          "),
-                      _c(
-                        "ul",
-                        {
-                          staticClass:
-                            "\n              absolute\n              w-full\n              opacity-0\n              pointer-events-none\n              shadow\n              rounded-b-sm\n              bg-gray-100 bg-opacity-90\n              text-black\n            ",
-                        },
-                        [
+                  },
+                  [
+                    _vm._v(
+                      "\r\n                    師資管理\r\n                    "
+                    ),
+                    _c(
+                      "ul",
+                      {
+                        staticClass:
+                          "\r\n                bg-gray-100 bg-opacity-50\r\n                absolute\r\n                w-full\r\n                pointer-events-none\r\n                shadow\r\n                rounded-b-sm\r\n                text-black\r\n              ",
+                      },
+                      [
+                        _c("router-link", { attrs: { to: "/teachers" } }, [
                           _c(
                             "li",
                             {
-                              staticClass:
-                                "hover:bg-gray-400 hover:text-white rounded-t-sm",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.addShow()
+                                },
+                              },
                             },
-                            [
-                              _c(
-                                "router-link",
-                                { attrs: { to: "/teachers" } },
-                                [_vm._v("Search")]
-                              ),
-                            ],
-                            1
+                            [_vm._v("老師名單")]
                           ),
-                          _vm._v(" "),
+                        ]),
+                        _vm._v(" "),
+                        _c("router-link", { attrs: { to: "/newteacher" } }, [
                           _c(
                             "li",
                             {
-                              staticClass:
-                                "hover:bg-gray-400 hover:text-white rounded-sm",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.addShow()
+                                },
+                              },
                             },
-                            [
-                              _c(
-                                "router-link",
-                                { attrs: { to: "/newteacher" } },
-                                [_vm._v("New")]
-                              ),
-                            ],
-                            1
+                            [_vm._v("New")]
                           ),
-                        ]
-                      ),
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    {
-                      staticClass:
-                        "\n            min-w-max\n            relative\n            px-2\n            py-0\n            cursor-pointer\n            rounded-t-md\n            hover:bg-gray-400 hover:text-white\n          ",
-                      staticStyle: { "min-width": "100px" },
+                        ]),
+                      ],
+                      1
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    staticClass:
+                      "\r\n              relative\r\n              px-4\r\n              mx-2\r\n              cursor-pointer\r\n              border-solid border-t-2 border-l-2 border-transparent\r\n            ",
+                    class: { show: _vm.menu[1] },
+                    on: {
+                      click: function ($event) {
+                        return _vm.menuShow(_vm.index[1])
+                      },
                     },
-                    [
-                      _vm._v("\n          Students\n          "),
-                      _c(
-                        "ul",
-                        {
-                          staticClass:
-                            "\n              absolute\n              w-full\n              opacity-0\n              pointer-events-none\n              shadow\n              rounded-b-sm\n              bg-gray-100 bg-opacity-90\n              text-black\n            ",
-                        },
-                        [
+                  },
+                  [
+                    _vm._v(
+                      "\r\n                    學生管理\r\n                    "
+                    ),
+                    _c(
+                      "ul",
+                      {
+                        staticClass:
+                          "\r\n                     bg-gray-100 bg-opacity-60\r\n                absolute\r\n                w-full\r\n                pointer-events-none\r\n                shadow\r\n                rounded-b-sm\r\n                text-black\r\n              ",
+                      },
+                      [
+                        _c("router-link", { attrs: { to: "/teachers" } }, [
                           _c(
                             "li",
                             {
-                              staticClass:
-                                "hover:bg-gray-400 hover:text-white rounded-t-sm",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.addShow()
+                                },
+                              },
                             },
-                            [
-                              _c(
-                                "router-link",
-                                { attrs: { to: "/teachers" } },
-                                [_vm._v("Search")]
-                              ),
-                            ],
-                            1
+                            [_vm._v("Search")]
                           ),
-                          _vm._v(" "),
+                        ]),
+                        _vm._v(" "),
+                        _c("router-link", { attrs: { to: "/newteacher" } }, [
                           _c(
                             "li",
                             {
-                              staticClass:
-                                "hover:bg-gray-400 hover:text-white rounded-sm",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.addShow()
+                                },
+                              },
                             },
-                            [
-                              _c(
-                                "router-link",
-                                { attrs: { to: "/newteacher" } },
-                                [_vm._v("New")]
-                              ),
-                            ],
-                            1
+                            [_vm._v("New")]
                           ),
-                        ]
-                      ),
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    {
-                      staticClass:
-                        "\n            min-w-max\n            relative\n            px-2\n            py-0\n            cursor-pointer\n            rounded-t-md\n            hover:bg-gray-400 hover:text-white\n          ",
-                      staticStyle: { "min-width": "100px" },
+                        ]),
+                      ],
+                      1
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    staticClass:
+                      "\r\n              relative\r\n              px-4\r\n              mx-2\r\n              cursor-pointer\r\n              border-solid border-t-2 border-l-2 border-transparent\r\n            ",
+                    class: { show: _vm.menu[2] },
+                    on: {
+                      click: function ($event) {
+                        return _vm.menuShow(_vm.index[2])
+                      },
                     },
-                    [
-                      _vm._v("\n          Classes\n          "),
-                      _c(
-                        "ul",
-                        {
-                          staticClass:
-                            "\n              absolute\n              w-full\n              opacity-0\n              pointer-events-none\n              shadow\n              rounded-b-sm\n              bg-gray-100 bg-opacity-90\n              text-black\n            ",
-                        },
-                        [
+                  },
+                  [
+                    _vm._v(
+                      "\r\n                    課程管理\r\n                    "
+                    ),
+                    _c(
+                      "ul",
+                      {
+                        staticClass:
+                          "\r\n                     bg-gray-100 bg-opacity-60\r\n                absolute\r\n                w-full\r\n                pointer-events-none\r\n                shadow\r\n                rounded-b-sm\r\n                text-black\r\n              ",
+                      },
+                      [
+                        _c("router-link", { attrs: { to: "/teachers" } }, [
                           _c(
                             "li",
                             {
-                              staticClass:
-                                "hover:bg-gray-400 hover:text-white rounded-t-sm",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.addShow()
+                                },
+                              },
                             },
-                            [
-                              _c(
-                                "router-link",
-                                { attrs: { to: "/teachers" } },
-                                [_vm._v("Search")]
-                              ),
-                            ],
-                            1
+                            [_vm._v("Search")]
                           ),
-                          _vm._v(" "),
+                        ]),
+                        _vm._v(" "),
+                        _c("router-link", { attrs: { to: "/newteacher" } }, [
                           _c(
                             "li",
                             {
-                              staticClass:
-                                "hover:bg-gray-400 hover:text-white rounded-sm",
+                              on: {
+                                click: function ($event) {
+                                  return _vm.addShow()
+                                },
+                              },
                             },
-                            [
-                              _c(
-                                "router-link",
-                                { attrs: { to: "/newteacher" } },
-                                [_vm._v("New")]
-                              ),
-                            ],
-                            1
+                            [_vm._v("New")]
                           ),
-                        ]
-                      ),
-                    ]
-                  ),
-                ]
-              ),
+                        ]),
+                      ],
+                      1
+                    ),
+                  ]
+                ),
+              ]),
               _vm._v(" "),
               _c("div", [
                 _c(
@@ -30354,7 +30467,7 @@ var render = function () {
                   [
                     _c("i", { staticClass: "bx bx-log-out bx-sm" }),
                     _c("span", { staticClass: "px-1" }, [
-                      _vm._v(" LogOut (" + _vm._s(_vm.user) + ")"),
+                      _vm._v(" 登出 ( " + _vm._s(_vm.user) + " )"),
                     ]),
                   ]
                 ),
@@ -30784,6 +30897,146 @@ var staticRenderFns = [
     return _c("div", { staticClass: "text-left left-2 mx-1" }, [
       _c("label", { staticClass: "text-left ", attrs: { for: "password" } }, [
         _vm._v("Password"),
+      ]),
+    ])
+  },
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/students.vue?vue&type=template&id=1050fae3&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/students.vue?vue&type=template&id=1050fae3& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "text-center m-8" }, [
+    _c("h1", { staticClass: "text-5xl pb-4" }, [_vm._v("Students")]),
+    _vm._v(" "),
+    _c("div", [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.text,
+            expression: "text",
+          },
+        ],
+        attrs: { type: "text" },
+        domProps: { value: _vm.text },
+        on: {
+          input: function ($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.text = $event.target.value
+          },
+        },
+      }),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass:
+            "text-sm bg-gray-600 bg-opacity-60 mt-2 px-2 py-1 rounded-full text-white active:bg-gray-300 shadow",
+          on: {
+            click: function ($event) {
+              return _vm.teacherSearch()
+            },
+          },
+        },
+        [_vm._v(" Search")]
+      ),
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "flex justify-center m-5",
+        attrs: { id: "teachersTable" },
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "flex justify-center shadow p-4 rounded-xl" },
+          [
+            _c("table", { staticClass: "divide-y divide-gray-300" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                { staticClass: "rounded-md" },
+                _vm._l(_vm.students, function (s, index) {
+                  return _c(
+                    "tr",
+                    {
+                      key: "student" + index,
+                      staticClass: "hover:bg-gray-100 ",
+                    },
+                    [
+                      _c("td", { staticClass: "py-2 px-4" }, [
+                        _vm._v(" " + _vm._s(index + 1) + " "),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "py-2 px-4" }, [
+                        _vm._v(" " + _vm._s(s.enName) + " "),
+                      ]),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "py-2 px-4" }, [
+                        _vm._v(" " + _vm._s(s.phone) + " "),
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(1, true),
+                    ]
+                  )
+                }),
+                0
+              ),
+            ]),
+          ]
+        ),
+      ]
+    ),
+  ])
+}
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", {}, [
+      _c("tr", [
+        _c("th", {}, [_vm._v(" # ")]),
+        _vm._v(" "),
+        _c("th", {}, [_vm._v(" Name ")]),
+        _vm._v(" "),
+        _c("th", {}, [_vm._v(" Phone ")]),
+        _vm._v(" "),
+        _c("th", {}, [_vm._v(" Managemnet ")]),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "py-2 px-4" }, [
+      _c("button", { staticClass: "m-1 px-2 bg-white rounded-full shadow" }, [
+        _vm._v("Detail"),
       ]),
     ])
   },

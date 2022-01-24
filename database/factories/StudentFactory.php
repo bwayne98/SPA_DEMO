@@ -14,7 +14,7 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            "Name" => $this->faker->name(),
+            "enName" => $this->faker->name(),
             "birth" => $this->faker->date(),
             "phone" => "0" . strval($this->faker->numberBetween(900000000, 980000000)),
             "address" => $this->faker->address(),

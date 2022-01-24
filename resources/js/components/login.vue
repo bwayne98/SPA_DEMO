@@ -23,14 +23,14 @@
         <form action="" v-on:submit.prevent>
           <div>
             <div class="text-left left-2 mx-1">
-              <label for="account">Account</label>
+              <label for="email">Account</label>
             </div>
             <input
               type="text"
-              name="account"
+              name="email"
               id="account"
               class="my-2 px-2 py-1 rounded-md w-60"
-              v-model="form.account"
+              v-model="form.email"
             />
             <div class="text-left left-2 mx-1">
               <label for="password" class="text-left">Password</label>
@@ -46,7 +46,7 @@
           </div>
           <div class="p-3 pb-0">
             <button
-              @click="getLogin()"
+              @click.prevent="getLogin()"
               class="bg-blue-300 mt-2 px-2 py-1 rounded-xl hover:bg-blue-200"
             >
               Submit
@@ -67,7 +67,7 @@ export default {
   data() {
     return {
       form: {
-        account: "",
+        email: "",
         password: "",
       },
       dataBase: {
@@ -77,23 +77,21 @@ export default {
     };
   },
 
-  mounted() {
-    if (sessionStorage.getItem("Login")) {
-      this.login = true;
-    }
-    console.log(this.register);
-  },
+  // mounted() {
+  //   if (sessionStorage.getItem("Login")) {
+  //     this.login = true;
+  //   }
+  //   console.log(this.register);
+  // },
 
   methods: {
     getLogin() {
-      axios.post("api/login", this.form).then((res) => {
-        if (res) {
-          this.$router.push("/index");
-        } else {
-          console.log("error");
-        }
+      axios.post("/login", this.form).then((res) => {
+        console.log(res);
+      }).catch(err =>{
+        console.log(err);
       });
     },
   },
-};
+}
 </script>

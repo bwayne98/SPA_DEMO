@@ -20,4 +20,9 @@ class Teacher extends Model
             $model->id = Str::uuid();
         });
     }
+
+    public function lessons(){
+        return $this->hasMany(Lesson::class);
+    }
+
 }

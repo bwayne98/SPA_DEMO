@@ -33,20 +33,18 @@ class pageController extends Controller
     {
 
 
-        // $request->validate([
-        //     'account' => ['required', 'email'],
-        //     'password' => ['required'],
-        // ]);
+        $data = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
 
-        $credentials = [
-            "email" => $request->account,
-            "password" => $request->password
-        ];
+        // $credentials = [
+        //     "email" => $request->account,
+        //     "password" => $request->password
+        // ];
 
 
-        if (Auth::attempt($credentials, true)) {
-            // $credentials->session();
-
+        if (Auth::attempt($data, true)) {
             return true;
         };
 

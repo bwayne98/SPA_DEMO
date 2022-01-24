@@ -20,4 +20,9 @@ class Student extends Model
         });
 
     }
+
+    public function lessonDetails(){
+        return $this->hasMany(LessonDetail::class);
+    }
+
 }

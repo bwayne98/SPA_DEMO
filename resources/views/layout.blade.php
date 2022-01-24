@@ -14,7 +14,7 @@
         <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     </head>
 
-    <body class="bg-green-200 bg-opacity-60" style="overflow-x:hidden">
+    <body class="bg-sky-800 bg-opacity-10" style="overflow-x:hidden">
 
         <div id="app" >
             @yield("app")

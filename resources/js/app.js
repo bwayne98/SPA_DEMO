@@ -24,16 +24,16 @@ const app = new Vue({
         await axios.get('/sanctum/csrf-cookie').then(res=>{
             console.log(res);
         });
-        await axios.post('/login',{
-            email:"destin.wuckert@example.org",
-            password:"password"
-        })
-        .then(res=>{
-            axios.get('user');
-        })
-        .catch(err=>{
-            console.log(err);
-        })
+        // await axios.post('/login',{
+        //     email:"destin.wuckert@example.org",
+        //     password:"password"
+        // })
+        // .then(res=>{
+        //     axios.get('/user');
+        // })
+        // .catch(err=>{
+        //     console.log(err);
+        // })
 
         
     },
