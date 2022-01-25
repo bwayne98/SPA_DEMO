@@ -11,11 +11,7 @@ import axios from 'axios';
 const app = new Vue({
     el: '#app',
     router,
-    data(){
-        return {
-            rooo: 0
-        }
-    },
+
     components: {
         "index": index
     },
@@ -34,7 +30,5 @@ const app = new Vue({
         // .catch(err=>{
         //     console.log(err);
         // })
-
-        
     },
 });

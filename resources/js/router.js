@@ -6,6 +6,7 @@ import ExampleComponent from './components/ExampleComponent.vue';
 import newTeacher from "./components/newTeacher.vue";
 import Teachers from "./components/Teachers.vue";
 import students from "./components/students.vue";
+import studentShow from "./components/studentShow.vue";
 import nav from "./components/navComponent.vue";
 import login from "./components/login.vue";
 import newuser from "./components/newuser.vue";
@@ -15,14 +16,6 @@ Vue.use(VueRouter);
 
 // Route 設定
 export const routes = [
-{   path: '/', 
-    components: {
-        default: ExampleComponent,
-        nav: nav,
-    },
-    name:'index'
-},
-
 {   path: '/newteacher', 
     components: {
         default: newTeacher,
@@ -45,6 +38,14 @@ export const routes = [
     }, 
     name:'students'
 },
+{   path: '/student/:id', 
+    components: {
+        default: studentShow,
+        nav: nav,
+    }, 
+    name:'student'
+},
+
 {   path: '/newuser', 
     component: newuser,
     name: "newuser"
@@ -52,6 +53,14 @@ export const routes = [
 {   path: '/auth/login', 
     component: login,
     name: "login"
+},
+
+{   path: '/', 
+    components: {
+        default: ExampleComponent,
+        nav: nav,
+    },
+    name:'index'
 },
 // {   path: '*', 
 //     redirect: "/index"

@@ -1,5 +1,5 @@
 <template>
-<div id="nav" class="bg-gray-100 bg-opacity-40 relative" :class="{ show: nav }">
+<div id="nav" class="bg-gray-100 bg-opacity-40 relative z-20" :class="{ show: nav }">
     <i id="nav-control" class="bx bx-left-indent bx-lg absolute top-0 cursor-pointer" @click="addShow()"></i>
     <div id="nav-bar" class="flex justify-center text-xl shadow backdrop-blur-lg">
         <div id="nav-bar-detail" class="flex justify-between w-2/3 text-center p-8 pb-0 items-baseline">
@@ -50,7 +50,7 @@
                 rounded-b-sm
                 text-black
               ">
-                        <router-link :to="'/teachers'">
+                        <router-link :to="'/students'">
                             <li @click="addShow()">Search</li>
                         </router-link>
                         <router-link :to="'/newteacher'">

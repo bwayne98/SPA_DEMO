@@ -22,7 +22,7 @@
                             <td class="py-2 px-4"> {{s.enName}} </td>
                             <td class="py-2 px-4"> {{s.phone}} </td>
                             <td class="py-2 px-4">
-                                <button  class="m-1 px-2 bg-white rounded-full shadow">Detail</button>
+                                <router-link :to="{ name: 'student', params:{id: s.id}}" class="hover:ring-2 ring-gray-300 px-2 py-1 rounded-sm active:opacity-60" >詳細資訊</router-link>
                             </td>                   
                         </tr>
                     </tbody>
@@ -39,14 +39,10 @@ export default {
     data(){
         return {
             students:{},
-            teacherId: 4,
             text: "",
-
         }
     },
-
     methods: {
-
         teacherSearch(){
             if(this.text === ""){
                 alert("無法查詢");
@@ -54,7 +50,6 @@ export default {
             console.log(this.text);
         },
     },
-
     mounted(){
         axios.get('/api/student').then(response => {
             //console.log(response.data);

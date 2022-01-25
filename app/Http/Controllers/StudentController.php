@@ -14,7 +14,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return Student::all("enName", "phone");
+        return Student::all("id","enName", "phone");
     }
 
     /**
@@ -46,7 +46,9 @@ class StudentController extends Controller
      */
     public function show($id)
     {
-        //
+       $student = Student::findOrFail($id);
+       
+        return $student;
     }
 
     /**
