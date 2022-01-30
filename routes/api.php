@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\pageController;
+use App\Http\Controllers\ShowLessonCurrentController;
 use App\Http\Controllers\ShowStudenLessons;
 use App\Http\Controllers\StudentController;
 
@@ -28,3 +29,4 @@ Route::post('/newuser',[pageController::class,"newuser"]);
 Route::get('/teachers', [TeacherController::class, "index"]);
 Route::resource('student', StudentController::class)->only(["index","show"]);
 Route::get('/student/{id}/showstudentlessons',ShowStudenLessons::class);
+Route::get('/lesson/current',ShowLessonCurrentController::class);

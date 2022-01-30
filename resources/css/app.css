@@ -73,7 +73,7 @@ body::-webkit-scrollbar {
     pointer-events: none;
 }
 
-@media (max-width:1200px) {
+@media (max-width:1024px) {
 
 
 #nav-menu li:hover {

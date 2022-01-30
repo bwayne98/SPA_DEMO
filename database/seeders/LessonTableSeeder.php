@@ -24,7 +24,7 @@ class LessonTableSeeder extends Seeder
 
 
         $teachers = Teacher::all();
-        $times = ["1800", "2000"];
+        $times = ["18", "20"];
         foreach ($teachers as $teacher) {
 
             for ($t = 0; $t < rand(1, 5); $t++) {
@@ -39,26 +39,31 @@ class LessonTableSeeder extends Seeder
                 $dates = [$start];
                 if ($period == 1 || $period == 4) {
                     $dates = LessonTableSeeder::datePush($period, $start);
-                    $dates = json_encode($dates);
                     Lesson::factory()->state([
-                        'period' => 'Mon/Thur/' . Arr::random($times),
-                        'date' => $dates,
+                        'start' => $start,
+                        'end' => $dates[23],
+                        'period' => 'Mon-Thur-' . Arr::random($times),
+                        'date' => json_encode($dates),
                         'teacher_id' => $teacher->id
                     ])->create();
                 } elseif ($period == 2 || $period == 5) {
                     $dates = LessonTableSeeder::datePush($period, $start);
-                    $dates = json_encode($dates);
+                    
                     Lesson::factory()->state([
-                        'period' => 'Tue/Fri/' . Arr::random($times),
-                        'date' => $dates,
+                        'start' => $start,
+                        'end' => $dates[23],
+                        'period' => 'Tue-Fri-' . Arr::random($times),
+                        'date' => json_encode($dates),
                         'teacher_id' => $teacher->id
                     ])->create();
                 } else {
                     $dates = LessonTableSeeder::datePush($period, $start);
-                    $dates = json_encode($dates);
+                    
                     Lesson::factory()->state([
-                        'period' => 'Wed/Sat/' . Arr::random($times),
-                        'date' => $dates,
+                        'start' => $start,
+                        'end' => $dates[23],
+                        'period' => 'Wed-Sat-' . Arr::random($times),
+                        'date' => json_encode($dates),
                         'teacher_id' => $teacher->id
                     ])->create();
                 }

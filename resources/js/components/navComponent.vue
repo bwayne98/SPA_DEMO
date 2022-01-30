@@ -11,7 +11,6 @@
                 <li class="
               relative
               px-4
-              mx-2
               cursor-pointer
               border-solid border-t-2 border-l-2 border-transparent
             " :class="{ show: menu[0] }" @click="menuShow(index[0])">
@@ -36,7 +35,7 @@
                 <li class="
               relative
               px-4
-              mx-2
+
               cursor-pointer
               border-solid border-t-2 border-l-2 border-transparent
             " :class="{ show: menu[1] }" @click="menuShow(index[1])">
@@ -61,7 +60,6 @@
                 <li class="
               relative
               px-4
-              mx-2
               cursor-pointer
               border-solid border-t-2 border-l-2 border-transparent
             " :class="{ show: menu[2] }" @click="menuShow(index[2])">

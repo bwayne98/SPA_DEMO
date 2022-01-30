@@ -1,30 +1,32 @@
 <template>
 <div class="grid grid-cols-10 my-16 mx-4">
     <!-- 確認跳窗 -->
-    <div v-if="!loading && check" class="inset-0 flex fixed w-full h-screen justify-center items-center bg-gray-900 z-30 bg-opacity-60">
-        <div class="w-80 h-80 bg-white rounded-md relative">
-            <div class="w-full text-center text-3xl pt-3 pb-2 bg-slate-300 rounded-t-md font-bold text-red-600">
-                <i class='bx bxs-error'></i> 最後確認</div>
-            <h1 class="m-2 text-lg font-bold">即將修改為以下資訊? </h1>
-            <div class="mx-2 grid grid-cols-4 gap-y-1">
-                <div>中文名：</div>
-                <div class="col-span-3">王小明</div>
-                <div>英文名：</div>
-                <div class="col-span-3">{{student.enName}}</div>
-                <div>電話：</div>
-                <div class="col-span-3">{{student.phone}}</div>
-                <div>地址：</div>
-                <div class="col-span-3">{{student.address}}</div>
-            </div>
-            <div class="w-full bottom-0 absolute grid grid-cols-2">
-                <button class="py-2 bg-green-600 text-white bg-opacity-80 rounded-bl-md active:bg-opacity-100">確認</button>
-                <button class="py-2 bg-rose-600 text-white bg-opacity-80 rounded-br-md active:bg-opacity-100" @click="finalCheck()">返回</button>
+    <transition>
+        <div v-if="!loading && check" class="inset-0 flex fixed w-full h-screen justify-center items-center bg-gray-900 z-30 bg-opacity-60">
+            <div class="w-80 h-80 bg-white rounded-md relative">
+                <div class="w-full text-center text-3xl pt-3 pb-2 bg-slate-300 rounded-t-md font-bold text-red-600">
+                    <i class='bx bxs-error'></i> 最後確認</div>
+                <h1 class="m-2 text-lg font-bold">即將修改為以下資訊? </h1>
+                <div class="mx-2 grid grid-cols-4 gap-y-1">
+                    <div>中文名：</div>
+                    <div class="col-span-3">王小明</div>
+                    <div>英文名：</div>
+                    <div class="col-span-3">{{student.enName}}</div>
+                    <div>電話：</div>
+                    <div class="col-span-3">{{student.phone}}</div>
+                    <div>地址：</div>
+                    <div class="col-span-3">{{student.address}}</div>
+                </div>
+                <div class="w-full bottom-0 absolute grid grid-cols-2">
+                    <button class="py-2 bg-green-600 text-white bg-opacity-80 rounded-bl-md active:bg-opacity-100">確認</button>
+                    <button class="py-2 bg-rose-600 text-white bg-opacity-80 rounded-br-md active:bg-opacity-100" @click="finalCheck()">返回</button>
+                </div>
             </div>
         </div>
-    </div>
+    </transition>
     <!-- 主要內容 -->
     <div class="lg:col-span-2 col-span-1"></div>
-    <div v-if="loading" class="text-center text-xl   lg:col-span-6 col-span-8 font-bold">
+    <div v-if="loading" class="text-xl lg:col-span-6 col-span-8 font-bold h-48 items-center flex w-full justify-center">
         <i class='bx bx-loader-circle bx-spin'></i> Loading...
     </div>
     <div v-else class="lg:col-span-6 col-span-8">
@@ -182,17 +184,31 @@
             <div class="col-span-2">{{ lesson.room }}</div>
             <div class="col-span-3">{{ teachers[index1].chName }}</div>
             <div class="col-span-4 justify-between flex">
-                <span>{{ lesson.period }}</span>
-                <span class="cursor-pointer z-10" @click="showattend(index1)"><i id="attendControl" :class="{ show: attendcontrol[index1] }" class="
+                <div>{{ lesson.period }}</div>
+                <div class="cursor-pointer z-10" @click="showattend(index1)" id="attendControl" :class="{ show: attendcontrol[index1]}"><i class="
                 bx bx-chevron-down
                 bg-cyan-700 bg-opacity-30
-                rounded-t-sm
+                rounded-sm
                 z-10
-              "></i></span>
+              "></i></div>
             </div>
-
+            <div class="col-span-12 m-0  p-1 overflow-hidden relative">
+                <div class="grid grid-cols-6 lg:grid-cols-12 gap-1" id="attend" :class="{ show: attendcontrol[index1] }">
+                    <div v-for="(date, index2) in lesson.date" :key="'lesson' + index2" class="
+                border-2 border-cyan-700 border-opacity-30
+                text-center
+                rounded
+              ">
+                        <div class="text-xs md:text-sm">{{ date.slice(5) }}</div>
+                        <div v-if="lessonsDetail[index1].attend[index2] == false">
+                            <i class="bx bx-x-circle text-red-600"></i>
+                        </div>
+                        <div v-else><i class="bx bx-smile text-green-600"></i></div>
+                    </div>
+                </div>
+            </div>
             <!-- 出席紀錄 -->
-            <transition>
+            <!-- <transition>
                 <div class="col-span-12 grid grid-cols-6 lg:grid-cols-12 m-0 gap-1 p-1" v-if="attendcontrol[index1]">
                     <div v-for="(date, index2) in lesson.date" :key="'lesson' + index2" class="
                 border-2 border-cyan-700 border-opacity-30
@@ -206,7 +222,7 @@
                         <div v-else><i class="bx bx-smile text-green-600"></i></div>
                     </div>
                 </div>
-            </transition>
+            </transition> -->
         </div>
 
     </div>
@@ -219,10 +235,10 @@
 
 <script>
 export default {
-    props: ["id"],
     data() {
         return {
             student: null,
+            editstudent: null,
             edit: false,
             loading: true,
             lessons: null,
@@ -237,6 +253,8 @@ export default {
         await axios.get("/api/student/" + this.$route.params.id).then((res) => {
             this.student = res.data;
             console.log(res.data);
+        }).catch(() => {
+            this.$router.push('/');
         });
 
         await axios
@@ -293,33 +311,63 @@ export default {
 </script>
 
 <style scoped>
-.v-leave {
+.v-leave{
     opacity: 1;
 }
 
-.v-leave-active {
-    transition: all 0.2s ease;
-}
-
-.v-leave-to {
+.v-leave-active{
     opacity: 0;
-    transform: translateY(-10px);
+    transition: all 0.3s ;
 }
 
-.v-enter {
+.v-leave-to{
     opacity: 0;
-    transform: translateY(-10px);
 }
 
-.v-enter-active {
-    transition: all 0.6s ease;
+.v-enter{
 }
 
-.v-enter-to {
-    opacity: 1;
+.v-enter-active{
+
+    animation: jump 0.3s ;
 }
 
-#attendControl.show {
+.v-enter-to{
+
+}
+
+@keyframes jump {
+    0% {transform: scale(0.8)}
+    50% {transform: scale(1.08)}
+    100%{transform: scale(1)}   
+}
+
+#attendControl {}
+
+#attendControl.show i {
     transform: rotate(180deg);
+}
+
+#attend {
+
+    margin-top: -110px;
+    transition: all 0.5s;
+}
+
+#attend.show {
+
+    margin-top: 0px 
+}
+
+@media (max-width:1024px) {
+    #attend {
+        margin-top: -210px;
+    }
+}
+
+@media (max-width:300px) {
+    #attend {
+        margin-top: -260px;
+    }
 }
 </style>
