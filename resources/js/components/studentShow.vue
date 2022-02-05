@@ -7,18 +7,19 @@
                 <div class="w-full text-center text-3xl pt-3 pb-2 bg-slate-300 rounded-t-md font-bold text-red-600">
                     <i class='bx bxs-error'></i> 最後確認</div>
                 <h1 class="m-2 text-lg font-bold">即將修改為以下資訊? </h1>
-                <div class="mx-2 grid grid-cols-4 gap-y-1">
-                    <div>中文名：</div>
-                    <div class="col-span-3">王小明</div>
-                    <div>英文名：</div>
+                <div class="mx-2 grid grid-cols-4 gap-y-1 text-md">
+                    <div>中文姓名 |</div>
+                    <div class="col-span-3">{{student.chName}}</div>
+                    <div>英文姓名 |</div>
                     <div class="col-span-3">{{student.enName}}</div>
-                    <div>電話：</div>
+                    <div>聯絡電話 |</div>
                     <div class="col-span-3">{{student.phone}}</div>
-                    <div>地址：</div>
+                    <div>通訊地址 |</div>
                     <div class="col-span-3">{{student.address}}</div>
                 </div>
+
                 <div class="w-full bottom-0 absolute grid grid-cols-2">
-                    <button class="py-2 bg-green-600 text-white bg-opacity-80 rounded-bl-md active:bg-opacity-100">確認</button>
+                    <button class="py-2 bg-green-600 text-white bg-opacity-80 rounded-bl-md active:bg-opacity-100" @click="updateStudent()">確認</button>
                     <button class="py-2 bg-rose-600 text-white bg-opacity-80 rounded-br-md active:bg-opacity-100" @click="finalCheck()">返回</button>
                 </div>
             </div>
@@ -31,6 +32,8 @@
     </div>
     <div v-else class="lg:col-span-6 col-span-8">
         <h1 class="text-2xl text-center font-bold">學生資訊</h1>
+        <div v-if="errors" class="text-center text-rose-700 text-opacity-70 mt-1"> <i class='bx bx-x-circle'></i> 資料格式錯誤，請再確認 </div>
+        <div v-if="updated" class="text-center text-cyan-700 text-opacity-80 mt-1"> <i class='bx bx-cloud-upload text-lg'></i> 學生資料已更新 </div>
         <hr class="my-2" />
 
         <div class="grid grid-cols-6 gap-y-2 gap-x-4">
@@ -43,14 +46,17 @@
             items-center
           ">
                 <div class="
-              text-xl
+              text-lg
               font-semibold
               border-r-2 border-cyan-700 border-opacity-20
               lg:border-0
             ">
-                    中文名
+                    中文姓名
                 </div>
-                <div class="col-span-3 lg:col-span-1 lg:place-self-start">王小明</div>
+                <div class="col-span-3" v-if="edit">
+                    <input type="text" v-model="student.chName" class="w-full px-2 py-1 rounded" />
+                </div>
+                <div v-else class="col-span-3 lg:col-span-1 lg:place-self-start">{{student.chName}}</div>
             </div>
             <div class="
             grid
@@ -61,12 +67,12 @@
             items-center
           ">
                 <div class="
-              text-xl
+              text-lg
               font-semibold
               border-r-2 border-cyan-700 border-opacity-20
               lg:border-0
             ">
-                    英文名
+                    英文姓名
                 </div>
                 <div class="col-span-3" v-if="edit">
                     <input type="text" v-model="student.enName" class="w-full px-2 py-1 rounded" />
@@ -75,21 +81,9 @@
                     {{ student.enName }}
                 </div>
             </div>
-            <div class="
-            grid
-            lg:grid-rows-2 lg:col-span-1 lg:grid-cols-1
-            col-span-6
-            grid-cols-4
-            gap-2
-            items-center
-          ">
-                <div class="
-              text-xl
-              font-semibold
-              border-r-2 border-cyan-700 border-opacity-20
-              lg:border-0
-            ">
-                    電話
+            <div class="grid lg:grid-rows-2 lg:col-span-1 lg:grid-cols-1 col-span-6 grid-cols-4 gap-2 items-center">
+                <div class="text-lg font-semibold border-r-2 border-cyan-700 border-opacity-20 lg:border-0">
+                    聯絡電話
                 </div>
                 <div class="col-span-3" v-if="edit">
                     <input type="text" v-model="student.phone" class="w-full px-2 py-1 rounded" />
@@ -98,21 +92,9 @@
                     {{ student.phone }}
                 </div>
             </div>
-            <div class="
-            grid
-            lg:col-span-3 lg:grid-rows-2 lg:grid-cols-1
-            col-span-6
-            grid-cols-4
-            gap-2
-            items-center
-          ">
-                <div class="
-              text-xl
-              font-semibold
-              border-r-2 border-cyan-700 border-opacity-20
-              lg:border-0
-            ">
-                    地址
+            <div class="grid lg:col-span-3 lg:grid-rows-2 lg:grid-cols-1 col-span-6 grid-cols-4 gap-2 items-center">
+                <div class="text-lg font-semibold border-r-2 border-cyan-700 border-opacity-20 lg:border-0">
+                    通訊地址
                 </div>
                 <div class="col-span-3" v-if="edit">
                     <input type="text" v-model="student.address" class="w-full px-2 py-1 rounded" />
@@ -133,7 +115,7 @@
             rounded
             m-1
           " :disabled="!button" v-if="edit" @click="finalCheck()">
-                確定修改
+                修改
             </button>
             <button class="
             disabled:opacity-50
@@ -246,7 +228,9 @@ export default {
             button: true,
             lessonsDetail: null,
             attendcontrol: [],
-            check: false
+            check: false,
+            errors: null,
+            updated: false
         };
     },
     async beforeCreate() {
@@ -284,6 +268,8 @@ export default {
         async reset() {
             this.loading = true;
             this.button = false;
+            this.errors = null;
+            this.updated = false
 
             await axios
                 .get("/api/student/" + this.$route.params.id)
@@ -305,44 +291,64 @@ export default {
         },
         finalCheck() {
             this.check = !this.check;
+            this.updated = false
         },
+        async updateStudent() {
+            this.loading = true;
+            this.errors = null;
+            this.updated = false
+
+            await axios.put('/api/student/' + this.$route.params.id, this.student).then(res => {
+                if (res.status == 204) {
+                    console.log(res);
+                    this.reset();
+                    this.finalCheck();
+                    this.updated = true;
+                }
+
+            }).catch(err => {
+                this.errors = err.response.data.errors
+                this.finalCheck();
+                this.loading = false;
+            })
+
+        }
     },
 };
 </script>
 
 <style scoped>
-.v-leave{
+.v-leave {
     opacity: 1;
 }
 
-.v-leave-active{
+.v-leave-active {
     opacity: 0;
-    transition: all 0.3s ;
+    transition: all 0.3s;
 }
 
-.v-leave-to{
+.v-leave-to {
     opacity: 0;
 }
 
-.v-enter{
-}
+.v-enter-active {
 
-.v-enter-active{
-
-    animation: jump 0.3s ;
-}
-
-.v-enter-to{
-
+    animation: jump 0.3s;
 }
 
 @keyframes jump {
-    0% {transform: scale(0.8)}
-    50% {transform: scale(1.08)}
-    100%{transform: scale(1)}   
-}
+    0% {
+        transform: scale(0.8)
+    }
 
-#attendControl {}
+    50% {
+        transform: scale(1.08)
+    }
+
+    100% {
+        transform: scale(1)
+    }
+}
 
 #attendControl.show i {
     transform: rotate(180deg);
@@ -356,7 +362,7 @@ export default {
 
 #attend.show {
 
-    margin-top: 0px 
+    margin-top: 0px
 }
 
 @media (max-width:1024px) {

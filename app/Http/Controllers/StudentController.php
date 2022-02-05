@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use Illuminate\Foundation\Console\StubPublishCommand;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -14,7 +15,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return Student::all("id","enName", "phone");
+        return Student::all("id","chName","enName", "phone");
     }
 
     /**
@@ -35,7 +36,24 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $student = $request->validate([
+            'chineseName' => 'required|min:2',
+            'englishName' => 'required|min:3',
+            'birth' => 'required|date_format:Y-m-d|after:2000-01-01',
+            'phone' => 'required|size:10|regex:/^09[0-9]{8}$/',
+            'address' => 'required|min:10',
+        ]);
+
+        Student::factory()->state([
+            'chName' => $student['chineseName'],
+            'enName' => $student['englishName'],
+            'birth' => $student['birth'],
+            'phone' => $student['phone'],
+            'address' => $student['address'],
+        ])->create();
+
+        return response("",204);
     }
 
     /**
@@ -72,6 +90,17 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $data = $request->validate([
+            'chName' => 'required|min:2',
+            'enName' => 'required|min:3',
+            'phone' => 'required|size:10|regex:/^09[0-9]{8}$/',
+            'address' => 'required|min:10'
+        ]);
+
+        Student::findOrFail($id)->update($data);
+
+        return response("",204);
     }
 
     /**

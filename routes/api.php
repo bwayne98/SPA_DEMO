@@ -27,6 +27,6 @@ Route::post('/newuser',[pageController::class,"newuser"]);
 // Route::post('/login',[pageController::class,"login"]);
 // Route::get('/login',[pageController::class,"getUser"]);
 Route::get('/teachers', [TeacherController::class, "index"]);
-Route::resource('student', StudentController::class)->only(["index","show"]);
+Route::resource('student', StudentController::class)->only(["index","show","store","update"]);
 Route::get('/student/{id}/showstudentlessons',ShowStudenLessonsController::class);
 Route::get('/lesson/current',ShowLessonCurrentController::class);

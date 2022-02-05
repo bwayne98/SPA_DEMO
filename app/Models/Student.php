@@ -11,6 +11,9 @@ class Student extends Model
     use HasFactory;
     protected $keyType = 'string';
     public $incrementing = false;
+    protected $fillable = [
+        'chName',
+    ];
 
     protected static function boot(){
         parent::boot();

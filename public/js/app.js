@@ -5735,6 +5735,185 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newStudent.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newStudent.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  data: function data() {
+    return {
+      student: {
+        chineseName: "",
+        englishName: "",
+        birth: "2000-01-01",
+        phone: "",
+        address: ""
+      },
+      errors: {
+        chineseName: "",
+        englishName: "",
+        birth: "",
+        phone: "",
+        address: ""
+      },
+      error: false,
+      success: {
+        status: false,
+        meg: ""
+      },
+      checking: false
+    };
+  },
+  methods: {
+    sentForm: function sentForm() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+        var check;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _this.success.status = false;
+                _this.checking = true;
+                _this.errors = {
+                  chineseName: "",
+                  englishName: "",
+                  birth: "",
+                  phone: "",
+                  address: ""
+                };
+                check = confirm("確定送出資料?");
+
+                if (!check) {
+                  _context.next = 7;
+                  break;
+                }
+
+                _context.next = 7;
+                return axios.post("/api/student", _this.student).then(function (res) {
+                  if (res.status == 204) {
+                    _this.success.status = true;
+                    _this.success.meg = _this.student.chineseName;
+                    _this.student = {
+                      chineseName: "",
+                      englishName: "",
+                      birth: "2000-01-01",
+                      phone: "",
+                      address: ""
+                    };
+                  }
+                })["catch"](function (err) {
+                  _this.errors = err.response.data.errors;
+                });
+
+              case 7:
+                setTimeout(function () {
+                  _this.checking = false;
+                }, 500);
+
+              case 8:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
+    cleanForm: function cleanForm() {
+      var check = confirm("確定清空表格?");
+
+      if (check) {
+        this.student = {
+          chineseName: "",
+          englishName: "",
+          birth: "2000-01-01",
+          phone: "",
+          address: ""
+        };
+        this.errors = {
+          chineseName: "",
+          englishName: "",
+          birth: "",
+          phone: "",
+          address: ""
+        };
+        this.success = {
+          status: false,
+          meg: ""
+        };
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newTeacher.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newTeacher.vue?vue&type=script&lang=js& ***!
@@ -6140,24 +6319,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -6170,7 +6331,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       button: true,
       lessonsDetail: null,
       attendcontrol: [],
-      check: false
+      check: false,
+      errors: null,
+      updated: false
     };
   },
   beforeCreate: function beforeCreate() {
@@ -6234,7 +6397,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _this3.loading = true;
                 _this3.button = false;
-                _context2.next = 4;
+                _this3.errors = null;
+                _this3.updated = false;
+                _context2.next = 6;
                 return axios.get("/api/student/" + _this3.$route.params.id).then(function (res) {
                   _this3.student = res.data;
                   console.log(res.data);
@@ -6242,13 +6407,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   _this3.edit = false;
                 });
 
-              case 4:
+              case 6:
                 setTimeout(function () {
                   _this3.button = true;
                   _this3.loading = false;
                 }, 200);
 
-              case 5:
+              case 7:
               case "end":
                 return _context2.stop();
             }
@@ -6261,6 +6426,45 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     finalCheck: function finalCheck() {
       this.check = !this.check;
+      this.updated = false;
+    },
+    updateStudent: function updateStudent() {
+      var _this4 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                _this4.loading = true;
+                _this4.errors = null;
+                _this4.updated = false;
+                _context3.next = 5;
+                return axios.put('/api/student/' + _this4.$route.params.id, _this4.student).then(function (res) {
+                  if (res.status == 204) {
+                    console.log(res);
+
+                    _this4.reset();
+
+                    _this4.finalCheck();
+
+                    _this4.updated = true;
+                  }
+                })["catch"](function (err) {
+                  _this4.errors = err.response.data.errors;
+
+                  _this4.finalCheck();
+
+                  _this4.loading = false;
+                });
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }))();
     }
   }
 });
@@ -6314,29 +6518,73 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      students: {},
-      text: ""
+      students: null,
+      findStudents: null,
+      text: "",
+      loading: true,
+      searching: false
     };
   },
   methods: {
-    teacherSearch: function teacherSearch() {
-      if (this.text === "") {
-        alert("無法查詢");
+    studentSearch: function studentSearch() {
+      var _this = this;
+
+      this.searching = true;
+
+      if (this.text == "") {
+        this.findStudents = this.students;
+        setTimeout(function () {
+          _this.searching = false;
+        }, 500);
+        return;
       }
 
-      console.log(this.text);
+      var reg = /^(09)[0-9]{1,7}[0-9]$/;
+
+      if (reg.test(this.text)) {
+        this.loading = true;
+        var num = this.text.length;
+        this.findStudents = this.students.filter(function (student) {
+          return student.phone.slice(0, num) == _this.text;
+        });
+        setTimeout(function () {
+          _this.loading = false;
+        }, 500);
+      } else {
+        alert("請輸入手機號碼");
+      }
+
+      setTimeout(function () {
+        _this.searching = false;
+      }, 500);
+    },
+    cleanSearch: function cleanSearch() {
+      this.text = "";
+      this.studentSearch();
     }
   },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
+    this.loading = true;
     axios.get('/api/student').then(function (response) {
       //console.log(response.data);
-      _this.students = response.data;
+      _this2.students = response.data;
+      _this2.findStudents = response.data;
     });
+    setTimeout(function () {
+      _this2.loading = false;
+    }, 500);
   }
 });
 
@@ -6480,8 +6728,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "routes": () => (/* binding */ routes),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue");
 /* harmony import */ var _components_newTeacher_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/newTeacher.vue */ "./resources/js/components/newTeacher.vue");
 /* harmony import */ var _components_Teachers_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Teachers.vue */ "./resources/js/components/Teachers.vue");
@@ -6490,6 +6738,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/navComponent.vue */ "./resources/js/components/navComponent.vue");
 /* harmony import */ var _components_login_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/login.vue */ "./resources/js/components/login.vue");
 /* harmony import */ var _components_newuser_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/newuser.vue */ "./resources/js/components/newuser.vue");
+/* harmony import */ var _components_newStudent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/newStudent.vue */ "./resources/js/components/newStudent.vue");
 
  // 引用頁面的 Component
 
@@ -6500,60 +6749,68 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
  // 使用 Vue Router
 
-vue__WEBPACK_IMPORTED_MODULE_8__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_9__["default"]); // Route 設定
+vue__WEBPACK_IMPORTED_MODULE_9__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_10__["default"]); // Route 設定
 
 var routes = [{
-  path: '/newteacher',
+  path: "/newteacher",
   components: {
     "default": _components_newTeacher_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     nav: _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
-  name: 'newteacher'
+  name: "newteacher"
 }, {
-  path: '/teachers',
+  path: "/newstudent",
+  components: {
+    "default": _components_newStudent_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    nav: _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+  },
+  name: "newstudent"
+}, {
+  path: "/teachers",
   components: {
     "default": _components_Teachers_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     nav: _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
-  name: 'teachers'
+  name: "teachers"
 }, {
-  path: '/students',
+  path: "/students",
   components: {
     "default": _components_students_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     nav: _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
-  name: 'students'
+  name: "students"
 }, {
-  path: '/student/:id',
+  path: "/student/:id",
   components: {
     "default": _components_studentShow_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     nav: _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
-  name: 'student'
+  name: "student"
 }, {
-  path: '/newuser',
+  path: "/newuser",
   component: _components_newuser_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
   name: "newuser"
 }, {
-  path: '/auth/login',
+  path: "/auth/login",
   component: _components_login_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
   name: "login"
 }, {
-  path: '/',
+  path: "/",
   components: {
     "default": _components_ExampleComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     nav: _components_navComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
   },
-  name: 'index'
-} // {   path: '*', 
+  name: "index"
+} // {   path: '*',
 //     redirect: "/index"
 // },
 ]; // 建立 Vue Router instance
 
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_9__["default"]({
-  mode: 'history',
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_10__["default"]({
+  mode: "history",
   routes: routes
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
@@ -11611,6 +11868,30 @@ ___CSS_LOADER_EXPORT___.push([module.id, "\n#slider-content[data-v-299e239e] {\r
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newStudent.vue?vue&type=style&index=0&id=71ab8786&scoped=true&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newStudent.vue?vue&type=style&index=0&id=71ab8786&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* input::-webkit-input-placeholder {\r\n    font-size: 14px;\r\n    line-height: 3;\r\n} */\n.error[data-v-71ab8786] {\r\n    background-color: red;\n}\r\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/studentShow.vue?vue&type=style&index=0&id=985a5a46&scoped=true&lang=css&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/studentShow.vue?vue&type=style&index=0&id=985a5a46&scoped=true&lang=css& ***!
@@ -11628,7 +11909,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.v-leave[data-v-985a5a46]{\r\n    opacity: 1;\n}\n.v-leave-active[data-v-985a5a46]{\r\n    opacity: 0;\r\n    transition: all 0.3s ;\n}\n.v-leave-to[data-v-985a5a46]{\r\n    opacity: 0;\n}\n.v-enter[data-v-985a5a46]{\n}\n.v-enter-active[data-v-985a5a46]{\r\n\r\n    -webkit-animation: jump-data-v-985a5a46 0.3s;\r\n\r\n            animation: jump-data-v-985a5a46 0.3s;\n}\n.v-enter-to[data-v-985a5a46]{\n}\n@-webkit-keyframes jump-data-v-985a5a46 {\n0% {transform: scale(0.8)}\n50% {transform: scale(1.08)}\n100%{transform: scale(1)}\n}\n@keyframes jump-data-v-985a5a46 {\n0% {transform: scale(0.8)}\n50% {transform: scale(1.08)}\n100%{transform: scale(1)}\n}\n#attendControl[data-v-985a5a46] {}\n#attendControl.show i[data-v-985a5a46] {\r\n    transform: rotate(180deg);\n}\n#attend[data-v-985a5a46] {\r\n\r\n    margin-top: -110px;\r\n    transition: all 0.5s;\n}\n#attend.show[data-v-985a5a46] {\r\n\r\n    margin-top: 0px\n}\n@media (max-width:1024px) {\n#attend[data-v-985a5a46] {\r\n        margin-top: -210px;\n}\n}\n@media (max-width:300px) {\n#attend[data-v-985a5a46] {\r\n        margin-top: -260px;\n}\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.v-leave[data-v-985a5a46] {\r\n    opacity: 1;\n}\n.v-leave-active[data-v-985a5a46] {\r\n    opacity: 0;\r\n    transition: all 0.3s;\n}\n.v-leave-to[data-v-985a5a46] {\r\n    opacity: 0;\n}\n.v-enter-active[data-v-985a5a46] {\r\n\r\n    -webkit-animation: jump-data-v-985a5a46 0.3s;\r\n\r\n            animation: jump-data-v-985a5a46 0.3s;\n}\n@-webkit-keyframes jump-data-v-985a5a46 {\n0% {\r\n        transform: scale(0.8)\n}\n50% {\r\n        transform: scale(1.08)\n}\n100% {\r\n        transform: scale(1)\n}\n}\n@keyframes jump-data-v-985a5a46 {\n0% {\r\n        transform: scale(0.8)\n}\n50% {\r\n        transform: scale(1.08)\n}\n100% {\r\n        transform: scale(1)\n}\n}\n#attendControl.show i[data-v-985a5a46] {\r\n    transform: rotate(180deg);\n}\n#attend[data-v-985a5a46] {\r\n\r\n    margin-top: -110px;\r\n    transition: all 0.5s;\n}\n#attend.show[data-v-985a5a46] {\r\n\r\n    margin-top: 0px\n}\n@media (max-width:1024px) {\n#attend[data-v-985a5a46] {\r\n        margin-top: -210px;\n}\n}\n@media (max-width:300px) {\n#attend[data-v-985a5a46] {\r\n        margin-top: -260px;\n}\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -29924,6 +30205,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newStudent.vue?vue&type=style&index=0&id=71ab8786&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newStudent.vue?vue&type=style&index=0&id=71ab8786&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_newStudent_vue_vue_type_style_index_0_id_71ab8786_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./newStudent.vue?vue&type=style&index=0&id=71ab8786&scoped=true&lang=css& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newStudent.vue?vue&type=style&index=0&id=71ab8786&scoped=true&lang=css&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_newStudent_vue_vue_type_style_index_0_id_71ab8786_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_newStudent_vue_vue_type_style_index_0_id_71ab8786_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/studentShow.vue?vue&type=style&index=0&id=985a5a46&scoped=true&lang=css&":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/studentShow.vue?vue&type=style&index=0&id=985a5a46&scoped=true&lang=css& ***!
@@ -30391,6 +30702,47 @@ component.options.__file = "resources/js/components/navComponent.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/newStudent.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/newStudent.vue ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _newStudent_vue_vue_type_template_id_71ab8786_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./newStudent.vue?vue&type=template&id=71ab8786&scoped=true& */ "./resources/js/components/newStudent.vue?vue&type=template&id=71ab8786&scoped=true&");
+/* harmony import */ var _newStudent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./newStudent.vue?vue&type=script&lang=js& */ "./resources/js/components/newStudent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _newStudent_vue_vue_type_style_index_0_id_71ab8786_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./newStudent.vue?vue&type=style&index=0&id=71ab8786&scoped=true&lang=css& */ "./resources/js/components/newStudent.vue?vue&type=style&index=0&id=71ab8786&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+;
+
+
+/* normalize component */
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _newStudent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _newStudent_vue_vue_type_template_id_71ab8786_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
+  _newStudent_vue_vue_type_template_id_71ab8786_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  "71ab8786",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/newStudent.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/newTeacher.vue":
 /*!************************************************!*\
   !*** ./resources/js/components/newTeacher.vue ***!
@@ -30652,6 +31004,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/newStudent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/newStudent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_newStudent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./newStudent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newStudent.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_newStudent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/newTeacher.vue?vue&type=script&lang=js&":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/newTeacher.vue?vue&type=script&lang=js& ***!
@@ -30745,6 +31113,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/newStudent.vue?vue&type=style&index=0&id=71ab8786&scoped=true&lang=css&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/newStudent.vue?vue&type=style&index=0&id=71ab8786&scoped=true&lang=css& ***!
+  \*********************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_0_rules_0_use_2_node_modules_vue_loader_lib_index_js_vue_loader_options_newStudent_vue_vue_type_style_index_0_id_71ab8786_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./newStudent.vue?vue&type=style&index=0&id=71ab8786&scoped=true&lang=css& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9[0].rules[0].use[2]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newStudent.vue?vue&type=style&index=0&id=71ab8786&scoped=true&lang=css&");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/studentShow.vue?vue&type=style&index=0&id=985a5a46&scoped=true&lang=css&":
 /*!**********************************************************************************************************!*\
   !*** ./resources/js/components/studentShow.vue?vue&type=style&index=0&id=985a5a46&scoped=true&lang=css& ***!
@@ -30822,6 +31203,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_navComponent_vue_vue_type_template_id_47683de5___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_navComponent_vue_vue_type_template_id_47683de5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./navComponent.vue?vue&type=template&id=47683de5& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/navComponent.vue?vue&type=template&id=47683de5&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/newStudent.vue?vue&type=template&id=71ab8786&scoped=true&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/newStudent.vue?vue&type=template&id=71ab8786&scoped=true& ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_newStudent_vue_vue_type_template_id_71ab8786_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_newStudent_vue_vue_type_template_id_71ab8786_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_newStudent_vue_vue_type_template_id_71ab8786_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./newStudent.vue?vue&type=template&id=71ab8786&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newStudent.vue?vue&type=template&id=71ab8786&scoped=true&");
 
 
 /***/ }),
@@ -31512,7 +31910,7 @@ var render = function () {
                     _c(
                       "i",
                       { staticClass: "bx bxs-home text-3xl cursor-pointer" },
-                      [_vm._v(" Home ")]
+                      [_vm._v(" 首頁 ")]
                     ),
                   ]),
                 ],
@@ -31567,7 +31965,7 @@ var render = function () {
                                 },
                               },
                             },
-                            [_vm._v("New")]
+                            [_vm._v("新增資料")]
                           ),
                         ]),
                       ],
@@ -31609,11 +32007,11 @@ var render = function () {
                                 },
                               },
                             },
-                            [_vm._v("Search")]
+                            [_vm._v("學生名單")]
                           ),
                         ]),
                         _vm._v(" "),
-                        _c("router-link", { attrs: { to: "/newteacher" } }, [
+                        _c("router-link", { attrs: { to: "/newstudent" } }, [
                           _c(
                             "li",
                             {
@@ -31623,7 +32021,7 @@ var render = function () {
                                 },
                               },
                             },
-                            [_vm._v("New")]
+                            [_vm._v("新增資料")]
                           ),
                         ]),
                       ],
@@ -31710,6 +32108,293 @@ var render = function () {
       ),
     ]
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newStudent.vue?vue&type=template&id=71ab8786&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newStudent.vue?vue&type=template&id=71ab8786&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function () {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "grid grid-cols-4 mt-12" }, [
+    _c(
+      "div",
+      {
+        staticClass: " lg:col-start-2 col-start-2 col-span-2 text-center mb-4",
+      },
+      [
+        _c("div", { staticClass: "text-3xl font-bold" }, [
+          _vm._v("學生基本資料"),
+        ]),
+        _vm._v(" "),
+        _vm.success.status
+          ? _c(
+              "div",
+              { staticClass: "m-2 flex justify-center text-cyan-500" },
+              [
+                _c("i", {
+                  staticClass: "bx bx-cloud-upload text-xl pt-1 pr-2",
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "leading-7" }, [
+                  _vm._v(" " + _vm._s(_vm.success.meg) + " 學生資料已新增"),
+                ]),
+              ]
+            )
+          : _vm._e(),
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass:
+          " lg:col-start-2 col-start-2 lg:grid lg:grid-cols-2 col-span-2",
+        attrs: { action: "#", method: "POST" },
+      },
+      [
+        _c("div", { staticClass: "grid p-2" }, [
+          _c("label", { staticClass: "border-b-2 mb-1", attrs: { for: "" } }, [
+            _vm._v("中文姓名\r\n                "),
+            _vm.errors.chineseName
+              ? _c("span", { staticClass: "text-sm text-red-800" }, [
+                  _c("i", { staticClass: "bx bx-message-rounded-error" }),
+                  _vm._v("最少兩個字元"),
+                ])
+              : _vm._e(),
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.student.chineseName,
+                expression: "student.chineseName",
+              },
+            ],
+            staticClass:
+              "px-2 py-1 rounded-sm focus:outline-cyan-600/40 w-full",
+            attrs: { type: "text", placeholder: "請填入中文姓名，例：王大明" },
+            domProps: { value: _vm.student.chineseName },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.student, "chineseName", $event.target.value)
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "grid p-2" }, [
+          _c("label", { staticClass: "border-b-2 mb-1", attrs: { for: "" } }, [
+            _vm._v("英文姓名\r\n                "),
+            _vm.errors.englishName
+              ? _c("span", { staticClass: "text-sm text-red-800" }, [
+                  _c("i", { staticClass: "bx bx-message-rounded-error" }),
+                  _vm._v("最少三個字元"),
+                ])
+              : _vm._e(),
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.student.englishName,
+                expression: "student.englishName",
+              },
+            ],
+            staticClass:
+              "px-2 py-1 rounded-sm focus:outline-cyan-600/40 w-full",
+            attrs: { type: "text", placeholder: "請填入英文姓名，例：Paul" },
+            domProps: { value: _vm.student.englishName },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.student, "englishName", $event.target.value)
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "grid p-2" }, [
+          _c(
+            "label",
+            { staticClass: "border-b-2 mb-1 self-end", attrs: { for: "" } },
+            [
+              _vm._v("生日\r\n                "),
+              _vm.errors.birth
+                ? _c("span", { staticClass: "text-sm text-red-800" }, [
+                    _c("i", { staticClass: "bx bx-message-rounded-error" }),
+                    _vm._v("請再確認日期"),
+                  ])
+                : _vm._e(),
+            ]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.student.birth,
+                expression: "student.birth",
+              },
+            ],
+            staticClass:
+              "px-1 py-1 rounded-sm focus:outline-cyan-600/40 w-full",
+            attrs: { type: "date", placeholder: "請填入生日，例：2022/01/01" },
+            domProps: { value: _vm.student.birth },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.student, "birth", $event.target.value)
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "grid p-2" }, [
+          _c("label", { staticClass: "border-b-2 mb-1", attrs: { for: "" } }, [
+            _vm._v("聯絡電話\r\n                "),
+            _vm.errors.phone
+              ? _c("span", { staticClass: "text-sm text-red-800" }, [
+                  _c("i", { staticClass: "bx bx-message-rounded-error" }),
+                  _vm._v("號碼為十個字元"),
+                ])
+              : _vm._e(),
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.student.phone,
+                expression: "student.phone",
+              },
+            ],
+            staticClass:
+              "px-2 py-1 rounded-sm focus:outline-cyan-600/40 w-full",
+            attrs: {
+              type: "text",
+              placeholder: "請填入手機號碼，例：0912111222",
+            },
+            domProps: { value: _vm.student.phone },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.student, "phone", $event.target.value)
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "grid p-2 lg:col-span-2" }, [
+          _c("label", { staticClass: "border-b-2 mb-1", attrs: { for: "" } }, [
+            _vm._v("通訊地址\r\n                "),
+            _vm.errors.address
+              ? _c("span", { staticClass: "text-sm text-red-800" }, [
+                  _c("i", { staticClass: "bx bx-message-rounded-error" }),
+                  _vm._v("最少十個字元"),
+                ])
+              : _vm._e(),
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.student.address,
+                expression: "student.address",
+              },
+            ],
+            staticClass:
+              "px-2 py-1 rounded-sm focus:outline-cyan-600/40 w-full",
+            attrs: {
+              type: "text",
+              placeholder: "請填入地址，例：雲林縣斗六市雲林路二段515號",
+            },
+            domProps: { value: _vm.student.address },
+            on: {
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.student, "address", $event.target.value)
+              },
+            },
+          }),
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "grid lg:grid-cols-2 grid-rows-2 p-2 lg:col-span-2 gap-2 mt-2",
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "bg-cyan-600 bg-opacity-80 rounded-sm text-white border-2 border-cyan-800 border-opacity-0 hover:border-opacity-80 disabled:opacity-50",
+                attrs: { type: "button", disabled: _vm.checking },
+                on: {
+                  click: function ($event) {
+                    return _vm.sentForm()
+                  },
+                },
+              },
+              [_vm._v("送出")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass:
+                  "bg-rose-400 bg-opacity-80 rounded-sm text-white border-2 border-rose-800 border-opacity-0 hover:border-opacity-80 disabled:opacity-50",
+                attrs: { type: "button", disabled: _vm.checking },
+                on: {
+                  click: function ($event) {
+                    return _vm.cleanForm()
+                  },
+                },
+              },
+              [_vm._v("清空")]
+            ),
+          ]
+        ),
+      ]
+    ),
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -32190,27 +32875,27 @@ var render = function () {
                     _vm._v(" "),
                     _c(
                       "div",
-                      { staticClass: "mx-2 grid grid-cols-4 gap-y-1" },
+                      { staticClass: "mx-2 grid grid-cols-4 gap-y-1 text-md" },
                       [
-                        _c("div", [_vm._v("中文名：")]),
+                        _c("div", [_vm._v("中文姓名 |")]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-span-3" }, [
-                          _vm._v("王小明"),
+                          _vm._v(_vm._s(_vm.student.chName)),
                         ]),
                         _vm._v(" "),
-                        _c("div", [_vm._v("英文名：")]),
+                        _c("div", [_vm._v("英文姓名 |")]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-span-3" }, [
                           _vm._v(_vm._s(_vm.student.enName)),
                         ]),
                         _vm._v(" "),
-                        _c("div", [_vm._v("電話：")]),
+                        _c("div", [_vm._v("聯絡電話 |")]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-span-3" }, [
                           _vm._v(_vm._s(_vm.student.phone)),
                         ]),
                         _vm._v(" "),
-                        _c("div", [_vm._v("地址：")]),
+                        _c("div", [_vm._v("通訊地址 |")]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-span-3" }, [
                           _vm._v(_vm._s(_vm.student.address)),
@@ -32230,6 +32915,11 @@ var render = function () {
                           {
                             staticClass:
                               "py-2 bg-green-600 text-white bg-opacity-80 rounded-bl-md active:bg-opacity-100",
+                            on: {
+                              click: function ($event) {
+                                return _vm.updateStudent()
+                              },
+                            },
                           },
                           [_vm._v("確認")]
                         ),
@@ -32275,10 +32965,95 @@ var render = function () {
               _vm._v("學生資訊"),
             ]),
             _vm._v(" "),
+            _vm.errors
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "text-center text-rose-700 text-opacity-70 mt-1",
+                  },
+                  [
+                    _c("i", { staticClass: "bx bx-x-circle" }),
+                    _vm._v(" 資料格式錯誤，請再確認 "),
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.updated
+              ? _c(
+                  "div",
+                  {
+                    staticClass:
+                      "text-center text-cyan-700 text-opacity-80 mt-1",
+                  },
+                  [
+                    _c("i", { staticClass: "bx bx-cloud-upload text-lg" }),
+                    _vm._v(" 學生資料已更新 "),
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
             _c("hr", { staticClass: "my-2" }),
             _vm._v(" "),
             _c("div", { staticClass: "grid grid-cols-6 gap-y-2 gap-x-4" }, [
-              _vm._m(0),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "\r\n            col-span-6\r\n            gap-2\r\n            grid\r\n            lg:grid-rows-2 lg:col-span-1 lg:grid-cols-1 lg:divide-x-0\r\n            grid-cols-4\r\n            items-center\r\n          ",
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "\r\n              text-lg\r\n              font-semibold\r\n              border-r-2 border-cyan-700 border-opacity-20\r\n              lg:border-0\r\n            ",
+                    },
+                    [
+                      _vm._v(
+                        "\r\n                    中文姓名\r\n                "
+                      ),
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm.edit
+                    ? _c("div", { staticClass: "col-span-3" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.student.chName,
+                              expression: "student.chName",
+                            },
+                          ],
+                          staticClass: "w-full px-2 py-1 rounded",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.student.chName },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.student,
+                                "chName",
+                                $event.target.value
+                              )
+                            },
+                          },
+                        }),
+                      ])
+                    : _c(
+                        "div",
+                        {
+                          staticClass:
+                            "col-span-3 lg:col-span-1 lg:place-self-start",
+                        },
+                        [_vm._v(_vm._s(_vm.student.chName))]
+                      ),
+                ]
+              ),
               _vm._v(" "),
               _c(
                 "div",
@@ -32291,11 +33066,11 @@ var render = function () {
                     "div",
                     {
                       staticClass:
-                        "\r\n              text-xl\r\n              font-semibold\r\n              border-r-2 border-cyan-700 border-opacity-20\r\n              lg:border-0\r\n            ",
+                        "\r\n              text-lg\r\n              font-semibold\r\n              border-r-2 border-cyan-700 border-opacity-20\r\n              lg:border-0\r\n            ",
                     },
                     [
                       _vm._v(
-                        "\r\n                    英文名\r\n                "
+                        "\r\n                    英文姓名\r\n                "
                       ),
                     ]
                   ),
@@ -32346,16 +33121,20 @@ var render = function () {
                 "div",
                 {
                   staticClass:
-                    "\r\n            grid\r\n            lg:grid-rows-2 lg:col-span-1 lg:grid-cols-1\r\n            col-span-6\r\n            grid-cols-4\r\n            gap-2\r\n            items-center\r\n          ",
+                    "grid lg:grid-rows-2 lg:col-span-1 lg:grid-cols-1 col-span-6 grid-cols-4 gap-2 items-center",
                 },
                 [
                   _c(
                     "div",
                     {
                       staticClass:
-                        "\r\n              text-xl\r\n              font-semibold\r\n              border-r-2 border-cyan-700 border-opacity-20\r\n              lg:border-0\r\n            ",
+                        "text-lg font-semibold border-r-2 border-cyan-700 border-opacity-20 lg:border-0",
                     },
-                    [_vm._v("\r\n                    電話\r\n                ")]
+                    [
+                      _vm._v(
+                        "\r\n                    聯絡電話\r\n                "
+                      ),
+                    ]
                   ),
                   _vm._v(" "),
                   _vm.edit
@@ -32404,16 +33183,20 @@ var render = function () {
                 "div",
                 {
                   staticClass:
-                    "\r\n            grid\r\n            lg:col-span-3 lg:grid-rows-2 lg:grid-cols-1\r\n            col-span-6\r\n            grid-cols-4\r\n            gap-2\r\n            items-center\r\n          ",
+                    "grid lg:col-span-3 lg:grid-rows-2 lg:grid-cols-1 col-span-6 grid-cols-4 gap-2 items-center",
                 },
                 [
                   _c(
                     "div",
                     {
                       staticClass:
-                        "\r\n              text-xl\r\n              font-semibold\r\n              border-r-2 border-cyan-700 border-opacity-20\r\n              lg:border-0\r\n            ",
+                        "text-lg font-semibold border-r-2 border-cyan-700 border-opacity-20 lg:border-0",
                     },
-                    [_vm._v("\r\n                    地址\r\n                ")]
+                    [
+                      _vm._v(
+                        "\r\n                    通訊地址\r\n                "
+                      ),
+                    ]
                   ),
                   _vm._v(" "),
                   _vm.edit
@@ -32479,7 +33262,7 @@ var render = function () {
                           },
                         },
                       },
-                      [_vm._v("\r\n                確定修改\r\n            ")]
+                      [_vm._v("\r\n                修改\r\n            ")]
                     )
                   : _vm._e(),
                 _vm._v(" "),
@@ -32530,9 +33313,9 @@ var render = function () {
                 "col-span-10 grid grid-cols-12 lg:col-start-3 lg:col-end-9 gap-y-1",
             },
             [
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
               _vm._l(_vm.lessons, function (lesson, index1) {
                 return _c(
@@ -32667,34 +33450,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "\r\n            col-span-6\r\n            gap-2\r\n            grid\r\n            lg:grid-rows-2 lg:col-span-1 lg:grid-cols-1 lg:divide-x-0\r\n            grid-cols-4\r\n            items-center\r\n          ",
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass:
-              "\r\n              text-xl\r\n              font-semibold\r\n              border-r-2 border-cyan-700 border-opacity-20\r\n              lg:border-0\r\n            ",
-          },
-          [_vm._v("\r\n                    中文名\r\n                ")]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-span-3 lg:col-span-1 lg:place-self-start" },
-          [_vm._v("王小明")]
-        ),
-      ]
-    )
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-span-12" }, [
       _c("h1", { staticClass: " text-2xl text-center font-bold mt-20" }, [
         _vm._v("課程資訊"),
@@ -32742,111 +33497,176 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "text-center m-8" }, [
-    _c("h1", { staticClass: "text-5xl pb-4" }, [_vm._v("Students")]),
+  return _c("div", { staticClass: "text-center" }, [
+    _c("h1", { staticClass: "text-3xl pb-4 mt-12 font-bold" }, [
+      _vm._v("學生名單"),
+    ]),
     _vm._v(" "),
-    _c("div", [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.text,
-            expression: "text",
-          },
-        ],
-        attrs: { type: "text" },
-        domProps: { value: _vm.text },
-        on: {
-          input: function ($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.text = $event.target.value
-          },
-        },
-      }),
-      _vm._v(" "),
+    _c("div", { staticClass: "grid grid-cols-12" }, [
       _c(
-        "button",
+        "div",
         {
           staticClass:
-            "text-sm bg-gray-600 bg-opacity-60 mt-2 px-2 py-1 rounded-full text-white active:bg-gray-300 shadow",
-          on: {
-            click: function ($event) {
-              return _vm.teacherSearch()
-            },
-          },
+            "lg:col-start-5 lg:col-span-4 grid grid-cols-6 gap-2 col-start-4 col-span-6 ",
         },
-        [_vm._v(" Search")]
+        [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.text,
+                expression: "text",
+              },
+            ],
+            staticClass:
+              "px-2 py-1 rounded-sm outline-gray-600/40 lg:col-span-4 col-span-6 focus:shadow-lg text-gray-600",
+            attrs: { type: "text", placeholder: "請輸入手機號碼" },
+            domProps: { value: _vm.text },
+            on: {
+              keyup: function ($event) {
+                if (
+                  !$event.type.indexOf("key") &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.studentSearch()
+              },
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.text = $event.target.value
+              },
+            },
+          }),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass:
+                "text-md bg-gray-600 bg-opacity-60 px-2 py-1 rounded-sm text-white hover:shadow-lg col-span-3 lg:col-span-1 disabled:opacity-50",
+              attrs: { disabled: _vm.searching },
+              on: {
+                click: function ($event) {
+                  return _vm.studentSearch()
+                },
+              },
+            },
+            [_vm._v(" 查詢")]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass:
+                "text-md bg-gray-600 bg-opacity-60 px-2 py-1 rounded-sm text-white hover:shadow-lg col-span-3 lg:col-span-1 disabled:opacity-50",
+              attrs: { disabled: _vm.searching },
+              on: {
+                click: function ($event) {
+                  return _vm.cleanSearch()
+                },
+              },
+            },
+            [_vm._v(" 清空")]
+          ),
+        ]
       ),
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "flex justify-center m-5",
-        attrs: { id: "teachersTable" },
-      },
-      [
-        _c(
+    _vm.loading
+      ? _c("div", { staticClass: "m-4 text-2xl" }, [
+          _c("i", { staticClass: "bx bx-loader-circle bx-spin" }),
+          _vm._v(" Loading...\r\n    "),
+        ])
+      : _c(
           "div",
-          { staticClass: "flex justify-center shadow p-4 rounded-xl" },
+          {
+            staticClass: "flex justify-center m-5",
+            attrs: { id: "teachersTable" },
+          },
           [
-            _c("table", { staticClass: "divide-y divide-gray-300" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                { staticClass: "rounded-md" },
-                _vm._l(_vm.students, function (s, index) {
-                  return _c(
-                    "tr",
-                    {
-                      key: "student" + index,
-                      staticClass: "hover:bg-gray-100 ",
+            !_vm.findStudents.length
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "cursor-pointer text-lg hover:text-cyan-700",
+                    on: {
+                      click: function ($event) {
+                        return _vm.cleanSearch()
+                      },
                     },
-                    [
-                      _c("td", { staticClass: "py-2 px-4" }, [
-                        _vm._v(" " + _vm._s(index + 1) + " "),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "py-2 px-4" }, [
-                        _vm._v(" " + _vm._s(s.enName) + " "),
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "py-2 px-4" }, [
-                        _vm._v(" " + _vm._s(s.phone) + " "),
-                      ]),
+                  },
+                  [_vm._v("--無符合條件--")]
+                )
+              : _c(
+                  "div",
+                  { staticClass: "flex justify-center shadow p-4 rounded-xl" },
+                  [
+                    _c("table", { staticClass: "divide-y divide-gray-300" }, [
+                      _vm._m(0),
                       _vm._v(" "),
                       _c(
-                        "td",
-                        { staticClass: "py-2 px-4" },
-                        [
-                          _c(
-                            "router-link",
+                        "tbody",
+                        { staticClass: "rounded-md" },
+                        _vm._l(_vm.findStudents, function (s, index) {
+                          return _c(
+                            "tr",
                             {
-                              staticClass:
-                                "hover:ring-2 ring-gray-300 px-2 py-1 rounded-sm active:opacity-60",
-                              attrs: {
-                                to: { name: "student", params: { id: s.id } },
-                              },
+                              key: "student" + s.id,
+                              staticClass: "hover:bg-gray-100 ",
                             },
-                            [_vm._v("詳細資訊")]
-                          ),
-                        ],
-                        1
+                            [
+                              _c("td", { staticClass: "py-2 px-4" }, [
+                                _vm._v(" " + _vm._s(index + 1) + " "),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "py-2 px-4 text-left" }, [
+                                _vm._v(
+                                  " " +
+                                    _vm._s(s.chName) +
+                                    " (" +
+                                    _vm._s(s.enName) +
+                                    ") "
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "py-2 px-4" }, [
+                                _vm._v(" " + _vm._s(s.phone) + " "),
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                { staticClass: "py-2 px-4" },
+                                [
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass:
+                                        "hover:ring-gray-400 ring-2 ring-gray-300 px-2 py-1 rounded-sm active:opacity-60",
+                                      attrs: {
+                                        to: {
+                                          name: "student",
+                                          params: { id: s.id },
+                                        },
+                                      },
+                                    },
+                                    [_vm._v("click")]
+                                  ),
+                                ],
+                                1
+                              ),
+                            ]
+                          )
+                        }),
+                        0
                       ),
-                    ]
-                  )
-                }),
-                0
-              ),
-            ]),
+                    ]),
+                  ]
+                ),
           ]
         ),
-      ]
-    ),
   ])
 }
 var staticRenderFns = [
@@ -32858,11 +33678,11 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", {}, [_vm._v(" # ")]),
         _vm._v(" "),
-        _c("th", {}, [_vm._v(" Name ")]),
+        _c("th", {}, [_vm._v(" 姓名 ")]),
         _vm._v(" "),
-        _c("th", {}, [_vm._v(" Phone ")]),
+        _c("th", {}, [_vm._v(" 連絡電話 ")]),
         _vm._v(" "),
-        _c("th", {}, [_vm._v(" Managemnet ")]),
+        _c("th", {}, [_vm._v(" 詳情 ")]),
       ]),
     ])
   },
