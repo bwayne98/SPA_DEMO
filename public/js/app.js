@@ -5307,6 +5307,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5315,7 +5340,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       lessons: null,
       teachers: null,
       studentcount: null,
-      loading: true
+      loading: true,
+      newsAll: null,
+      newsList: null,
+      curPage: 1
     };
   },
   computed: {
@@ -5350,41 +5378,48 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               });
 
             case 3:
+              console.log(window.innerWidth); //初始使窗大小
+
+              if (window.innerWidth > 1600) {
+                _this.slidervalue = 1 / 3;
+              } else if (window.innerWidth > 650) {
+                _this.slidervalue = 1 / 2;
+              } else {
+                _this.slidervalue = 1;
+              } //視窗大小偵測
+
+
+              window.addEventListener('resize', function () {
+                _this.sliderposition = 0;
+
+                if (window.innerWidth > 1600) {
+                  _this.slidervalue = 1 / 3;
+                } else if (window.innerWidth > 650) {
+                  _this.slidervalue = 1 / 2;
+                } else {
+                  _this.slidervalue = 1;
+                }
+              }); //python news
+
+              _context.next = 8;
+              return axios.get('/api/news').then(function (res) {
+                console.log(res.data);
+                _this.newsAll = res.data;
+                _this.newsList = res.data.slice(0, 5);
+              })["catch"](function (err) {
+                console.err(err.response.data.errors);
+              });
+
+            case 8:
               _this.loading = false;
 
-            case 4:
+            case 9:
             case "end":
               return _context.stop();
           }
         }
       }, _callee);
     }))();
-  },
-  mounted: function mounted() {
-    var _this2 = this;
-
-    console.log(window.innerWidth); //初始使窗大小
-
-    if (window.innerWidth > 1600) {
-      this.slidervalue = 1 / 3;
-    } else if (window.innerWidth > 650) {
-      this.slidervalue = 1 / 2;
-    } else {
-      this.slidervalue = 1;
-    } //視窗大小偵測
-
-
-    window.addEventListener('resize', function () {
-      _this2.sliderposition = 0;
-
-      if (window.innerWidth > 1600) {
-        _this2.slidervalue = 1 / 3;
-      } else if (window.innerWidth > 650) {
-        _this2.slidervalue = 1 / 2;
-      } else {
-        _this2.slidervalue = 1;
-      }
-    });
   },
   methods: {
     slide_left: function slide_left() {
@@ -5402,6 +5437,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       this.sliderposition += this.slidervalue;
+    },
+    changPage: function changPage(num) {
+      this.curPage = num;
+      num = num - 1;
+      this.newsList = this.newsAll.slice(num * 5, num * 5 + 5);
     }
   }
 });
@@ -6539,8 +6579,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -6550,9 +6588,8 @@ __webpack_require__.r(__webpack_exports__);
       text: "",
       loading: true,
       searching: false,
-      perpageItem: 5,
+      perpageItem: 8,
       totalPage: 0,
-      lastItemNum: 0,
       curPage: 1
     };
   },
@@ -6580,7 +6617,7 @@ __webpack_require__.r(__webpack_exports__);
           return student.phone.slice(0, num) == _this.text;
         });
 
-        if (this.findStudents.length > 5) {
+        if (this.findStudents.length > this.perpageItem) {
           this.setPage();
         } else {
           this.studentList = this.findStudents;
@@ -6598,26 +6635,26 @@ __webpack_require__.r(__webpack_exports__);
 
       setTimeout(function () {
         _this.searching = false;
-      }, 500);
+      }, 300);
     },
     cleanSearch: function cleanSearch() {
       this.text = "";
       this.studentSearch();
     },
     setPage: function setPage() {
-      this.totalPage = Math.ceil(this.findStudents.length / 5);
-      this.lastItemNum = this.findStudents.length % 5 ? 5 - this.findStudents.length % 5 : 0;
-      this.studentList = this.findStudents.slice(0, 5);
+      this.totalPage = Math.ceil(this.findStudents.length / this.perpageItem);
+      this.studentList = this.findStudents.slice(0, this.perpageItem);
+      document.querySelector('.pagebtn').click();
     },
     changePage: function changePage(num) {
-      var start = num * 5;
-      var end = num * 5 + 5;
+      var start = num * this.perpageItem;
+      var end = num * this.perpageItem + this.perpageItem;
 
       if (end > this.findStudents.length) {
         this.studentList = this.findStudents.slice(start);
         var length = this.studentList.length;
 
-        for (var i = 0; i < 5 - length; i += 1) {
+        for (var i = 0; i < this.perpageItem - length; i += 1) {
           this.studentList.push({});
         }
       } else {
@@ -6636,7 +6673,7 @@ __webpack_require__.r(__webpack_exports__);
       _this2.students = response.data;
       _this2.findStudents = _this2.students;
 
-      if (_this2.findStudents.length > 5) {
+      if (_this2.findStudents.length > _this2.perpageItem) {
         _this2.setPage();
       }
     });
@@ -11919,7 +11956,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#slider-content[data-v-299e239e] {\r\n    transition: all 0.5s ease;\n}\n@media (max-width:1600px) {\n#slider-content[data-v-299e239e] {\r\n        width: 150%;\n}\n}\n@media (max-width: 650px) {\n#slider-content[data-v-299e239e] {\r\n        width: 300%;\n}\n}\n#lessson-sign[data-v-299e239e] {\r\n    top:-100%;\r\n    transition: 0.5s;\n}\n#slider-content div:hover #lessson-sign[data-v-299e239e] {\r\n    top:2rem\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#slider-content[data-v-299e239e] {\r\n    transition: all 0.5s ease;\n}\n@media (max-width:1600px) {\n#slider-content[data-v-299e239e] {\r\n        width: 150%;\n}\n}\n@media (max-width: 650px) {\n#slider-content[data-v-299e239e] {\r\n        width: 300%;\n}\n}\n#lessson-sign[data-v-299e239e] {\r\n    top: -100%;\r\n    transition: 0.5s;\n}\n#slider-content div:hover #lessson-sign[data-v-299e239e] {\r\n    top: 2rem\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -31618,6 +31655,78 @@ var render = function () {
               0
             ),
           ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "h-24" }),
+          _vm._v(" "),
+          _c("div", [
+            _c(
+              "h1",
+              { staticClass: "text-center text-3xl font-extrabold mb-2 " },
+              [_vm._v("新聞")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "grid grid-cols-5 divide-y divide-cyan-600/20" },
+              [
+                _vm._m(1),
+                _vm._v(" "),
+                _vm._l(_vm.newsList, function (news, index) {
+                  return _c(
+                    "div",
+                    {
+                      key: "news" + index,
+                      staticClass:
+                        "md:col-start-2 md:col-span-3 col-start-1 col-span-5 grid grid-cols-3 py-1",
+                    },
+                    [
+                      _c("div", { staticClass: "text-center" }, [
+                        _vm._v(_vm._s(news[0])),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-span-2 truncate" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "hover:text-cyan-700 ",
+                            attrs: { href: news[1], target: "_blank" },
+                          },
+                          [_vm._v(_vm._s(news[2]))]
+                        ),
+                      ]),
+                    ]
+                  )
+                }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "flex justify-center md:col-start-2 md:col-span-3 col-start-1 col-span-5 py-1",
+                  },
+                  _vm._l(5, function (num) {
+                    return _c(
+                      "button",
+                      {
+                        key: "button" + num,
+                        staticClass:
+                          "mx-1 px-1 border-2 rounded-md text-gray-400 disabled:bg-gray-600 disabled:text-white",
+                        attrs: { disabled: num == _vm.curPage },
+                        on: {
+                          click: function ($event) {
+                            return _vm.changPage(num)
+                          },
+                        },
+                      },
+                      [_vm._v(" 0" + _vm._s(num))]
+                    )
+                  }),
+                  0
+                ),
+              ],
+              2
+            ),
+          ]),
         ]),
   ])
 }
@@ -31641,6 +31750,36 @@ var staticRenderFns = [
               "bg-white bg-opacity-60 text-gray-600 px-16 active:bg-opacity-80",
           },
           [_vm._v("點擊報名")]
+        ),
+      ]
+    )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "md:col-start-2 md:col-span-3 col-start-1 col-span-5 grid grid-cols-3 py-1",
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "text-center text-lg font-semibold text text-cyan-800",
+          },
+          [_vm._v("日期")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "text-center md:col-span-2 col-span-1 text-lg font-semibold text-cyan-800",
+          },
+          [_vm._v("標題")]
         ),
       ]
     )
@@ -33704,7 +33843,7 @@ var render = function () {
     _vm._v(" "),
     _vm.loading
       ? _c("div", { staticClass: "m-4 text-2xl" }, [
-          _c("i", { staticClass: "bx bx-loader-circle bx-spin" }),
+          _c("i", { staticClass: "bx bx-loader bx-spin" }),
           _vm._v(" Loading...\r\n    "),
         ])
       : _c(
@@ -33746,43 +33885,45 @@ var render = function () {
                             },
                             [
                               s.id
-                                ? _c("td", { staticClass: "py-2 px-4" }, [
+                                ? _c("td", { staticClass: "py-2 px-2 " }, [
                                     _vm._v(
                                       " " +
                                         _vm._s(
-                                          (_vm.curPage - 1) * 5 + index + 1
+                                          (_vm.curPage - 1) * _vm.perpageItem +
+                                            index +
+                                            1
                                         ) +
                                         " "
                                     ),
                                   ])
-                                : _c("td", { staticClass: "py-2 px-4" }, [
+                                : _c("td", { staticClass: "py-2 px-2" }, [
                                     _vm._v("#"),
                                   ]),
                               _vm._v(" "),
                               s.id
                                 ? _c(
                                     "td",
-                                    { staticClass: "py-2 px-4 text-left" },
+                                    { staticClass: "py-2 px-1 text-left" },
                                     [
                                       _vm._v(
                                         " " +
                                           _vm._s(s.chName) +
-                                          " (" +
+                                          " ( " +
                                           _vm._s(s.enName) +
-                                          ") "
+                                          " ) "
                                       ),
                                     ]
                                   )
-                                : _c("td", { staticClass: "py-2 px-4" }),
+                                : _c("td", { staticClass: "py-2 px-1" }),
                               _vm._v(" "),
-                              _c("td", { staticClass: "py-2 px-4" }, [
+                              _c("td", { staticClass: "py-2 px-1" }, [
                                 _vm._v(" " + _vm._s(s.phone) + " "),
                               ]),
                               _vm._v(" "),
                               s.id
                                 ? _c(
                                     "td",
-                                    { staticClass: "py-2 px-4" },
+                                    { staticClass: "py-2 px-2" },
                                     [
                                       _c(
                                         "router-link",
@@ -33801,7 +33942,7 @@ var render = function () {
                                     ],
                                     1
                                   )
-                                : _c("td", { staticClass: "py-2 px-4" }),
+                                : _c("td", { staticClass: "py-2 px-1" }),
                             ]
                           )
                         }),
@@ -33813,74 +33954,79 @@ var render = function () {
           ]
         ),
     _vm._v(" "),
-    _c(
-      "div",
-      {},
-      [
-        _vm.curPage >= 4
-          ? _c(
-              "button",
-              {
-                staticClass: "mx-1 px-1 border-2 rounded-md text-gray-400",
-                on: {
-                  click: function ($event) {
-                    return _vm.changePage(0)
+    !_vm.loading
+      ? _c(
+          "div",
+          {},
+          [
+            _vm.curPage >= 4
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "mx-1 px-1 border-2 rounded-md text-gray-400",
+                    on: {
+                      click: function ($event) {
+                        return _vm.changePage(0)
+                      },
+                    },
+                  },
+                  [_vm._v(" 01 ")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.curPage >= 4
+              ? _c("span", [_c("i", { staticClass: "bx bx-chevrons-left" })])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._l(_vm.totalPage, function (btn, index) {
+              return _c(
+                "button",
+                {
+                  key: "pagebtn" + index,
+                  staticClass:
+                    "pagebtn mx-1 px-1 border-2 rounded-md text-gray-400 disabled:bg-gray-600 disabled:text-white",
+                  class: {
+                    hide: (_vm.curPage - index > 3) | (index - _vm.curPage > 1),
+                  },
+                  attrs: { disabled: _vm.curPage == index + 1 },
+                  on: {
+                    click: function ($event) {
+                      return _vm.changePage(index)
+                    },
                   },
                 },
-              },
-              [_vm._v(" 01 ")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.curPage >= 4
-          ? _c("span", [_c("i", { staticClass: "bx bx-chevrons-left" })])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm._l(_vm.totalPage, function (btn, index) {
-          return _c(
-            "button",
-            {
-              key: "pagebtn" + index,
-              staticClass:
-                "mx-1 px-1 border-2 rounded-md text-gray-400 disabled:bg-gray-600 disabled:text-white",
-              class: {
-                hide: (_vm.curPage - index > 3) | (index - _vm.curPage > 1),
-              },
-              attrs: { disabled: _vm.curPage == index + 1 },
-              on: {
-                click: function ($event) {
-                  return _vm.changePage(index)
-                },
-              },
-            },
-            [
-              index < 9 ? _c("span", [_vm._v("0")]) : _vm._e(),
-              _vm._v(_vm._s(index + 1) + "\r\n        "),
-            ]
-          )
-        }),
-        _vm._v(" "),
-        _vm.totalPage - _vm.curPage >= 3
-          ? _c("span", [_c("i", { staticClass: "bx bx-chevrons-right" })])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.totalPage - _vm.curPage >= 3
-          ? _c(
-              "button",
-              {
-                staticClass: "mx-1 px-1 border-2 rounded-md text-gray-400",
-                on: {
-                  click: function ($event) {
-                    return _vm.changePage(_vm.totalPage - 1)
+                [
+                  index < 9 ? _c("span", [_vm._v("0")]) : _vm._e(),
+                  _vm._v(_vm._s(index + 1) + "\r\n        "),
+                ]
+              )
+            }),
+            _vm._v(" "),
+            _vm.totalPage - _vm.curPage >= 3
+              ? _c("span", [_c("i", { staticClass: "bx bx-chevrons-right" })])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.totalPage - _vm.curPage >= 3
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "mx-1 px-1 border-2 rounded-md text-gray-400",
+                    on: {
+                      click: function ($event) {
+                        return _vm.changePage(_vm.totalPage - 1)
+                      },
+                    },
                   },
-                },
-              },
-              [_vm._v(" " + _vm._s(_vm.totalPage) + " ")]
-            )
-          : _vm._e(),
-      ],
-      2
-    ),
+                  [
+                    _vm.totalPage < 9 ? _c("span", [_vm._v("0")]) : _vm._e(),
+                    _vm._v(_vm._s(_vm.totalPage) + " "),
+                  ]
+                )
+              : _vm._e(),
+          ],
+          2
+        )
+      : _vm._e(),
   ])
 }
 var staticRenderFns = [

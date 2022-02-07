@@ -2,6 +2,8 @@
 <div class="grid lg:grid-cols-5 grid-cols-3 mt-20">
     <div class="col-span-3 lg:col-start-2 text-xl h-48 items-center flex w-full justify-center" v-if="loading"> <i class='bx bx-loader-circle bx-spin'></i> Loading... </div>
     <div class="col-span-3 lg:col-start-2 " v-else>
+
+        <!-- 開班區塊 -->
         <h1 class="text-center text-3xl font-extrabold mb-2">開班訊息</h1>
         <div class="h-48 relative overflow-hidden">
             <div id="slider-buton" class="w-full absolute z-10 flex justify-center" style="bottom: -10px">
@@ -17,8 +19,8 @@
                         </div>
                         <div class="col-span-5 text-center">--{{lesson.name}}--</div>
                         <div id="lessson-content" class="row-start-2 col-span-5 row-span-4 bg-cyan-600 bg-opacity-10 text-cyan-800 mx-2 rounded shadow-md relative overflow-hidden">
-                            <div id="lessson-sign" class="absolute w-full h-full bg-gray-400 bg-opacity-50 text-center pt-4 text-2xl" >
-                                <button class="bg-white bg-opacity-60 text-gray-600 px-16 active:bg-opacity-80">點擊報名</button> 
+                            <div id="lessson-sign" class="absolute w-full h-full bg-gray-400 bg-opacity-50 text-center pt-4 text-2xl">
+                                <button class="bg-white bg-opacity-60 text-gray-600 px-16 active:bg-opacity-80">點擊報名</button>
                             </div>
                             <div class="text-center pt-1  font-semibold text-xl">課程資訊</div>
                             <hr>
@@ -39,6 +41,29 @@
                 </div>
             </div>
         </div>
+
+        <div class="h-24"></div>
+
+        <!-- 新聞區塊 -->
+        <div>
+            <h1 class="text-center text-3xl font-extrabold mb-2 ">新聞</h1>
+            <div class="grid grid-cols-5 divide-y divide-cyan-600/20">
+                <div class="md:col-start-2 md:col-span-3 col-start-1 col-span-5 grid grid-cols-3 py-1">
+                    <div class="text-center text-lg font-semibold text text-cyan-800">日期</div>
+                    <div class="text-center md:col-span-2 col-span-1 text-lg font-semibold text-cyan-800">標題</div>
+                </div>
+                <div class="md:col-start-2 md:col-span-3 col-start-1 col-span-5 grid grid-cols-3 py-1" v-for="(news,index) in newsList" :key="'news' + index">
+                    <div class="text-center">{{ news[0] }}</div>
+                    <div class="col-span-2 truncate">
+                        <a :href="news[1]" target="_blank" class="hover:text-cyan-700 ">{{ news[2] }}</a>
+                    </div>
+                </div>
+                <div class="flex justify-center md:col-start-2 md:col-span-3 col-start-1 col-span-5 py-1">
+                    <button class="mx-1 px-1 border-2 rounded-md text-gray-400 disabled:bg-gray-600 disabled:text-white" v-for="num in 5" :key="'button' + num" :disabled="num == curPage" @click="changPage(num)"> 0{{num}}</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 </template>
@@ -52,7 +77,10 @@ export default {
             lessons: null,
             teachers: null,
             studentcount: null,
-            loading: true
+            loading: true,
+            newsAll: null,
+            newsList: null,
+            curPage: 1
         }
     },
     computed: {
@@ -79,9 +107,6 @@ export default {
             this.studentcount = res.data[2]
         })
 
-        this.loading = false;
-    },
-    mounted() {
         console.log(window.innerWidth);
         //初始使窗大小
         if (window.innerWidth > 1600) {
@@ -102,6 +127,19 @@ export default {
                 this.slidervalue = 1
             }
         });
+
+        //python news
+
+        await axios.get('/api/news').then(res => {
+            console.log(res.data)
+            this.newsAll = res.data
+            this.newsList = res.data.slice(0, 5)
+        }).catch(err => {
+            console.err(err.response.data.errors)
+        })
+
+        this.loading = false
+
     },
     methods: {
         slide_left() {
@@ -117,6 +155,11 @@ export default {
                 return;
             }
             this.sliderposition += this.slidervalue;
+        },
+        changPage(num) {
+            this.curPage = num
+            num = num - 1
+            this.newsList = this.newsAll.slice(num * 5, num * 5 + 5)
         }
     }
 };
@@ -140,13 +183,11 @@ export default {
 }
 
 #lessson-sign {
-    top:-100%;
+    top: -100%;
     transition: 0.5s;
 }
 
-
 #slider-content div:hover #lessson-sign {
-    top:2rem
+    top: 2rem
 }
-
 </style>

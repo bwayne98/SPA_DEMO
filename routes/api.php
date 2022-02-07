@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,15 +19,17 @@ use App\Http\Controllers\pageController;
 use App\Http\Controllers\ShowLessonCurrentController;
 use App\Http\Controllers\ShowStudenLessonsController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\NewsController;
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
 
-Route::post('/newuser',[pageController::class,"newuser"]);
+Route::post('/newuser', [pageController::class, "newuser"]);
 // Route::post('/login',[pageController::class,"login"]);
 // Route::get('/login',[pageController::class,"getUser"]);
 Route::get('/teachers', [TeacherController::class, "index"]);
-Route::resource('student', StudentController::class)->only(["index","show","store","update"]);
-Route::get('/student/{id}/showstudentlessons',ShowStudenLessonsController::class);
-Route::get('/lesson/current',ShowLessonCurrentController::class);
+Route::resource('student', StudentController::class)->only(["index", "show", "store", "update"]);
+Route::get('/student/{id}/showstudentlessons', ShowStudenLessonsController::class);
+Route::get('/lesson/current', ShowLessonCurrentController::class);
+ROute::get('/news', NewsController::class);

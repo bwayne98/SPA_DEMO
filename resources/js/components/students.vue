@@ -9,7 +9,7 @@
         </div>
     </div>
     <div v-if="loading" class="m-4 text-2xl">
-        <i class='bx bx-loader-circle bx-spin'></i> Loading...
+        <i class='bx bx-loader bx-spin'></i> Loading...
     </div>
     <div v-else id="teachersTable" class="flex justify-center m-5">
         <div v-if="!findStudents.length" @click="cleanSearch()" class="cursor-pointer text-lg hover:text-cyan-700">--無符合條件--</div>
@@ -25,15 +25,15 @@
                 </thead>
                 <tbody class="rounded-md">
                     <tr v-for="(s , index) in studentList" :key="'student' + index" class="hover:bg-gray-100 ">
-                        <td v-if="s.id" class="py-2 px-4"> {{(curPage-1) * 5 + index + 1}} </td>
-                        <td v-else class="py-2 px-4">#</td>
-                        <td v-if="s.id" class="py-2 px-4 text-left"> {{s.chName}} ({{s.enName}}) </td>
-                        <td v-else class="py-2 px-4"></td>
-                        <td class="py-2 px-4"> {{s.phone}} </td>
-                        <td v-if="s.id" class="py-2 px-4">
+                        <td v-if="s.id" class="py-2 px-2 "> {{(curPage-1) * perpageItem + index + 1}} </td>
+                        <td v-else class="py-2 px-2">#</td>
+                        <td v-if="s.id" class="py-2 px-1 text-left"> {{s.chName}} ( {{s.enName}} ) </td>
+                        <td v-else class="py-2 px-1"></td>
+                        <td class="py-2 px-1"> {{s.phone}} </td>
+                        <td v-if="s.id" class="py-2 px-2">
                             <router-link :to="{ name: 'student', params:{id: s.id}}" class="hover:ring-gray-400 ring-2 ring-gray-300 px-2 py-1 rounded-sm active:opacity-60">click</router-link>
                         </td>
-                        <td v-else class="py-2 px-4"></td>
+                        <td v-else class="py-2 px-1"></td>
                     </tr>
                 </tbody>
 
@@ -42,16 +42,14 @@
         </div>
 
     </div>
-    <div class="">
+    <div v-if="!loading" class="">
         <button v-if="curPage >= 4" @click="changePage(0)" class="mx-1 px-1 border-2 rounded-md text-gray-400"> 01 </button>
-        <span v-if="curPage >= 4"><i class='bx bx-chevrons-left' ></i></span>
-        <button v-for="(btn,index) in totalPage" :key="'pagebtn' + index" @click="changePage(index)" :disabled="curPage == index+1" class="mx-1 px-1 border-2 rounded-md text-gray-400 disabled:bg-gray-600 disabled:text-white" :class="{hide : curPage-index > 3 | index-curPage > 1 }">
+        <span v-if="curPage >= 4"><i class='bx bx-chevrons-left'></i></span>
+        <button v-for="(btn,index) in totalPage" :key="'pagebtn' + index" @click="changePage(index)" :disabled="curPage == index+1" class="pagebtn mx-1 px-1 border-2 rounded-md text-gray-400 disabled:bg-gray-600 disabled:text-white" :class="{hide : curPage-index > 3 | index-curPage > 1 }">
             <span v-if="index < 9">0</span>{{ index + 1 }}
         </button>
         <span v-if="totalPage - curPage >= 3 "><i class='bx bx-chevrons-right'></i></span>
-        <button v-if="totalPage - curPage >= 3" @click="changePage(totalPage-1)" class="mx-1 px-1 border-2 rounded-md text-gray-400"> {{ totalPage }} </button>
-        
-
+        <button v-if="totalPage - curPage >= 3" @click="changePage(totalPage-1)" class="mx-1 px-1 border-2 rounded-md text-gray-400"> <span v-if="totalPage < 9">0</span>{{ totalPage }} </button>
     </div>
 
 </div>
@@ -67,9 +65,8 @@ export default {
             text: "",
             loading: true,
             searching: false,
-            perpageItem: 5,
+            perpageItem: 8,
             totalPage: 0,
-            lastItemNum: 0,
             curPage: 1
         }
     },
@@ -95,18 +92,14 @@ export default {
                     return student.phone.slice(0, num) == this.text
                 })
 
-
-
-                if (this.findStudents.length > 5) {
+                if (this.findStudents.length > this.perpageItem) {
                     this.setPage();
                 } else {
                     this.studentList = this.findStudents;
-                    this.totalPage= 0;
-                    this.lastItemNum= 0;
-                    this.curPage= 1
+                    this.totalPage = 0;
+                    this.lastItemNum = 0;
+                    this.curPage = 1
                 }
-
-
 
                 setTimeout(() => {
                     this.loading = false;
@@ -118,7 +111,7 @@ export default {
 
             setTimeout(() => {
                 this.searching = false;
-            }, 500);
+            }, 300);
 
         },
         cleanSearch() {
@@ -126,41 +119,40 @@ export default {
             this.studentSearch();
         },
         setPage() {
-            this.totalPage = Math.ceil(this.findStudents.length / 5 );
-            this.lastItemNum = this.findStudents.length % 5 ? 5 - this.findStudents.length % 5 : 0;
-
-            this.studentList = this.findStudents.slice(0, 5);
+            this.totalPage = Math.ceil(this.findStudents.length / this.perpageItem);
+            this.studentList = this.findStudents.slice(0, this.perpageItem);
+            document.querySelector('.pagebtn').click();
         },
         changePage(num) {
-            let start = num * 5
-            let end =  num * 5 + 5
-            if (end > this.findStudents.length){
+            let start = num * this.perpageItem
+            let end = num * this.perpageItem + this.perpageItem
+            if (end > this.findStudents.length) {
                 this.studentList = this.findStudents.slice(start);
                 let length = this.studentList.length
-                for (let i=0 ; i < 5-length ; i+=1){
+                for (let i = 0; i < this.perpageItem - length; i += 1) {
                     this.studentList.push({})
                 }
-            }else{
-            this.studentList = this.findStudents.slice(start, end);
+            } else {
+                this.studentList = this.findStudents.slice(start, end);
             }
             this.curPage = num + 1
         }
     },
     mounted() {
-            this.loading = true;
+        this.loading = true;
 
-            axios.get('/api/student').then(response => {
-                //console.log(response.data);
-                this.students = response.data;
-                this.findStudents = this.students;
-                if (this.findStudents.length > 5) {
-                    this.setPage();
-                }
-            }, );
-            setTimeout(() => {
-                this.loading = false;
-            }, 500);
-        },
+        axios.get('/api/student').then(response => {
+            //console.log(response.data);
+            this.students = response.data;
+            this.findStudents = this.students;
+            if (this.findStudents.length > this.perpageItem) {
+                this.setPage();
+            }
+        }, );
+        setTimeout(() => {
+            this.loading = false;
+        }, 500);
+    },
 
 }
 </script>
