@@ -11,38 +11,36 @@
     <div v-if="loading" class="m-4 text-2xl">
         <i class='bx bx-loader bx-spin'></i> Loading...
     </div>
-    <div v-else id="teachersTable" class="flex justify-center m-5">
-        <div v-if="!findStudents.length" @click="cleanSearch()" class="cursor-pointer text-lg hover:text-cyan-700">--無符合條件--</div>
-        <div v-else class="flex justify-center shadow p-4 rounded-xl">
-            <table class="divide-y divide-gray-300">
-                <thead class="">
-                    <tr>
-                        <th class=""> # </th>
-                        <th class=""> 姓名 </th>
-                        <th class=""> 連絡電話 </th>
-                        <th class=""> 詳情 </th>
-                    </tr>
-                </thead>
-                <tbody class="rounded-md">
-                    <tr v-for="(s , index) in studentList" :key="'student' + index" class="hover:bg-gray-100 ">
-                        <td v-if="s.id" class="py-2 px-2 "> {{(curPage-1) * perpageItem + index + 1}} </td>
-                        <td v-else class="py-2 px-2">#</td>
-                        <td v-if="s.id" class="py-2 px-1 text-left"> {{s.chName}} ( {{s.enName}} ) </td>
-                        <td v-else class="py-2 px-1"></td>
-                        <td class="py-2 px-1"> {{s.phone}} </td>
-                        <td v-if="s.id" class="py-2 px-2">
+    <div v-else id="teachersTable" class="flex justify-center">
+        <div v-if="!findStudents.length" @click="cleanSearch()" class="cursor-pointer text-lg hover:text-cyan-700 mt-12">--無符合條件--</div>
+        <div v-else class="shadow rounded-lg lg:w-3/6 md:w-4/5 w-full py-2">
+            <div class="divide-gray-300 w-full">
+                    <div class="grid grid-cols-8 py-1 text-lg font-semibold">
+                        <div class=""> # </div>
+                        <div class="md:col-span-4 col-span-3"> 姓名 </div>
+                        <div class="md:col-span-2 col-span-2"> 連絡電話 </div>
+                        <div class="md:col-span-1 col-span-2"> 詳情 </div>
+                    </div>
+                    <hr>
+                    <div v-for="(s , index) in studentList" :key="'student' + index" class="hover:bg-gray-100 bg-opacity-70 grid grid-cols-8 rounded-md items-center" :class="{'bg-gray-200': index%2==1}">
+                        <div v-if="s.id" class="py-2 "> {{(curPage-1) * perpageItem + index + 1}} </div>
+                        <div v-else class="py-2 ">#</div>
+                        <div v-if="s.id" class="py-2 text-left md:col-span-4 col-span-3"> {{s.chName}} ( {{s.enName}} ) </div>
+                        <div v-else class="py-2 md:col-span-4 col-span-3"></div>
+                        <div class="py-2 md:col-span-2 col-span-2"> {{s.phone}} </div>
+                        <div v-if="s.id" class="py-2 md:col-span-1 col-span-2">
                             <router-link :to="{ name: 'student', params:{id: s.id}}" class="hover:ring-gray-400 ring-2 ring-gray-300 px-2 py-1 rounded-sm active:opacity-60">click</router-link>
-                        </td>
-                        <td v-else class="py-2 px-1"></td>
-                    </tr>
-                </tbody>
+                        </div>
+                        <div v-else class="py-2 md:col-span-1 col-span-2"></div>
+                    </div>
 
-            </table>
+
+            </div>
 
         </div>
 
     </div>
-    <div v-if="!loading" class="">
+    <div v-if="!loading" class="mt-6">
         <button v-if="curPage >= 4" @click="changePage(0)" class="mx-1 px-1 border-2 rounded-md text-gray-400"> 01 </button>
         <span v-if="curPage >= 4"><i class='bx bx-chevrons-left'></i></span>
         <button v-for="(btn,index) in totalPage" :key="'pagebtn' + index" @click="changePage(index)" :disabled="curPage == index+1" class="pagebtn mx-1 px-1 border-2 rounded-md text-gray-400 disabled:bg-gray-600 disabled:text-white" :class="{hide : curPage-index > 3 | index-curPage > 1 }">
@@ -146,12 +144,16 @@ export default {
             this.students = response.data;
             this.findStudents = this.students;
             if (this.findStudents.length > this.perpageItem) {
-                this.setPage();
+                this.totalPage = Math.ceil(this.findStudents.length / this.perpageItem);
+                this.studentList = this.findStudents.slice(0, this.perpageItem);
             }
-        }, );
-        setTimeout(() => {
+        }, ).then(res=>
+        {
+            setTimeout(() => {
             this.loading = false;
         }, 500);
+        });
+        
     },
 
 }

@@ -27,6 +27,6 @@ class ShowLessonCurrentController extends Controller
             array_push($studentsCount,(LessonDetail::where('lesson_id',$lesson->id)->count()));
         }
 
-        return [ $lessons, $teachers,$studentsCount];
+        return [ $lessons, $teachers, $studentsCount];
     }
 }

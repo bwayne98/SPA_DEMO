@@ -9,8 +9,17 @@
     margin: 0
 }
 
+
 body::-webkit-scrollbar {
     display: none;
+}
+
+#nav-bg{
+    opacity: 0;
+    pointer-events: none;
+    z-index: 15;
+    top:0;
+    transition: all 0.6s;
 }
 
 #nav-menu{
@@ -137,7 +146,7 @@ body::-webkit-scrollbar {
     height: 100%;
     width:60%;
     right:-60%;
-    background-color: rgb(0, 0, 0, 0);
+    background-color: rgb(255, 255, 255, 0.3);
     transition: all 0.4s ease;
 }
 
@@ -149,7 +158,16 @@ body::-webkit-scrollbar {
 #nav.show {
     right:0;
     transition: all 0.6s ease;
+
 }
+
+#nav-bg.show{
+    opacity: 1;
+    pointer-events: all;
+    cursor: pointer;
+    transition: all 0.6s;
+}
+
 
 #nav-bar {
     opacity: 0;
@@ -191,6 +209,9 @@ body::-webkit-scrollbar {
     top: 2%;
     left: -50px;
     transition: all 0.3s ease; 
+    z-index: 15;
+    background-color: rgb(255, 255, 255, 0.3);
+    border-radius: 10%;
 }
 
 #nav.show #nav-control {

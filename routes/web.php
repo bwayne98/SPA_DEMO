@@ -17,16 +17,12 @@ use Illuminate\Http\Request;
 */
 use App\Http\Controllers\pageController;
 
-Auth::routes();
-
-Route::middleware('auth')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
 Route::get('/{any?}', function () {
     return view('welcome');
 })->where('any', '^(?!api\/)[\/\w\.\,-]*');
 
+Route::get('/',function () {
+    return view('welcome');
+})->name('home');
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

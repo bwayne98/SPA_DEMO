@@ -1,24 +1,24 @@
 <template>
 <div class="grid grid-cols-4 mt-12">
-    <div class=" lg:col-start-2 col-start-2 col-span-2 text-center mb-4">
+    <div class="col-span-4 text-center mb-4">
         <div class="text-3xl font-bold">學生基本資料</div>
         <div class="m-2 flex justify-center text-cyan-500" v-if="success.status">
             <i class='bx bx-cloud-upload text-xl pt-1 pr-2'></i>
             <span class='leading-7'> {{success.meg}} 學生資料已新增</span>
         </div>
     </div>
-    <form class=" lg:col-start-2 col-start-2 lg:grid lg:grid-cols-2 col-span-2" action="#" method="POST">
+    <form class=" lg:col-start-2 sm:col-start-2 lg:grid lg:grid-cols-2 sm:col-span-2 col-span-4" action="#" method="POST">
         <div class="grid p-2">
-            <label for="" class="border-b-2 mb-1">中文姓名
+            <label for="chineseName" class="border-b-2 mb-1">中文姓名
                 <span v-if="errors.chineseName" class="text-sm text-red-800"> <i class='bx bx-message-rounded-error'></i>最少兩個字元</span>
             </label>
-            <input class="px-2 py-1 rounded-sm focus:outline-cyan-600/40 w-full" type="text" placeholder="請填入中文姓名，例：王大明" v-model="student.chineseName">
+            <input id="chineseName" class="px-2 py-1 rounded-sm focus:outline-cyan-600/40 w-full" type="text" placeholder="請填入中文姓名，例：王大明" v-model="student.chineseName">
         </div>
         <div class="grid p-2">
-            <label for="" class="border-b-2 mb-1">英文姓名
+            <label for="engilshName" class="border-b-2 mb-1">英文姓名
                 <span v-if="errors.englishName" class="text-sm text-red-800"> <i class='bx bx-message-rounded-error'></i>最少三個字元</span>
             </label>
-            <input class="px-2 py-1 rounded-sm focus:outline-cyan-600/40 w-full" type="text" placeholder="請填入英文姓名，例：Paul" v-model="student.englishName">
+            <input id="engilshName" class="px-2 py-1 rounded-sm focus:outline-cyan-600/40 w-full" type="text" placeholder="請填入英文姓名，例：Paul" v-model="student.englishName">
         </div>
         <div class="grid p-2">
             <label for="" class="border-b-2 mb-1 self-end">生日
@@ -138,7 +138,6 @@ export default {
             }
         }
     }
-
 }
 </script>
 

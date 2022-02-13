@@ -17,9 +17,9 @@ const app = new Vue({
     },
 
     async created(){
-        await axios.get('/sanctum/csrf-cookie').then(res=>{
-            console.log(res);
-        });
+        // await axios.get('/sanctum/csrf-cookie').then(res=>{
+        //     console.log(res);
+        // });
         // await axios.post('/login',{
         //     email:"destin.wuckert@example.org",
         //     password:"password"
