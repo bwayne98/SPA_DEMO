@@ -5389,10 +5389,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               console.log(window.innerWidth); //初始使窗大小
 
               if (window.innerWidth > 1600) {
-                _this.slidernumber = Math.floor(_this.lessons.length / 3);
+                _this.slidernumber = _this.lessons.length % 3 ? Math.floor(_this.lessons.length / 3) : Math.floor(_this.lessons.length / 3) - 1;
                 _this.maxposition = (_this.lessons.length - 3) * 1 / 3;
               } else if (window.innerWidth > 650) {
-                _this.slidernumber = Math.floor(_this.lessons.length / 2);
+                _this.slidernumber = _this.lessons.length % 2 ? Math.floor(_this.lessons.length / 2) : Math.floor(_this.lessons.length / 2) - 1;
                 _this.maxposition = (_this.lessons.length - 2) * 1 / 2;
               } else {
                 _this.slidernumber = _this.lessons.length - 1;
@@ -5404,11 +5404,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _this.sliderposition = 0;
 
                 if (window.innerWidth > 1600) {
-                  _this.slidernumber = Math.floor(_this.lessons.length / 3);
+                  _this.slidernumber = _this.lessons.length % 3 ? Math.floor(_this.lessons.length / 3) : Math.floor(_this.lessons.length / 3) - 1;
                   _this.maxposition = (_this.lessons.length - 3) * 1 / 3;
                   _this.curslider = 1;
                 } else if (window.innerWidth > 650) {
-                  _this.slidernumber = Math.floor(_this.lessons.length / 2);
+                  _this.slidernumber = _this.lessons.length % 2 ? Math.floor(_this.lessons.length / 2) : Math.floor(_this.lessons.length / 2) - 1;
                   _this.maxposition = (_this.lessons.length - 2) * 1 / 2;
                   _this.curslider = 1;
                 } else {
@@ -6185,7 +6185,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       nav: false,
       menu: [false, false, false],
       index: [0, 1, 2],
-      test: 0
+      test: 0,
+      loading: true
     };
   },
   mounted: function mounted() {
@@ -6210,6 +6211,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               });
 
             case 3:
+              _this.loading = false;
+
+            case 4:
             case "end":
               return _context.stop();
           }
@@ -6236,8 +6240,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$set(this.menu, index, !this.menu[index]); //array不會自動偵測  要使用$set(目標array, 索引index, 欲修改的值value)
     },
     logOut: function logOut() {
-      axios.get('/api/user').then(function (res) {
-        console.log(res);
+      var _this2 = this;
+
+      localStorage.setItem('isLogged', 'false');
+      axios.post('/api/logout');
+      this.$router.push('/').then(function (res) {
+        _this2.$router.go();
+      })["catch"](function (err) {
+        console.log(err);
+
+        _this2.$router.go();
       });
     }
   }
@@ -33710,37 +33722,41 @@ var render = function () {
                     )
                   : _vm._e(),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  [
-                    _vm.user
-                      ? _c(
-                          "button",
-                          {
-                            staticClass:
-                              "px-2 flex items-center hover:text-gray-300 truncate",
-                            attrs: { id: "log-out" },
-                            on: {
-                              click: function ($event) {
-                                return _vm.logOut()
+                !_vm.loading
+                  ? _c(
+                      "div",
+                      [
+                        _vm.user
+                          ? _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "px-2 flex items-center hover:text-gray-300 truncate",
+                                attrs: { id: "log-out" },
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.logOut()
+                                  },
+                                },
                               },
-                            },
-                          },
-                          [
-                            _c("i", { staticClass: "bx bx-log-out bx-sm" }),
-                            _c("span", { staticClass: "px-1 " }, [
-                              _vm._v(" 登出 ( " + _vm._s(_vm.user.name) + " )"),
+                              [
+                                _c("i", { staticClass: "bx bx-log-out bx-sm" }),
+                                _c("span", { staticClass: "px-1 " }, [
+                                  _vm._v(
+                                    " 登出 ( " + _vm._s(_vm.user.name) + " )"
+                                  ),
+                                ]),
+                              ]
+                            )
+                          : _c("router-link", { attrs: { to: "/login" } }, [
+                              _vm._v(
+                                "\r\n                        登入\r\n                    "
+                              ),
                             ]),
-                          ]
-                        )
-                      : _c("router-link", { attrs: { to: "/login" } }, [
-                          _vm._v(
-                            "\r\n                        登入\r\n                    "
-                          ),
-                        ]),
-                  ],
-                  1
-                ),
+                      ],
+                      1
+                    )
+                  : _vm._e(),
               ]
             ),
           ]

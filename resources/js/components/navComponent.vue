@@ -85,7 +85,7 @@
                         </ul>
                     </li>
                 </ul>
-                <div>
+                <div v-if="!loading" >
                     <button v-if="user" id="log-out" class="px-2 flex items-center hover:text-gray-300 truncate" @click="logOut()">
                         <i class="bx bx-log-out bx-sm" style=""></i><span class="px-1 "> 登出 ( {{ user.name }} )</span>
                     </button>
@@ -109,6 +109,7 @@ export default {
             menu: [false, false, false],
             index: [0, 1, 2],
             test: 0,
+            loading: true,
         };
     },
 
@@ -121,6 +122,8 @@ export default {
                 this.user = null
             })
         }
+
+        this.loading = false;
 
     },
     //側邊欄顯示
@@ -143,8 +146,13 @@ export default {
             //array不會自動偵測  要使用$set(目標array, 索引index, 欲修改的值value)
         },
         logOut() {
-            axios.get('/api/user').then(res => {
-                console.log(res)
+            localStorage.setItem('isLogged','false')
+            axios.post('/api/logout')
+            this.$router.push('/').then(res=>{
+                this.$router.go()
+            }).catch(err=>{
+                console.log(err)
+                this.$router.go()
             })
         }
     },

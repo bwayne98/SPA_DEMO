@@ -120,10 +120,10 @@ export default {
         console.log(window.innerWidth);
         //初始使窗大小
         if (window.innerWidth > 1600) {
-            this.slidernumber = Math.floor(this.lessons.length / 3)
+            this.slidernumber = this.lessons.length % 3 ? Math.floor(this.lessons.length / 3) : Math.floor(this.lessons.length / 3)-1
             this.maxposition = (this.lessons.length - 3) * 1 / 3
         } else if (window.innerWidth > 650) {
-            this.slidernumber = Math.floor(this.lessons.length / 2)
+            this.slidernumber = this.lessons.length % 2 ? Math.floor(this.lessons.length / 2) : Math.floor(this.lessons.length / 2)-1
             this.maxposition = (this.lessons.length - 2) * 1 / 2
         } else {
             this.slidernumber = this.lessons.length - 1
@@ -133,11 +133,11 @@ export default {
         window.addEventListener('resize', () => {
             this.sliderposition = 0;
             if (window.innerWidth > 1600) {
-                this.slidernumber = Math.floor(this.lessons.length / 3)
+                this.slidernumber = this.lessons.length % 3 ? Math.floor(this.lessons.length / 3) : Math.floor(this.lessons.length / 3)-1
                 this.maxposition = (this.lessons.length - 3) * 1 / 3
                 this.curslider = 1
             } else if (window.innerWidth > 650) {
-                this.slidernumber = Math.floor(this.lessons.length / 2)
+                this.slidernumber = this.lessons.length % 2 ? Math.floor(this.lessons.length / 2) : Math.floor(this.lessons.length / 2)-1
                 this.maxposition = (this.lessons.length - 2) * 1 / 2
                 this.curslider = 1
             } else {
