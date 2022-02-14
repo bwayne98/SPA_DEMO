@@ -13,7 +13,6 @@
 RWD練習
 
 ![RWD01](https://user-images.githubusercontent.com/71909860/153897173-4e03033b-cb2f-49bf-830c-923cd8dd9cda.gif)
-![RWD02](https://user-images.githubusercontent.com/71909860/153897180-8b0492c0-dd34-4f7a-878a-3406841ec6a2.gif)
 ![RWD03](https://user-images.githubusercontent.com/71909860/153897899-f791c22f-ca76-4fb4-8ac9-1a60939ddc4a.gif)
 
 JS互動
