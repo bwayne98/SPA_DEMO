@@ -1,4 +1,8 @@
-	框架：Laravel + Sanctum 
+#開發用途
+
+小型補習班管理 + 遊客展示頁面
+
+    框架：Laravel + Sanctum 
 	前端：Vue + Vue router + Tailwind
 	資料庫：MySQL
 
