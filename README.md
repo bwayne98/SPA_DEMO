@@ -7,6 +7,9 @@
 	Google map Api
 	Python Beautifulsoup
 
+以補習班電子化管理需求設計
+
+
 RWD練習
 
 ![RWD01](https://user-images.githubusercontent.com/71909860/153897173-4e03033b-cb2f-49bf-830c-923cd8dd9cda.gif)
