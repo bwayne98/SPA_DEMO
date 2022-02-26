@@ -79,7 +79,7 @@
                             <router-link :to="'/lessons'">
                                 <li @click="selected()">Search</li>
                             </router-link>
-                            <router-link :to="'/newteacher'">
+                            <router-link :to="'/newlesson'">
                                 <li @click="selected()">New</li>
                             </router-link>
                         </ul>

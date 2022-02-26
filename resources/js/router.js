@@ -7,6 +7,7 @@ import newTeacher from "./components/newTeacher.vue";
 import Teachers from "./components/Teachers.vue";
 import students from "./components/students.vue";
 import lessons from "./components/lessons.vue";
+import newlesson from "./components/newLesson.vue";
 import studentShow from "./components/studentShow.vue";
 import nav from "./components/navComponent.vue";
 import login from "./components/login.vue";
@@ -69,6 +70,14 @@ export const routes = [
             nav: nav,
         },
         name: "lessons",
+    },
+    {
+        path: "/newlesson",
+        components: {
+            default: newlesson,
+            nav: nav,
+        },
+        name: "newlesson",
     },
 
     { path: "/newuser", component: newuser, name: "newuser" },

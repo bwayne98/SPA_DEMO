@@ -33,10 +33,10 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
     Route::post('/newuser', [pageController::class, "newuser"]);
-    Route::get('/teachers', [TeacherController::class, "index"]);
     Route::resource('student', StudentController::class)->only(["index", "show", "store", "update"]);
     Route::get('/student/{id}/showstudentlessons', ShowStudenLessonsController::class);
     Route::resource('lesson', LessonController::class)->only(['index']);
+    Route::resource('teacher', TeacherController::class)->only(['index']);
 });
 Route::get('sanctum/csrf-dookie', [CsrfCookieController::class, 'show']);
 Route::get('/news', NewsController::class);

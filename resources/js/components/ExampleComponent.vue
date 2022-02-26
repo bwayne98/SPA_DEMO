@@ -211,29 +211,24 @@ export default {
 };
 </script>
 
-<style scoped>
-#slider-content {
-    transition: all 0.5s ease;
-}
+<style lang="sass" scoped>
 
-@media (max-width:1600px) {
-    #slider-content {
-        width: 150%;
-    }
-}
+#lessson-sign
+    top: -100%
+    transition: 0.5s
 
-@media (max-width: 650px) {
-    #slider-content {
-        width: 300%;
-    }
-}
+#slider-content
+    transition: all 0.5s ease
+    div:hover
+        #lessson-sign
+            top: 2rem
 
-#lessson-sign {
-    top: -100%;
-    transition: 0.5s;
-}
+@media (max-width:1600px)
+    #slider-content
+        width: 150%
 
-#slider-content div:hover #lessson-sign {
-    top: 2rem
-}
+@media (max-width: 650px)
+    #slider-content
+        width: 300%
+
 </style>

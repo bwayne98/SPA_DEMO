@@ -63,7 +63,7 @@ export default {
     },
 
     mounted(){
-        axios.get('/api/teachers').then(response => {
+        axios.get('/api/teacher').then(response => {
             //console.log(response.data);
             this.teachers = response.data;
         })

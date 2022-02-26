@@ -673,6 +673,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-bottom: 0px;
 }
 
+.mt-3 {
+  margin-top: 0.75rem;
+}
+
 .block {
   display: block;
 }
@@ -755,6 +759,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
 .w-24 {
   width: 6rem;
+}
+
+.w-1\/2 {
+  width: 50%;
 }
 
 .transform {
@@ -1139,6 +1147,14 @@ Ensure the default browser behavior of the `hidden` attribute.
 .bg-cyan-700 {
   --tw-bg-opacity: 1;
   background-color: rgb(14 116 144 / var(--tw-bg-opacity));
+}
+
+.bg-cyan-600\/60 {
+  background-color: rgb(8 145 178 / 0.6);
+}
+
+.bg-cyan-600\/80 {
+  background-color: rgb(8 145 178 / 0.8);
 }
 
 .bg-opacity-10 {
@@ -1793,6 +1809,10 @@ body::-webkit-scrollbar {
 
 .focus\:outline-cyan-600\/40:focus {
   outline-color: rgb(8 145 178 / 0.4);
+}
+
+.active\:border-2:active {
+  border-width: 2px;
 }
 
 .active\:bg-blue-800:active {
