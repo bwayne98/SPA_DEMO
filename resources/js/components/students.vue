@@ -11,7 +11,7 @@
     <div v-if="loading" class="m-4 text-2xl">
         <i class='bx bx-loader bx-spin'></i> Loading...
     </div>
-    <div v-else id="teachersTable" class="flex justify-center">
+    <div v-else id="teachersTable" class="flex justify-center mt-4">
         <div v-if="!findStudents.length" @click="cleanSearch()" class="cursor-pointer text-lg hover:text-cyan-700 mt-12">--無符合條件--</div>
         <div v-else class="shadow rounded-lg lg:w-3/6 md:w-4/5 w-full py-2">
             <div class="divide-gray-300 w-full">
