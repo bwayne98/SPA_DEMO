@@ -6,6 +6,7 @@
 	Other：
 	Google map Api
 	Python Beautifulsoup
+    canvas
 
 以補習班電子化管理需求設計
 
