@@ -2,7 +2,7 @@
 <div v-show="img_src !== ''" class="mt-4">
     <div class="flex justify-center">
 
-        <div v-show="img_onload" class="grid grid-clos-2 gap-x-20 gap-y-2">
+        <div v-show="img_onload" class="grid grid-clos-2 lg:gap-x-14 gap-x-2 gap-y-4">
             <div class="relative">
                 <input id="img-input" type="file" accept="image/png, image/jpeg" style="display:none">
                 <div id="source-shape" draggable="false" class="overflow-hidden relative bg-black/60 rounded-md " style="width:250px; height:250px">
@@ -11,19 +11,22 @@
                     </div>
                 </div>
                 <img src="/images/blur.png" alt="blur" class="absolute top-0 pointer-events-none rounded-md border-2 border-white" width="250" height="250">
+                <div class="absolute top-2 w-full flex justify-between items-center px-2">
+                    <button type="button" class='text-white/80 text-xl fa-solid fa-rotate-right disabled:opacity-50' @click="canvasRoate(1)"></button>
+                    <button type="button" class='text-white/80 text-xl fa-solid fa-rotate-left disabled:opacity-50' @click="canvasRoate(0)"></button>
+                </div>
                 <div class="absolute bottom-2 w-full flex justify-center items-center">
-                    <button type="button" class='text-white/50 bx bx-minus-circle disabled:opacity-50' @click="canvasScale(-1)" :disabled="scale_set == 1"></button>
+                    <button type="button" class='text-white/80 text-xl bx bx-minus-circle disabled:opacity-20' @click="canvasScale(-1)" :disabled="scale_set == 1"></button>
                     <input type="range" min="1" max="10" v-model="scale_set" class="mx-1 pointer-events-none">
-                    <button type="button" class='text-white/50 bx bx-plus-circle disabled:opacity-50' @click="canvasScale(1)" :disabled="scale_set == 10"></button>
+                    <button type="button" class='text-white/80 text-xl bx bx-plus-circle disabled:opacity-20' @click="canvasScale(1)" :disabled="scale_set == 10"></button>
                 </div>
             </div>
-            <div class="flex justify-center relative">
+            <div class="sm:col-start-2 relative col-start-1">
                 <canvas id="canvas" class="" :width="canvas_size" :height="canvas_size" style="width:250px; height:250px"></canvas>
-            </div>
-            <div class="sm:col-start-2 flex items-center justify-center col-start-1 sm:flex-col flex-col-reverse">
-                <div class="text-center my-1 font-light">
-                    預覽圖片
+                <div class="text-center my-1 font-light absolute sm:top-auto sm:bottom-0 flex w-full justify-center top-0 text-xl">
+                    <div>預覽圖片</div>
                 </div>
+                <img id="pre-img" src="#" alt="">
             </div>
         </div>
     </div>
@@ -40,6 +43,7 @@ export default {
             preimg_src: '',
             cutRadio: 150,
             scale: 1,
+            rotate: 0,
             transformX: 0,
             transformY: 0,
             scale_set: 1,
@@ -63,22 +67,34 @@ export default {
             let h = img.naturalHeight;
 
             ctx.beginPath();
-            ctx.arc((this.canvas_size / 2), (this.canvas_size / 2), this.cutRadio + 5, 0, Math.PI * 2);
+            ctx.arc((this.canvas_size / 2), (this.canvas_size / 2), this.cutRadio + 3, 0, Math.PI * 2);
             ctx.clip();
 
             ctx.save();
             ctx.scale(scale, scale);
+            ctx.rotate(rotate);
             ctx.drawImage(img, x, y, w, h);
             ctx.restore();
 
             // this.drawblur();
 
             ctx.beginPath();
-            ctx.lineWidth = 5;
+            ctx.lineWidth = 6;
             ctx.strokeStyle = '#2E86AB';
-            ctx.arc(this.canvas_size / 2, this.canvas_size / 2, (this.cutRadio + 3), 0, Math.PI * 2);
+            ctx.arc(this.canvas_size / 2, this.canvas_size / 2, (this.cutRadio), 0, Math.PI * 2);
             ctx.stroke();
 
+        },
+        canvasRoate(num) {
+            this.rotate = num ? (this.rotate + 90) % 360 : (this.rotate - 90) % 360;
+
+            let control = document.getElementById('source-control')
+
+            this.checkBoundary();
+
+            control.style.transform = "scale(" + this.scale / (this.canvas_size / 250) + ")translate(" + this.transformX + 'px,' + this.transformY + 'px)rotate(' + this.rotate + 'deg)';
+            let [x, y] = this.modifyDirection();
+            this.draw(x, y, this.scale, this.rotate * Math.PI / 180);
         },
         drawblur() {
             let canvas = document.getElementById('canvas');
@@ -123,11 +139,6 @@ export default {
             ctx.stroke();
         },
         canvasScale(num) {
-            let canvas = document.getElementById('canvas');
-            let ctx = canvas.getContext('2d');
-
-            let img = document.getElementById('source');
-
             let control = document.getElementById('source-control');
 
             if (num === 1) {
@@ -140,19 +151,13 @@ export default {
                 this.scale_set = parseInt(this.scale_set) - 1
             }
 
-            if (this.transformY > ((this.canvas_size - this.cutRadio * 2) / 2) / this.scale) {
-                this.transformY = ((this.canvas_size - this.cutRadio * 2) / 2) / this.scale;
-            } else if (this.transformY < ((((this.canvas_size - this.cutRadio * 2) / 2) / this.scale) + (this.cutRadio * 2 / this.scale) - control.offsetHeight)) {
-                this.transformY = ((((this.canvas_size - this.cutRadio * 2) / 2) / this.scale) + (this.cutRadio * 2 / this.scale) - control.offsetHeight)
-            }
-            if (this.transformX > ((this.canvas_size - this.cutRadio * 2) / 2) / this.scale) {
-                this.transformX = ((this.canvas_size - this.cutRadio * 2) / 2) / this.scale;
-            } else if (this.transformX < ((((this.canvas_size - this.cutRadio * 2) / 2) / this.scale) + (this.cutRadio * 2 / this.scale) - control.offsetWidth)) {
-                this.transformX = ((((this.canvas_size - this.cutRadio * 2) / 2) / this.scale) + (this.cutRadio * 2 / this.scale) - control.offsetWidth)
-            }
+            this.checkBoundary();
 
-            control.style.transform = "scale(" + this.scale / (this.canvas_size / 250) + ")translate(" + this.transformX + 'px,' + this.transformY + 'px)';
-            this.draw(this.transformX, this.transformY, this.scale, 0);
+            //移動
+            control.style.transform = "scale(" + this.scale / (this.canvas_size / 250) + ")translate(" + this.transformX + 'px,' + this.transformY + 'px)rotate(' + this.rotate + 'deg)';
+
+            let [x, y] = this.modifyDirection();
+            this.draw(x, y, this.scale, this.rotate * Math.PI / 180);
         },
         // drawpre() {
         //     let pre_canvas = document.getElementById('hidden-canvas');
@@ -173,8 +178,72 @@ export default {
         //     }
         //     img.src = document.getElementById('canvas').toDataURL();
         // }
+        checkBoundary() {
+            let x_min = 0;
+            let y_min = 0;
+            let x_max = 0;
+            let y_max = 0;
+
+            let dis = ((this.canvas_size - this.cutRadio * 2) / 2) / this.scale;
+            let circle = this.cutRadio * 2 / this.scale;
+            let img_x = document.getElementById('source-control').offsetWidth; //natralWidth
+            let img_y = document.getElementById('source-control').offsetHeight;
+
+            if (this.rotate === 0) {
+                x_max = dis;
+                x_min = -img_x + dis + circle;
+                y_max = dis;
+                y_min = -img_y + dis + circle;
+            } else if (this.rotate === 90 || this.rotate === -270) {
+                x_max = img_y + dis;
+                x_min = circle + dis;
+                y_max = dis;
+                y_min = -img_x + dis + circle;
+            } else if (this.rotate === 180 || this.rotate === -180) {
+                x_max = img_x + dis;
+                x_min = circle + dis;
+                y_max = img_y + dis;
+                y_min = circle + dis;
+            } else {
+                x_max = dis;
+                x_min = -img_y + dis + circle;
+                y_max = img_x + dis;
+                y_min = dis + circle;
+            }
+
+            if (this.transformX > x_max) {
+                this.transformX = x_max;
+            } else if (this.transformX < x_min) {
+                this.transformX = x_min;
+            }
+
+            if (this.transformY > y_max) {
+                this.transformY = y_max;
+            } else if (this.transformY < y_min) {
+                this.transformY = y_min
+            }
+
+        },
+        modifyDirection() {
+            let x, y;
+            if (this.rotate === 0) {
+                x = this.transformX;
+                y = this.transformY;
+            } else if (this.rotate === 90 || this.rotate === -270) {
+                x = this.transformY;
+                y = -this.transformX;
+            } else if (this.rotate === 180 || this.rotate === -180) {
+                x = -this.transformX;
+                y = -this.transformY;
+            } else {
+                x = -this.transformY;
+                y = this.transformX;
+            }
+            return [x, y]
+        },
 
     },
+
     mounted() {
 
         let img = document.getElementById('source');
@@ -184,13 +253,7 @@ export default {
         let originY = 0;
         let vm = this;
 
-        control.addEventListener('mouseup', () => {
-            window.removeEventListener('mousemove', mouseMove);
-            document.body.style.userSelect = '';
-            // this.draw(this.transformX, this.transformY, this.scale, 0);
-        });
-
-        control.addEventListener('mouseleave', () => {
+        window.addEventListener('mouseup', () => {
             window.removeEventListener('mousemove', mouseMove);
             document.body.style.userSelect = '';
             // this.draw(this.transformX, this.transformY, this.scale, 0);
@@ -208,19 +271,27 @@ export default {
             vm.transformY = vm.transformY + (e.pageY - originY) * 2 / vm.scale;
             vm.transformX = vm.transformX + (e.pageX - originX) * 2 / vm.scale;
 
-            if (vm.transformY > ((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) {
-                vm.transformY = ((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale;
-            } else if (vm.transformY < ((((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) + (vm.cutRadio * 2 / vm.scale) - control.offsetHeight)) {
-                vm.transformY = ((((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) + (vm.cutRadio * 2 / vm.scale) - control.offsetHeight)
-            }
-            if (vm.transformX > ((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) {
-                vm.transformX = ((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale;
-            } else if (vm.transformX < ((((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) + (vm.cutRadio * 2 / vm.scale) - control.offsetWidth)) {
-                vm.transformX = ((((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) + (vm.cutRadio * 2 / vm.scale) - control.offsetWidth)
-            }
+            //判斷超出範圍 scale後的圖片保持原來尺寸
+            // if (vm.transformY > ((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) {
+            //     vm.transformY = ((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale;
+            // } else if (vm.transformY < ((((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) + (vm.cutRadio * 2 / vm.scale) - control.offsetHeight)) {
+            //     vm.transformY = ((((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) + (vm.cutRadio * 2 / vm.scale) - control.offsetHeight)
+            // }
+            // if (vm.transformX > ((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) {
+            //     vm.transformX = ((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale;
+            // } else if (vm.transformX < ((((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) + (vm.cutRadio * 2 / vm.scale) - control.offsetWidth)) {
+            //     vm.transformX = ((((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) + (vm.cutRadio * 2 / vm.scale) - control.offsetWidth)
+            // }
 
-            control.style.transform = "scale(" + vm.scale / (vm.canvas_size / 250) + ")translate(" + vm.transformX + 'px,' + vm.transformY + 'px)';
-            vm.draw(vm.transformX, vm.transformY, vm.scale, 0);
+            
+            vm.checkBoundary();
+            //移動
+            control.style.transform = "scale(" + vm.scale / (vm.canvas_size / 250) + ")translate(" + vm.transformX + 'px,' + vm.transformY + 'px)rotate(' + vm.rotate + 'deg)';
+            //對應畫布
+
+            let [x, y] = vm.modifyDirection();
+            vm.draw(x, y, vm.scale, vm.rotate * Math.PI / 180);
+
             originX = e.pageX;
             originY = e.pageY;
         }
@@ -228,7 +299,7 @@ export default {
         img.onload = () => {
             this.scale = 1;
             this.scale_set = 1;
-
+            this.rotate = 0;
             control.style.top = 0 + 'px';
             control.style.left = 0 + 'px';
 
@@ -280,7 +351,7 @@ input[type="range"] {
     -webkit-appearance: none;
     /* overflow: hidden; */
     /* 限定範圍 */
-    width: 100px;
+    width: 150px;
     height: 1px;
     outline: none;
     /* 避免點選會有藍線或虛線 */

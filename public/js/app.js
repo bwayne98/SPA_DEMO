@@ -5746,6 +5746,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+//
+//
+//
 //
 //
 //
@@ -5787,6 +5802,7 @@ __webpack_require__.r(__webpack_exports__);
       preimg_src: '',
       cutRadio: 150,
       scale: 1,
+      rotate: 0,
       transformX: 0,
       transformY: 0,
       scale_set: 1
@@ -5806,18 +5822,32 @@ __webpack_require__.r(__webpack_exports__);
       var w = img.naturalWidth;
       var h = img.naturalHeight;
       ctx.beginPath();
-      ctx.arc(this.canvas_size / 2, this.canvas_size / 2, this.cutRadio + 5, 0, Math.PI * 2);
+      ctx.arc(this.canvas_size / 2, this.canvas_size / 2, this.cutRadio + 3, 0, Math.PI * 2);
       ctx.clip();
       ctx.save();
       ctx.scale(scale, scale);
+      ctx.rotate(rotate);
       ctx.drawImage(img, x, y, w, h);
       ctx.restore(); // this.drawblur();
 
       ctx.beginPath();
-      ctx.lineWidth = 5;
+      ctx.lineWidth = 6;
       ctx.strokeStyle = '#2E86AB';
-      ctx.arc(this.canvas_size / 2, this.canvas_size / 2, this.cutRadio + 3, 0, Math.PI * 2);
+      ctx.arc(this.canvas_size / 2, this.canvas_size / 2, this.cutRadio, 0, Math.PI * 2);
       ctx.stroke();
+    },
+    canvasRoate: function canvasRoate(num) {
+      this.rotate = num ? (this.rotate + 90) % 360 : (this.rotate - 90) % 360;
+      var control = document.getElementById('source-control');
+      this.checkBoundary();
+      control.style.transform = "scale(" + this.scale / (this.canvas_size / 250) + ")translate(" + this.transformX + 'px,' + this.transformY + 'px)rotate(' + this.rotate + 'deg)';
+
+      var _this$modifyDirection = this.modifyDirection(),
+          _this$modifyDirection2 = _slicedToArray(_this$modifyDirection, 2),
+          x = _this$modifyDirection2[0],
+          y = _this$modifyDirection2[1];
+
+      this.draw(x, y, this.scale, this.rotate * Math.PI / 180);
     },
     drawblur: function drawblur() {
       var canvas = document.getElementById('canvas');
@@ -5856,9 +5886,6 @@ __webpack_require__.r(__webpack_exports__);
       ctx.stroke();
     },
     canvasScale: function canvasScale(num) {
-      var canvas = document.getElementById('canvas');
-      var ctx = canvas.getContext('2d');
-      var img = document.getElementById('source');
       var control = document.getElementById('source-control');
 
       if (num === 1) {
@@ -5871,21 +5898,18 @@ __webpack_require__.r(__webpack_exports__);
         this.scale_set = parseInt(this.scale_set) - 1;
       }
 
-      if (this.transformY > (this.canvas_size - this.cutRadio * 2) / 2 / this.scale) {
-        this.transformY = (this.canvas_size - this.cutRadio * 2) / 2 / this.scale;
-      } else if (this.transformY < (this.canvas_size - this.cutRadio * 2) / 2 / this.scale + this.cutRadio * 2 / this.scale - control.offsetHeight) {
-        this.transformY = (this.canvas_size - this.cutRadio * 2) / 2 / this.scale + this.cutRadio * 2 / this.scale - control.offsetHeight;
-      }
+      this.checkBoundary(); //移動
 
-      if (this.transformX > (this.canvas_size - this.cutRadio * 2) / 2 / this.scale) {
-        this.transformX = (this.canvas_size - this.cutRadio * 2) / 2 / this.scale;
-      } else if (this.transformX < (this.canvas_size - this.cutRadio * 2) / 2 / this.scale + this.cutRadio * 2 / this.scale - control.offsetWidth) {
-        this.transformX = (this.canvas_size - this.cutRadio * 2) / 2 / this.scale + this.cutRadio * 2 / this.scale - control.offsetWidth;
-      }
+      control.style.transform = "scale(" + this.scale / (this.canvas_size / 250) + ")translate(" + this.transformX + 'px,' + this.transformY + 'px)rotate(' + this.rotate + 'deg)';
 
-      control.style.transform = "scale(" + this.scale / (this.canvas_size / 250) + ")translate(" + this.transformX + 'px,' + this.transformY + 'px)';
-      this.draw(this.transformX, this.transformY, this.scale, 0);
-    } // drawpre() {
+      var _this$modifyDirection3 = this.modifyDirection(),
+          _this$modifyDirection4 = _slicedToArray(_this$modifyDirection3, 2),
+          x = _this$modifyDirection4[0],
+          y = _this$modifyDirection4[1];
+
+      this.draw(x, y, this.scale, this.rotate * Math.PI / 180);
+    },
+    // drawpre() {
     //     let pre_canvas = document.getElementById('hidden-canvas');
     //     pre_canvas.width = this.cutRadio * 2;
     //     pre_canvas.height = this.cutRadio * 2;
@@ -5903,7 +5927,70 @@ __webpack_require__.r(__webpack_exports__);
     //     }
     //     img.src = document.getElementById('canvas').toDataURL();
     // }
+    checkBoundary: function checkBoundary() {
+      var x_min = 0;
+      var y_min = 0;
+      var x_max = 0;
+      var y_max = 0;
+      var dis = (this.canvas_size - this.cutRadio * 2) / 2 / this.scale;
+      var circle = this.cutRadio * 2 / this.scale;
+      var img_x = document.getElementById('source-control').offsetWidth; //natralWidth
 
+      var img_y = document.getElementById('source-control').offsetHeight;
+
+      if (this.rotate === 0) {
+        x_max = dis;
+        x_min = -img_x + dis + circle;
+        y_max = dis;
+        y_min = -img_y + dis + circle;
+      } else if (this.rotate === 90 || this.rotate === -270) {
+        x_max = img_y + dis;
+        x_min = circle + dis;
+        y_max = dis;
+        y_min = -img_x + dis + circle;
+      } else if (this.rotate === 180 || this.rotate === -180) {
+        x_max = img_x + dis;
+        x_min = circle + dis;
+        y_max = img_y + dis;
+        y_min = circle + dis;
+      } else {
+        x_max = dis;
+        x_min = -img_y + dis + circle;
+        y_max = img_x + dis;
+        y_min = dis + circle;
+      }
+
+      if (this.transformX > x_max) {
+        this.transformX = x_max;
+      } else if (this.transformX < x_min) {
+        this.transformX = x_min;
+      }
+
+      if (this.transformY > y_max) {
+        this.transformY = y_max;
+      } else if (this.transformY < y_min) {
+        this.transformY = y_min;
+      }
+    },
+    modifyDirection: function modifyDirection() {
+      var x, y;
+
+      if (this.rotate === 0) {
+        x = this.transformX;
+        y = this.transformY;
+      } else if (this.rotate === 90 || this.rotate === -270) {
+        x = this.transformY;
+        y = -this.transformX;
+      } else if (this.rotate === 180 || this.rotate === -180) {
+        x = -this.transformX;
+        y = -this.transformY;
+      } else {
+        x = -this.transformY;
+        y = this.transformX;
+      }
+
+      return [x, y];
+    }
   },
   mounted: function mounted() {
     var _this = this;
@@ -5913,11 +6000,7 @@ __webpack_require__.r(__webpack_exports__);
     var originX = 0;
     var originY = 0;
     var vm = this;
-    control.addEventListener('mouseup', function () {
-      window.removeEventListener('mousemove', mouseMove);
-      document.body.style.userSelect = ''; // this.draw(this.transformX, this.transformY, this.scale, 0);
-    });
-    control.addEventListener('mouseleave', function () {
+    window.addEventListener('mouseup', function () {
       window.removeEventListener('mousemove', mouseMove);
       document.body.style.userSelect = ''; // this.draw(this.transformX, this.transformY, this.scale, 0);
     });
@@ -5931,22 +6014,28 @@ __webpack_require__.r(__webpack_exports__);
     function mouseMove(e) {
       e.preventDefault();
       vm.transformY = vm.transformY + (e.pageY - originY) * 2 / vm.scale;
-      vm.transformX = vm.transformX + (e.pageX - originX) * 2 / vm.scale;
+      vm.transformX = vm.transformX + (e.pageX - originX) * 2 / vm.scale; //判斷超出範圍 scale後的圖片保持原來尺寸
+      // if (vm.transformY > ((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) {
+      //     vm.transformY = ((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale;
+      // } else if (vm.transformY < ((((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) + (vm.cutRadio * 2 / vm.scale) - control.offsetHeight)) {
+      //     vm.transformY = ((((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) + (vm.cutRadio * 2 / vm.scale) - control.offsetHeight)
+      // }
+      // if (vm.transformX > ((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) {
+      //     vm.transformX = ((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale;
+      // } else if (vm.transformX < ((((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) + (vm.cutRadio * 2 / vm.scale) - control.offsetWidth)) {
+      //     vm.transformX = ((((vm.canvas_size - vm.cutRadio * 2) / 2) / vm.scale) + (vm.cutRadio * 2 / vm.scale) - control.offsetWidth)
+      // }
 
-      if (vm.transformY > (vm.canvas_size - vm.cutRadio * 2) / 2 / vm.scale) {
-        vm.transformY = (vm.canvas_size - vm.cutRadio * 2) / 2 / vm.scale;
-      } else if (vm.transformY < (vm.canvas_size - vm.cutRadio * 2) / 2 / vm.scale + vm.cutRadio * 2 / vm.scale - control.offsetHeight) {
-        vm.transformY = (vm.canvas_size - vm.cutRadio * 2) / 2 / vm.scale + vm.cutRadio * 2 / vm.scale - control.offsetHeight;
-      }
+      vm.checkBoundary(); //移動
 
-      if (vm.transformX > (vm.canvas_size - vm.cutRadio * 2) / 2 / vm.scale) {
-        vm.transformX = (vm.canvas_size - vm.cutRadio * 2) / 2 / vm.scale;
-      } else if (vm.transformX < (vm.canvas_size - vm.cutRadio * 2) / 2 / vm.scale + vm.cutRadio * 2 / vm.scale - control.offsetWidth) {
-        vm.transformX = (vm.canvas_size - vm.cutRadio * 2) / 2 / vm.scale + vm.cutRadio * 2 / vm.scale - control.offsetWidth;
-      }
+      control.style.transform = "scale(" + vm.scale / (vm.canvas_size / 250) + ")translate(" + vm.transformX + 'px,' + vm.transformY + 'px)rotate(' + vm.rotate + 'deg)'; //對應畫布
 
-      control.style.transform = "scale(" + vm.scale / (vm.canvas_size / 250) + ")translate(" + vm.transformX + 'px,' + vm.transformY + 'px)';
-      vm.draw(vm.transformX, vm.transformY, vm.scale, 0);
+      var _vm$modifyDirection = vm.modifyDirection(),
+          _vm$modifyDirection2 = _slicedToArray(_vm$modifyDirection, 2),
+          x = _vm$modifyDirection2[0],
+          y = _vm$modifyDirection2[1];
+
+      vm.draw(x, y, vm.scale, vm.rotate * Math.PI / 180);
       originX = e.pageX;
       originY = e.pageY;
     }
@@ -5954,6 +6043,7 @@ __webpack_require__.r(__webpack_exports__);
     img.onload = function () {
       _this.scale = 1;
       _this.scale_set = 1;
+      _this.rotate = 0;
       control.style.top = 0 + 'px';
       control.style.left = 0 + 'px';
       _this.transformX = 0;
@@ -6963,6 +7053,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _imgEdit_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./imgEdit.vue */ "./resources/js/components/imgEdit.vue");
+//
 //
 //
 //
@@ -13233,7 +13324,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\ninput[type=\"range\"][data-v-d7f3391c] {\r\n    -webkit-appearance: none;\r\n    /* overflow: hidden; */\r\n    /* 限定範圍 */\r\n    width: 100px;\r\n    height: 1px;\r\n    outline: none;\r\n    /* 避免點選會有藍線或虛線 */\r\n    background: rgba(255, 255, 255, 0.6);\n}\ninput[type=\"range\"][data-v-d7f3391c]::-webkit-slider-thumb {\r\n    -webkit-appearance: none;\r\n    position: relative;\r\n    /* 設為相對位置，為了前後區塊的絕對位置而設定 */\r\n    width: 10px;\r\n    height: 10px;\r\n    background: rgba(255, 255, 255, 0.6);\r\n    border-radius: 50%;\r\n    -webkit-transition: .2s;\r\n    transition: .2s;\r\n    /* 點選放大時候的漸變時間 */\n}\n#source-shape[data-v-d7f3391c] {\r\n    box-shadow: 0 0 0 2px rgba(21, 94, 117, 0.4);\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\ninput[type=\"range\"][data-v-d7f3391c] {\r\n    -webkit-appearance: none;\r\n    /* overflow: hidden; */\r\n    /* 限定範圍 */\r\n    width: 150px;\r\n    height: 1px;\r\n    outline: none;\r\n    /* 避免點選會有藍線或虛線 */\r\n    background: rgba(255, 255, 255, 0.6);\n}\ninput[type=\"range\"][data-v-d7f3391c]::-webkit-slider-thumb {\r\n    -webkit-appearance: none;\r\n    position: relative;\r\n    /* 設為相對位置，為了前後區塊的絕對位置而設定 */\r\n    width: 10px;\r\n    height: 10px;\r\n    background: rgba(255, 255, 255, 0.6);\r\n    border-radius: 50%;\r\n    -webkit-transition: .2s;\r\n    transition: .2s;\r\n    /* 點選放大時候的漸變時間 */\n}\n#source-shape[data-v-d7f3391c] {\r\n    box-shadow: 0 0 0 2px rgba(21, 94, 117, 0.4);\n}\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -33953,7 +34044,7 @@ var render = function () {
                 expression: "img_onload",
               },
             ],
-            staticClass: "grid grid-clos-2 gap-x-20 gap-y-2",
+            staticClass: "grid grid-clos-2 lg:gap-x-14 gap-x-2 gap-y-4",
           },
           [
             _c("div", { staticClass: "relative" }, [
@@ -34012,12 +34103,43 @@ var render = function () {
                 "div",
                 {
                   staticClass:
+                    "absolute top-2 w-full flex justify-between items-center px-2",
+                },
+                [
+                  _c("button", {
+                    staticClass:
+                      "text-white/80 text-xl fa-solid fa-rotate-right disabled:opacity-50",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.canvasRoate(1)
+                      },
+                    },
+                  }),
+                  _vm._v(" "),
+                  _c("button", {
+                    staticClass:
+                      "text-white/80 text-xl fa-solid fa-rotate-left disabled:opacity-50",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function ($event) {
+                        return _vm.canvasRoate(0)
+                      },
+                    },
+                  }),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
                     "absolute bottom-2 w-full flex justify-center items-center",
                 },
                 [
                   _c("button", {
                     staticClass:
-                      "text-white/50 bx bx-minus-circle disabled:opacity-50",
+                      "text-white/80 text-xl bx bx-minus-circle disabled:opacity-20",
                     attrs: { type: "button", disabled: _vm.scale_set == 1 },
                     on: {
                       click: function ($event) {
@@ -34047,7 +34169,7 @@ var render = function () {
                   _vm._v(" "),
                   _c("button", {
                     staticClass:
-                      "text-white/50 bx bx-plus-circle disabled:opacity-50",
+                      "text-white/80 text-xl bx bx-plus-circle disabled:opacity-20",
                     attrs: { type: "button", disabled: _vm.scale_set == 10 },
                     on: {
                       click: function ($event) {
@@ -34059,7 +34181,7 @@ var render = function () {
               ),
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "flex justify-center relative" }, [
+            _c("div", { staticClass: "sm:col-start-2 relative col-start-1" }, [
               _c("canvas", {
                 staticStyle: { width: "250px", height: "250px" },
                 attrs: {
@@ -34068,9 +34190,11 @@ var render = function () {
                   height: _vm.canvas_size,
                 },
               }),
+              _vm._v(" "),
+              _vm._m(0),
+              _vm._v(" "),
+              _c("img", { attrs: { id: "pre-img", src: "#", alt: "" } }),
             ]),
-            _vm._v(" "),
-            _vm._m(0),
           ]
         ),
       ]),
@@ -34086,13 +34210,9 @@ var staticRenderFns = [
       "div",
       {
         staticClass:
-          "sm:col-start-2 flex items-center justify-center col-start-1 sm:flex-col flex-col-reverse",
+          "text-center my-1 font-light absolute sm:top-auto sm:bottom-0 flex w-full justify-center top-0 text-xl",
       },
-      [
-        _c("div", { staticClass: "text-center my-1 font-light" }, [
-          _vm._v("\r\n                    預覽圖片\r\n                "),
-        ]),
-      ]
+      [_c("div", [_vm._v("預覽圖片")])]
     )
   },
 ]
@@ -35860,6 +35980,8 @@ var render = function () {
                     },
                   }),
                 ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "w-full h-2" }),
                 _vm._v(" "),
                 _c("imgedit", { ref: "canvas" }),
               ],

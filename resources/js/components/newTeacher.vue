@@ -34,6 +34,7 @@
                     </div>
                     <input class="px-2 py-1 rounded-md" type="text" id="address" v-model="formData.address">
                 </div>
+                <div class="w-full h-2"></div>
                 <imgedit ref="canvas"></imgedit>
 
                 <!-- <div v-show="img_src !== ''" class="mt-4">
@@ -71,12 +72,11 @@
 </template>
 
 <script>
-
 import imgedit from './imgEdit.vue';
 
 export default {
-    components:{
-        'imgedit':imgedit
+    components: {
+        'imgedit': imgedit
     },
     data() {
         return {
@@ -117,127 +117,127 @@ export default {
             console.log("No");
             return;
         },
-        canvasLoad(){
+        canvasLoad() {
             this.$refs.canvas.loadImg();
         }
 
-    //     loadImg() {
-    //         this.img_onload = false;
-    //         document.getElementById('img-input').click();
-    //     },
-    //     draw() {
-    //         let canvas = document.getElementById('canvas');
-    //         let img = document.getElementById('source');
+        //     loadImg() {
+        //         this.img_onload = false;
+        //         document.getElementById('img-input').click();
+        //     },
+        //     draw() {
+        //         let canvas = document.getElementById('canvas');
+        //         let img = document.getElementById('source');
 
-    //         let ctx = canvas.getContext('2d');
+        //         let ctx = canvas.getContext('2d');
 
-    //         ctx.mozImageSmoothingEnabled = true;
-    //         ctx.clearRect(0, 0, this.canvas_size, this.canvas_size);
+        //         ctx.mozImageSmoothingEnabled = true;
+        //         ctx.clearRect(0, 0, this.canvas_size, this.canvas_size);
 
-    //         let w = img.naturalWidth;
-    //         let h = img.naturalHeight;
+        //         let w = img.naturalWidth;
+        //         let h = img.naturalHeight;
 
-    //         if (w < h) {
-    //             // w = this.canvas_size;
-    //             // h = h * (w / img.naturalWidth);
-    //             this.scale = (this.canvas_size / w);
-    //         } else {
-    //             // h = this.canvas_size;
-    //             // w = w * (h / img.naturalHeight);
-    //             this.scale = (this.canvas_size / h);
-    //         }
+        //         if (w < h) {
+        //             // w = this.canvas_size;
+        //             // h = h * (w / img.naturalWidth);
+        //             this.scale = (this.canvas_size / w);
+        //         } else {
+        //             // h = this.canvas_size;
+        //             // w = w * (h / img.naturalHeight);
+        //             this.scale = (this.canvas_size / h);
+        //         }
 
-    //         ctx.save();
-    //         ctx.scale(this.scale, this.scale);
-    //         ctx.drawImage(img, 0, 0, w, h);
-    //         ctx.restore();
-    //     },
-    //     darwblur() {
-    //         let canvas = document.getElementById('canvas');
-    //         let ctx = canvas.getContext('2d');
+        //         ctx.save();
+        //         ctx.scale(this.scale, this.scale);
+        //         ctx.drawImage(img, 0, 0, w, h);
+        //         ctx.restore();
+        //     },
+        //     darwblur() {
+        //         let canvas = document.getElementById('canvas');
+        //         let ctx = canvas.getContext('2d');
 
-    //         let radio = this.cutRadio;
-    //         //上半部
-    //         ctx.fillStyle = 'rgba(255,255,255,0.8)';
-    //         ctx.beginPath();
-    //         ctx.moveTo(0, 0);
-    //         ctx.lineTo(0, (canvas.height / 2));
-    //         ctx.lineTo((canvas.width / 2 - radio), canvas.height / 2);
-    //         //arc(x, y, radius, startAngle, endAngle, anticlockwise)
+        //         let radio = this.cutRadio;
+        //         //上半部
+        //         ctx.fillStyle = 'rgba(255,255,255,0.8)';
+        //         ctx.beginPath();
+        //         ctx.moveTo(0, 0);
+        //         ctx.lineTo(0, (canvas.height / 2));
+        //         ctx.lineTo((canvas.width / 2 - radio), canvas.height / 2);
+        //         //arc(x, y, radius, startAngle, endAngle, anticlockwise)
 
-    //         ctx.arc(canvas.width / 2, canvas.height / 2, radio, Math.PI, 0)
+        //         ctx.arc(canvas.width / 2, canvas.height / 2, radio, Math.PI, 0)
 
-    //         ctx.lineTo((canvas.width / 2 + radio), canvas.height / 2);
-    //         ctx.lineTo(canvas.width, canvas.height / 2);
-    //         ctx.lineTo(canvas.width, 0);
-    //         ctx.closePath();
-    //         ctx.fill();
-    //         //下半部
-    //         ctx.beginPath();
-    //         ctx.moveTo(0, canvas.height);
-    //         ctx.lineTo(0, (canvas.height / 2));
-    //         ctx.lineTo((canvas.width / 2 - radio), canvas.height / 2);
-    //         //arc(x, y, radius, startAngle, endAngle, anticlockwise)
+        //         ctx.lineTo((canvas.width / 2 + radio), canvas.height / 2);
+        //         ctx.lineTo(canvas.width, canvas.height / 2);
+        //         ctx.lineTo(canvas.width, 0);
+        //         ctx.closePath();
+        //         ctx.fill();
+        //         //下半部
+        //         ctx.beginPath();
+        //         ctx.moveTo(0, canvas.height);
+        //         ctx.lineTo(0, (canvas.height / 2));
+        //         ctx.lineTo((canvas.width / 2 - radio), canvas.height / 2);
+        //         //arc(x, y, radius, startAngle, endAngle, anticlockwise)
 
-    //         ctx.arc(canvas.width / 2, canvas.height / 2, radio, Math.PI, 0, true)
+        //         ctx.arc(canvas.width / 2, canvas.height / 2, radio, Math.PI, 0, true)
 
-    //         ctx.lineTo((canvas.width / 2 + radio), canvas.height / 2);
-    //         ctx.lineTo(canvas.width, canvas.height / 2);
-    //         ctx.lineTo(canvas.width, canvas.height);
-    //         ctx.closePath();
-    //         ctx.fill();
+        //         ctx.lineTo((canvas.width / 2 + radio), canvas.height / 2);
+        //         ctx.lineTo(canvas.width, canvas.height / 2);
+        //         ctx.lineTo(canvas.width, canvas.height);
+        //         ctx.closePath();
+        //         ctx.fill();
 
-    //         //圓框
-    //         ctx.strokeStyle = '#2E86AB';
-    //         ctx.beginPath();
-    //         ctx.lineWidth = 4;
-    //         ctx.arc(canvas.width / 2, canvas.height / 2, radio + ctx.lineWidth / 2, 0, Math.PI * 2, true);
-    //         ctx.stroke();
-    //     },
-    //     canvasScale(num) {
+        //         //圓框
+        //         ctx.strokeStyle = '#2E86AB';
+        //         ctx.beginPath();
+        //         ctx.lineWidth = 4;
+        //         ctx.arc(canvas.width / 2, canvas.height / 2, radio + ctx.lineWidth / 2, 0, Math.PI * 2, true);
+        //         ctx.stroke();
+        //     },
+        //     canvasScale(num) {
 
-    //         let canvas = document.getElementById('canvas');
-    //         let ctx = canvas.getContext('2d');
+        //         let canvas = document.getElementById('canvas');
+        //         let ctx = canvas.getContext('2d');
 
-    //         let img = document.getElementById('source');
+        //         let img = document.getElementById('source');
 
-    //         if (num === 1) {
-    //             this.scale *= 1.1;
-    //         }
+        //         if (num === 1) {
+        //             this.scale *= 1.1;
+        //         }
 
-    //         if (num === -1) {
-    //             this.scale *= 0.9
-    //         }
+        //         if (num === -1) {
+        //             this.scale *= 0.9
+        //         }
 
-    //         ctx.save();
-    //         ctx.clearRect(0, 0, this.canvas_size, this.canvas_size);
-    //         ctx.scale(this.scale, this.scale);
-    //         ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-    //         ctx.restore();
-    //         console.log(this.scale)
-    //         this.darwblur();
-    //         this.drawpre();
+        //         ctx.save();
+        //         ctx.clearRect(0, 0, this.canvas_size, this.canvas_size);
+        //         ctx.scale(this.scale, this.scale);
+        //         ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
+        //         ctx.restore();
+        //         console.log(this.scale)
+        //         this.darwblur();
+        //         this.drawpre();
 
-    //     },
-    //     drawpre() {
-    //         let pre_canvas = document.getElementById('hidden-canvas');
-    //         pre_canvas.width = this.cutRadio * 2;
-    //         pre_canvas.height = this.cutRadio * 2;
-    //         let pre_ctx = pre_canvas.getContext('2d')
-    //         let img = new Image();
-    //         img.onload = () => {
+        //     },
+        //     drawpre() {
+        //         let pre_canvas = document.getElementById('hidden-canvas');
+        //         pre_canvas.width = this.cutRadio * 2;
+        //         pre_canvas.height = this.cutRadio * 2;
+        //         let pre_ctx = pre_canvas.getContext('2d')
+        //         let img = new Image();
+        //         img.onload = () => {
 
-    //             pre_ctx.beginPath();
-    //             //arc(x, y, radius, startAngle, endAngle, anticlockwise)
-    //             pre_ctx.arc(this.cutRadio, this.cutRadio, this.cutRadio, 0, Math.PI * 2);
-    //             //限制繪畫部分
-    //             pre_ctx.clip();
-    //             //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-    //             pre_ctx.drawImage(img, this.canvas_size / 2 - this.cutRadio, this.canvas_size / 2 - this.cutRadio, this.cutRadio * 2, this.cutRadio * 2, 0, 0, this.cutRadio * 2, this.cutRadio * 2)
-    //             this.preimg_src = pre_canvas.toDataURL();
-    //         }
-    //         img.src = document.getElementById('canvas').toDataURL();
-    //     }
+        //             pre_ctx.beginPath();
+        //             //arc(x, y, radius, startAngle, endAngle, anticlockwise)
+        //             pre_ctx.arc(this.cutRadio, this.cutRadio, this.cutRadio, 0, Math.PI * 2);
+        //             //限制繪畫部分
+        //             pre_ctx.clip();
+        //             //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+        //             pre_ctx.drawImage(img, this.canvas_size / 2 - this.cutRadio, this.canvas_size / 2 - this.cutRadio, this.cutRadio * 2, this.cutRadio * 2, 0, 0, this.cutRadio * 2, this.cutRadio * 2)
+        //             this.preimg_src = pre_canvas.toDataURL();
+        //         }
+        //         img.src = document.getElementById('canvas').toDataURL();
+        //     }
 
     },
     // mounted() {
