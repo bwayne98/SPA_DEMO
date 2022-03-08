@@ -152,10 +152,8 @@ export default {
             }
 
             this.checkBoundary();
-
             //移動
             control.style.transform = "scale(" + this.scale / (this.canvas_size / 250) + ")translate(" + this.transformX + 'px,' + this.transformY + 'px)rotate(' + this.rotate + 'deg)';
-
             let [x, y] = this.modifyDirection();
             this.draw(x, y, this.scale, this.rotate * Math.PI / 180);
         },

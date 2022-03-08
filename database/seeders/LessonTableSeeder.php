@@ -7,6 +7,7 @@ use \App\Models\Teacher;
 use \App\Models\Lesson;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
+use PDO;
 
 class LessonTableSeeder extends Seeder
 {
@@ -15,58 +16,48 @@ class LessonTableSeeder extends Seeder
      *
      * @return void
      */
-
-
-
-
+ 
     public function run()
     {
-
-
-        $teachers = Teacher::all();
         $times = ["18", "20"];
+        $teachers = Teacher::all();
+        
         foreach ($teachers as $teacher) {
 
-            for ($t = 0; $t < rand(1, 5); $t++) {
+            for ($t = 0; $t < rand(2, 4); $t++) {
                 $start = Carbon::today();
-                $start->subDay(rand(30, 180));
+                $start->subDay(rand(-180, 180));
 
                 $period = $start->copy()->dayOfWeek;
 
                 if ($period == 0) {
                     $start->subDay(rand(1, 3));
                 }
-                $dates = [$start];
+                
                 if ($period == 1 || $period == 4) {
-                    $dates = LessonTableSeeder::datePush($period, $start);
-                    Lesson::factory()->state([
-                        'start' => $start,
-                        'end' => $dates[23],
-                        'period' => 'Mon-Thur-' . Arr::random($times),
-                        'date' => json_encode($dates),
-                        'teacher_id' => $teacher->id
-                    ])->create();
-                } elseif ($period == 2 || $period == 5) {
-                    $dates = LessonTableSeeder::datePush($period, $start);
-                    
-                    Lesson::factory()->state([
-                        'start' => $start,
-                        'end' => $dates[23],
-                        'period' => 'Tue-Fri-' . Arr::random($times),
-                        'date' => json_encode($dates),
-                        'teacher_id' => $teacher->id
-                    ])->create();
-                } else {
-                    $dates = LessonTableSeeder::datePush($period, $start);
-                    
-                    Lesson::factory()->state([
-                        'start' => $start,
-                        'end' => $dates[23],
-                        'period' => 'Wed-Sat-' . Arr::random($times),
-                        'date' => json_encode($dates),
-                        'teacher_id' => $teacher->id
-                    ])->create();
+                    $period_and_time = 'Mon-Thur-' . Arr::random($times);
+                } elseif ($period == 2 || $period == 5) {                   
+                    $period_and_time = 'Tue-Fri-' . Arr::random($times);
+                } else {               
+                    $period_and_time = 'Wed-Sat-' . Arr::random($times);
                 }
+
+                $dates = LessonTableSeeder::datePush($period, $start);
+                $temp_rooms = LessonTableSeeder::checkRoom($period_and_time,$dates[0],$dates[23]);
+
+                if ($temp_rooms != []){
+                    Lesson::factory()->state([
+                        'start' => $dates[0],
+                        'end' => $dates[23],
+                        'room' => Arr::random($temp_rooms),
+                        'period' => $period_and_time,
+                        'date' => json_encode($dates),
+                        'teacher_id' => $teacher->id
+                    ])->create();
+                }else{
+                    continue;
+                }
+                
             }
         }
     }
@@ -89,4 +80,31 @@ class LessonTableSeeder extends Seeder
         }
         return $dates;
     }
+
+    public static function checkRoom(string $period_and_time,string $start,string $end) : array{
+        $lessons = Lesson::where('period',$period_and_time)->get();
+        $temp_rooms= ["2A","2S","2B", "3A", "3S", "3B", "4A", "4S", "4B"];
+        $start = Carbon::parse($start);
+        $end = Carbon::parse($end);
+        foreach ($lessons as $lesson){
+            
+            $dates = json_decode($lesson->date);
+            $lesson_start = Carbon::parse($dates[0]);
+            $lesson_end = Carbon::parse($dates[23]);
+
+            if ($lesson_start < $end || $lesson_end > $start){
+                $lesson_room = $lesson->room;
+
+                $temp_rooms = array_filter($temp_rooms,function($item) use ($lesson_room){
+                    return $item != $lesson_room;
+                });
+
+            }
+
+        }
+
+        return $temp_rooms;
+
+    }
+
 }

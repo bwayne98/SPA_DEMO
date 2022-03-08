@@ -23,7 +23,7 @@ class LessonDetailTableSeeder extends Seeder
 
         foreach ($students as $student) {
 
-            $num = rand(1, 5);
+            $num = rand(3, 5);
             $lessons = Lesson::all()->random($num);
 
             foreach ($lessons as $lesson) {
