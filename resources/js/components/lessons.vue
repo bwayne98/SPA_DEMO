@@ -60,45 +60,45 @@
                 <div class="col-start-1">{{room}}</div>
                 <div class="col-span-9 grid grid-cols-2 items-center">
                     <div v-if="curSelector == 3 || curSelector == 0" class="">   
-                        <div v-for="lesson in lessons.filter((item)=>{
+                        <div v-for="lesson in lessonList.filter((item)=>{
                             return room == item.room & 'Mon-Thur-18' == item.period
                             })" :key="'lesson' + lesson.id">
-                            <div>{{ lesson.name }} - {{ lesson.teacher }}</div>
+                            <div :title="lesson.start + '~' + lesson.end" :class="{'text-red-600' : compareNow(lesson.start,lesson.end) === 1,'text-gray-600/30' : compareNow(lesson.start,lesson.end) === -1,}">{{ lesson.name }} - {{ lesson.teacher }}</div>
                         </div>
                     </div>
                     <div v-if="curSelector == 3 || curSelector == 0" class="">    
-                        <div v-for="lesson in lessons.filter((item)=>{
+                        <div v-for="lesson in lessonList.filter((item)=>{
                             return room == item.room & 'Mon-Thur-20' == item.period
                             })" :key="'lesson' + lesson.id">
-                            <div>{{ lesson.name }} - {{ lesson.teacher }}</div>
+                            <div :title="lesson.start + '~' + lesson.end" :class="{'text-red-600' : compareNow(lesson.start,lesson.end) === 1,'text-gray-600/30'     : compareNow(lesson.start,lesson.end) === -1,}">{{ lesson.name }} - {{ lesson.teacher }}</div>
                         </div>
                     </div>
                     <div v-if="curSelector == 1" class="">    
-                        <div v-for="lesson in lessons.filter((item)=>{
+                        <div v-for="lesson in lessonList.filter((item)=>{
                             return room == item.room & 'Tue-Fri-18' == item.period
                             })" :key="'lesson' + lesson.id">
-                            <div>{{ lesson.name }} - {{ lesson.teacher }}</div>
+                            <div :title="lesson.start + '~' + lesson.end" :class="{'text-red-600' : compareNow(lesson.start,lesson.end) === 1,'text-gray-600/30'     : compareNow(lesson.start,lesson.end) === -1,}">{{ lesson.name }} - {{ lesson.teacher }}</div>
                         </div>
                     </div>
                     <div v-if="curSelector == 1" class="">   
-                        <div v-for="lesson in lessons.filter((item)=>{
+                        <div v-for="lesson in lessonList.filter((item)=>{
                             return room == item.room & 'Tue-Fri-20' == item.period
                             })" :key="'lesson' + lesson.id">
-                            <div>{{ lesson.name }} - {{ lesson.teacher }}</div>
+                            <div :title="lesson.start + '~' + lesson.end" :class="{'text-red-600' : compareNow(lesson.start,lesson.end) === 1,'text-gray-600/30'     : compareNow(lesson.start,lesson.end) === -1,}">{{ lesson.name }} - {{ lesson.teacher }}</div>
                         </div>
                     </div>
                     <div v-if="curSelector == 2" class="">  
-                        <div v-for="lesson in lessons.filter((item)=>{
+                        <div v-for="lesson in lessonList.filter((item)=>{
                             return room == item.room & 'Wed-Sat-18' == item.period
                             })" :key="'lesson' + lesson.id">
-                            <div>{{ lesson.name }} - {{ lesson.teacher }}</div>
+                            <div :title="lesson.start + '~' + lesson.end" :class="{'text-red-600' : compareNow(lesson.start,lesson.end) === 1,'text-gray-600/30'     : compareNow(lesson.start,lesson.end) === -1,}">{{ lesson.name }} - {{ lesson.teacher }}</div>
                         </div>
                     </div>
                     <div v-if="curSelector == 2" class="">  
-                        <div v-for="lesson in lessons.filter((item)=>{
+                        <div v-for="lesson in lessonList.filter((item)=>{
                             return room == item.room & 'Wed-Sat-20' == item.period
                             })" :key="'lesson' + lesson.id">
-                            <div>{{ lesson.name }} - {{ lesson.teacher }}</div>
+                            <div :title="lesson.start + '~' + lesson.end" :class="{'text-red-600' : compareNow(lesson.start,lesson.end) === 1,'text-gray-600/30'     : compareNow(lesson.start,lesson.end) === -1,}">{{ lesson.name }} - {{ lesson.teacher }}</div>
                         </div>
                     </div>
 
@@ -170,6 +170,19 @@ export default {
                     return
                 case 3:
                     this.lessonList = this.lessons
+            }
+        },
+        compareNow(start,end){
+            let now = Date.now();
+            let lesson_start = new Date(start);
+            let lesson_end = new Date(end);
+
+            if (lesson_end < now){
+                return -1
+            }else if (lesson_start > now){
+                return 1
+            }else{
+                return 0
             }
         }
     }

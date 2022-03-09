@@ -6305,6 +6305,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         case 3:
           this.lessonList = this.lessons;
       }
+    },
+    compareNow: function compareNow(start, end) {
+      var now = Date.now();
+      var lesson_start = new Date(start);
+      var lesson_end = new Date(end);
+
+      if (lesson_end < now) {
+        return -1;
+      } else if (lesson_start > now) {
+        return 1;
+      } else {
+        return 0;
+      }
     }
   }
 });
@@ -7107,25 +7120,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -7141,12 +7135,15 @@ __webpack_require__.r(__webpack_exports__);
         phone: "",
         address: ""
       },
-      canvas_size: 1000,
-      img_onload: false,
-      img_src: '',
-      preimg_src: '',
-      cutRadio: 200,
-      scale: 1
+      formErrors: {
+        chName: "",
+        enName: "",
+        birth: "",
+        idNumber: "",
+        phone: "",
+        address: ""
+      },
+      canvas_size: 1000
     };
   },
   methods: {
@@ -7161,138 +7158,39 @@ __webpack_require__.r(__webpack_exports__);
         this.formData.idNumber = "";
         this.formData.phone = "";
         this.formData.address = "";
-        console.log("Yes");
         return;
       }
 
-      console.log("No");
       return;
     },
     canvasLoad: function canvasLoad() {
       this.$refs.canvas.loadImg();
-    } //     loadImg() {
-    //         this.img_onload = false;
-    //         document.getElementById('img-input').click();
-    //     },
-    //     draw() {
-    //         let canvas = document.getElementById('canvas');
-    //         let img = document.getElementById('source');
-    //         let ctx = canvas.getContext('2d');
-    //         ctx.mozImageSmoothingEnabled = true;
-    //         ctx.clearRect(0, 0, this.canvas_size, this.canvas_size);
-    //         let w = img.naturalWidth;
-    //         let h = img.naturalHeight;
-    //         if (w < h) {
-    //             // w = this.canvas_size;
-    //             // h = h * (w / img.naturalWidth);
-    //             this.scale = (this.canvas_size / w);
-    //         } else {
-    //             // h = this.canvas_size;
-    //             // w = w * (h / img.naturalHeight);
-    //             this.scale = (this.canvas_size / h);
-    //         }
-    //         ctx.save();
-    //         ctx.scale(this.scale, this.scale);
-    //         ctx.drawImage(img, 0, 0, w, h);
-    //         ctx.restore();
-    //     },
-    //     darwblur() {
-    //         let canvas = document.getElementById('canvas');
-    //         let ctx = canvas.getContext('2d');
-    //         let radio = this.cutRadio;
-    //         //上半部
-    //         ctx.fillStyle = 'rgba(255,255,255,0.8)';
-    //         ctx.beginPath();
-    //         ctx.moveTo(0, 0);
-    //         ctx.lineTo(0, (canvas.height / 2));
-    //         ctx.lineTo((canvas.width / 2 - radio), canvas.height / 2);
-    //         //arc(x, y, radius, startAngle, endAngle, anticlockwise)
-    //         ctx.arc(canvas.width / 2, canvas.height / 2, radio, Math.PI, 0)
-    //         ctx.lineTo((canvas.width / 2 + radio), canvas.height / 2);
-    //         ctx.lineTo(canvas.width, canvas.height / 2);
-    //         ctx.lineTo(canvas.width, 0);
-    //         ctx.closePath();
-    //         ctx.fill();
-    //         //下半部
-    //         ctx.beginPath();
-    //         ctx.moveTo(0, canvas.height);
-    //         ctx.lineTo(0, (canvas.height / 2));
-    //         ctx.lineTo((canvas.width / 2 - radio), canvas.height / 2);
-    //         //arc(x, y, radius, startAngle, endAngle, anticlockwise)
-    //         ctx.arc(canvas.width / 2, canvas.height / 2, radio, Math.PI, 0, true)
-    //         ctx.lineTo((canvas.width / 2 + radio), canvas.height / 2);
-    //         ctx.lineTo(canvas.width, canvas.height / 2);
-    //         ctx.lineTo(canvas.width, canvas.height);
-    //         ctx.closePath();
-    //         ctx.fill();
-    //         //圓框
-    //         ctx.strokeStyle = '#2E86AB';
-    //         ctx.beginPath();
-    //         ctx.lineWidth = 4;
-    //         ctx.arc(canvas.width / 2, canvas.height / 2, radio + ctx.lineWidth / 2, 0, Math.PI * 2, true);
-    //         ctx.stroke();
-    //     },
-    //     canvasScale(num) {
-    //         let canvas = document.getElementById('canvas');
-    //         let ctx = canvas.getContext('2d');
-    //         let img = document.getElementById('source');
-    //         if (num === 1) {
-    //             this.scale *= 1.1;
-    //         }
-    //         if (num === -1) {
-    //             this.scale *= 0.9
-    //         }
-    //         ctx.save();
-    //         ctx.clearRect(0, 0, this.canvas_size, this.canvas_size);
-    //         ctx.scale(this.scale, this.scale);
-    //         ctx.drawImage(img, 0, 0, img.naturalWidth, img.naturalHeight);
-    //         ctx.restore();
-    //         console.log(this.scale)
-    //         this.darwblur();
-    //         this.drawpre();
-    //     },
-    //     drawpre() {
-    //         let pre_canvas = document.getElementById('hidden-canvas');
-    //         pre_canvas.width = this.cutRadio * 2;
-    //         pre_canvas.height = this.cutRadio * 2;
-    //         let pre_ctx = pre_canvas.getContext('2d')
-    //         let img = new Image();
-    //         img.onload = () => {
-    //             pre_ctx.beginPath();
-    //             //arc(x, y, radius, startAngle, endAngle, anticlockwise)
-    //             pre_ctx.arc(this.cutRadio, this.cutRadio, this.cutRadio, 0, Math.PI * 2);
-    //             //限制繪畫部分
-    //             pre_ctx.clip();
-    //             //drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-    //             pre_ctx.drawImage(img, this.canvas_size / 2 - this.cutRadio, this.canvas_size / 2 - this.cutRadio, this.cutRadio * 2, this.cutRadio * 2, 0, 0, this.cutRadio * 2, this.cutRadio * 2)
-    //             this.preimg_src = pre_canvas.toDataURL();
-    //         }
-    //         img.src = document.getElementById('canvas').toDataURL();
-    //     }
+      this.img_onload = true;
+    },
+    formCheck: function formCheck(regexp, event) {
+      var _this = this;
 
-  } // mounted() {
-  //     let img = document.getElementById('source');
-  //     img.onload = () => {
-  //         console.log(img.naturalWidth);
-  //         this.draw();
-  //         this.darwblur();
-  //         this.drawpre();
-  //     }
-  //     let img_input = document.getElementById('img-input');
-  //     img_input.addEventListener('change', (e) => {
-  //         this.img_src = '';
-  //         if (img_input.files && img_input.files[0]) {
-  //             let reader = new FileReader();
-  //             reader.onload = (e) => {
-  //                 console.log(e);
-  //                 this.img_src = e.target.result;
-  //                 this.img_onload = true;
-  //             }
-  //             reader.readAsDataURL(img_input.files[0]);
-  //         }
-  //     })
-  // }
+      if (regexp.test(event.currentTarget.value)) {
+        console.log(event.currentTarget.id);
 
+        switch (event.currentTarget.id) {
+          case 'chName':
+            this.formErrors.chName = "";
+            return;
+        }
+      } else {
+        switch (event.currentTarget.id) {
+          case 'chName':
+            this.formErrors.chName = "最少兩個字元，不包含特殊符號";
+            event.currentTarget.focus();
+            setTimeout(function () {
+              _this.formErrors.chName = "";
+            }, 1500);
+            return;
+        }
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -34398,7 +34296,7 @@ var render = function () {
                               "div",
                               {},
                               _vm._l(
-                                _vm.lessons.filter(function (item) {
+                                _vm.lessonList.filter(function (item) {
                                   return (
                                     (room == item.room) &
                                     ("Mon-Thur-18" == item.period)
@@ -34409,13 +34307,34 @@ var render = function () {
                                     "div",
                                     { key: "lesson" + lesson.id },
                                     [
-                                      _c("div", [
-                                        _vm._v(
-                                          _vm._s(lesson.name) +
-                                            " - " +
-                                            _vm._s(lesson.teacher)
-                                        ),
-                                      ]),
+                                      _c(
+                                        "div",
+                                        {
+                                          class: {
+                                            "text-red-600":
+                                              _vm.compareNow(
+                                                lesson.start,
+                                                lesson.end
+                                              ) === 1,
+                                            "text-gray-600/30":
+                                              _vm.compareNow(
+                                                lesson.start,
+                                                lesson.end
+                                              ) === -1,
+                                          },
+                                          attrs: {
+                                            title:
+                                              lesson.start + "~" + lesson.end,
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(lesson.name) +
+                                              " - " +
+                                              _vm._s(lesson.teacher)
+                                          ),
+                                        ]
+                                      ),
                                     ]
                                   )
                                 }
@@ -34429,7 +34348,7 @@ var render = function () {
                               "div",
                               {},
                               _vm._l(
-                                _vm.lessons.filter(function (item) {
+                                _vm.lessonList.filter(function (item) {
                                   return (
                                     (room == item.room) &
                                     ("Mon-Thur-20" == item.period)
@@ -34440,13 +34359,34 @@ var render = function () {
                                     "div",
                                     { key: "lesson" + lesson.id },
                                     [
-                                      _c("div", [
-                                        _vm._v(
-                                          _vm._s(lesson.name) +
-                                            " - " +
-                                            _vm._s(lesson.teacher)
-                                        ),
-                                      ]),
+                                      _c(
+                                        "div",
+                                        {
+                                          class: {
+                                            "text-red-600":
+                                              _vm.compareNow(
+                                                lesson.start,
+                                                lesson.end
+                                              ) === 1,
+                                            "text-gray-600/30":
+                                              _vm.compareNow(
+                                                lesson.start,
+                                                lesson.end
+                                              ) === -1,
+                                          },
+                                          attrs: {
+                                            title:
+                                              lesson.start + "~" + lesson.end,
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(lesson.name) +
+                                              " - " +
+                                              _vm._s(lesson.teacher)
+                                          ),
+                                        ]
+                                      ),
                                     ]
                                   )
                                 }
@@ -34460,7 +34400,7 @@ var render = function () {
                               "div",
                               {},
                               _vm._l(
-                                _vm.lessons.filter(function (item) {
+                                _vm.lessonList.filter(function (item) {
                                   return (
                                     (room == item.room) &
                                     ("Tue-Fri-18" == item.period)
@@ -34471,13 +34411,34 @@ var render = function () {
                                     "div",
                                     { key: "lesson" + lesson.id },
                                     [
-                                      _c("div", [
-                                        _vm._v(
-                                          _vm._s(lesson.name) +
-                                            " - " +
-                                            _vm._s(lesson.teacher)
-                                        ),
-                                      ]),
+                                      _c(
+                                        "div",
+                                        {
+                                          class: {
+                                            "text-red-600":
+                                              _vm.compareNow(
+                                                lesson.start,
+                                                lesson.end
+                                              ) === 1,
+                                            "text-gray-600/30":
+                                              _vm.compareNow(
+                                                lesson.start,
+                                                lesson.end
+                                              ) === -1,
+                                          },
+                                          attrs: {
+                                            title:
+                                              lesson.start + "~" + lesson.end,
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(lesson.name) +
+                                              " - " +
+                                              _vm._s(lesson.teacher)
+                                          ),
+                                        ]
+                                      ),
                                     ]
                                   )
                                 }
@@ -34491,7 +34452,7 @@ var render = function () {
                               "div",
                               {},
                               _vm._l(
-                                _vm.lessons.filter(function (item) {
+                                _vm.lessonList.filter(function (item) {
                                   return (
                                     (room == item.room) &
                                     ("Tue-Fri-20" == item.period)
@@ -34502,13 +34463,34 @@ var render = function () {
                                     "div",
                                     { key: "lesson" + lesson.id },
                                     [
-                                      _c("div", [
-                                        _vm._v(
-                                          _vm._s(lesson.name) +
-                                            " - " +
-                                            _vm._s(lesson.teacher)
-                                        ),
-                                      ]),
+                                      _c(
+                                        "div",
+                                        {
+                                          class: {
+                                            "text-red-600":
+                                              _vm.compareNow(
+                                                lesson.start,
+                                                lesson.end
+                                              ) === 1,
+                                            "text-gray-600/30":
+                                              _vm.compareNow(
+                                                lesson.start,
+                                                lesson.end
+                                              ) === -1,
+                                          },
+                                          attrs: {
+                                            title:
+                                              lesson.start + "~" + lesson.end,
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(lesson.name) +
+                                              " - " +
+                                              _vm._s(lesson.teacher)
+                                          ),
+                                        ]
+                                      ),
                                     ]
                                   )
                                 }
@@ -34522,7 +34504,7 @@ var render = function () {
                               "div",
                               {},
                               _vm._l(
-                                _vm.lessons.filter(function (item) {
+                                _vm.lessonList.filter(function (item) {
                                   return (
                                     (room == item.room) &
                                     ("Wed-Sat-18" == item.period)
@@ -34533,13 +34515,34 @@ var render = function () {
                                     "div",
                                     { key: "lesson" + lesson.id },
                                     [
-                                      _c("div", [
-                                        _vm._v(
-                                          _vm._s(lesson.name) +
-                                            " - " +
-                                            _vm._s(lesson.teacher)
-                                        ),
-                                      ]),
+                                      _c(
+                                        "div",
+                                        {
+                                          class: {
+                                            "text-red-600":
+                                              _vm.compareNow(
+                                                lesson.start,
+                                                lesson.end
+                                              ) === 1,
+                                            "text-gray-600/30":
+                                              _vm.compareNow(
+                                                lesson.start,
+                                                lesson.end
+                                              ) === -1,
+                                          },
+                                          attrs: {
+                                            title:
+                                              lesson.start + "~" + lesson.end,
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(lesson.name) +
+                                              " - " +
+                                              _vm._s(lesson.teacher)
+                                          ),
+                                        ]
+                                      ),
                                     ]
                                   )
                                 }
@@ -34553,7 +34556,7 @@ var render = function () {
                               "div",
                               {},
                               _vm._l(
-                                _vm.lessons.filter(function (item) {
+                                _vm.lessonList.filter(function (item) {
                                   return (
                                     (room == item.room) &
                                     ("Wed-Sat-20" == item.period)
@@ -34564,13 +34567,34 @@ var render = function () {
                                     "div",
                                     { key: "lesson" + lesson.id },
                                     [
-                                      _c("div", [
-                                        _vm._v(
-                                          _vm._s(lesson.name) +
-                                            " - " +
-                                            _vm._s(lesson.teacher)
-                                        ),
-                                      ]),
+                                      _c(
+                                        "div",
+                                        {
+                                          class: {
+                                            "text-red-600":
+                                              _vm.compareNow(
+                                                lesson.start,
+                                                lesson.end
+                                              ) === 1,
+                                            "text-gray-600/30":
+                                              _vm.compareNow(
+                                                lesson.start,
+                                                lesson.end
+                                              ) === -1,
+                                          },
+                                          attrs: {
+                                            title:
+                                              lesson.start + "~" + lesson.end,
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            _vm._s(lesson.name) +
+                                              " - " +
+                                              _vm._s(lesson.teacher)
+                                          ),
+                                        ]
+                                      ),
                                     ]
                                   )
                                 }
@@ -35818,7 +35842,7 @@ var render = function () {
           "form",
           {
             staticClass:
-              "mx-w-3/5 m-8 p-4 shadow rounded-md bg-gray-100 bg-opacity-30",
+              "m-8 w-11/12 p-4 shadow rounded-md bg-gray-100 bg-opacity-30",
             attrs: { id: "newTeacherForm", action: "#", method: "GET" },
             on: {
               submit: function ($event) {
@@ -35832,7 +35856,24 @@ var render = function () {
               { staticClass: "flex justify-center flex-wrap" },
               [
                 _c("div", { staticClass: "mx-2 up-section" }, [
-                  _vm._m(0),
+                  _c("div", { staticClass: "m-1 w-full relative" }, [
+                    _c(
+                      "label",
+                      { staticClass: " w-full", attrs: { for: "chName" } },
+                      [
+                        _c("span", [_vm._v(" Chinese Name ")]),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "text-red-600 pointer-events-none absolute top-8 right-2",
+                          },
+                          [_vm._v(" " + _vm._s(_vm.formErrors.chName) + " ")]
+                        ),
+                      ]
+                    ),
+                  ]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -35847,6 +35888,9 @@ var render = function () {
                     attrs: { type: "text", id: "chName", required: "" },
                     domProps: { value: _vm.formData.chName },
                     on: {
+                      blur: function (event) {
+                        return _vm.formCheck(/^[^\W^_]+[^\W^_]$/, event)
+                      },
                       input: function ($event) {
                         if ($event.target.composing) {
                           return
@@ -35856,7 +35900,7 @@ var render = function () {
                     },
                   }),
                   _vm._v(" "),
-                  _vm._m(1),
+                  _vm._m(0),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -35882,7 +35926,7 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "mx-2 up-section" }, [
-                  _vm._m(2),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -35906,7 +35950,7 @@ var render = function () {
                     },
                   }),
                   _vm._v(" "),
-                  _vm._m(3),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -35932,7 +35976,7 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "mx-2 up-section" }, [
-                  _vm._m(4),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -35956,7 +36000,7 @@ var render = function () {
                     },
                   }),
                   _vm._v(" "),
-                  _vm._m(5),
+                  _vm._m(4),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -36007,11 +36051,7 @@ var render = function () {
                       },
                     },
                   },
-                  [
-                    _vm.img_onload
-                      ? _c("span", [_vm._v("更換圖片")])
-                      : _c("span", [_vm._v("載入圖片")]),
-                  ]
+                  [_c("span", [_vm._v("載入圖片")])]
                 ),
                 _vm._v(" "),
                 _c(
@@ -36052,14 +36092,6 @@ var render = function () {
   )
 }
 var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "m-1" }, [
-      _c("label", { attrs: { for: "chName" } }, [_vm._v("Chinese Name")]),
-    ])
-  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
