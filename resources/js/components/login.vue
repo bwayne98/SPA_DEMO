@@ -17,7 +17,7 @@
     <div v-else id="login" class="w-96 shadow rounded-xl text-center p-5 pb-0">
         <h1 class="my-5 text-4xl font-bold">Login</h1>
         <p>Lorem ipsum dolor sit amet.</p>
-        <p>{{ meg }}</p>
+        <p class="text-red-600">{{ meg }}</p>
         <div class="p-5 px-12">
             <form action="" v-on:submit.prevent>
                 <div>
@@ -46,14 +46,14 @@
 
 <script>
 export default {
-    props: ["meg"],
     data() {
         return {
             form: {
                 email: "",
                 password: "",
             },
-            loginStatus: false
+            loginStatus: false,
+            meg: '',
         };
     },
 
@@ -69,7 +69,7 @@ export default {
 
     methods: {
         setLogin() {
-
+            this.meg = '';
             axios.get('/sanctum/csrf-cookie').then(res => {
                 axios.post("api/login", this.form).then((res) => {
                     console.log(res);
@@ -82,7 +82,7 @@ export default {
                     }, 2000);
 
                 }).catch(err => {
-                    console.log(err);
+                    this.meg='帳號或密碼錯誤!';
                 });
             });
 
