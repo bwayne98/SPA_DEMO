@@ -8,9 +8,26 @@
 	Python Beautifulsoup
     canvas
 
+AWS
+http://spademo-env.eba-hji6v9g3.ap-northeast-1.elasticbeanstalk.com/
+
+// NewsController 要改用 python3 執行 (初次啟用要安裝python套件)
+
+// touch /etc/nginx/conf.d/elasticbeanstalk/laravel.conf
+// vim /etc/nginx/conf.d/elasticbeanstalk/laravel.conf
+`location / {
+      try_files $uri $uri/ /index.php?$query_string;
+      gzip_static on;
+}`
+//
+
+//vim .env 或 cp /.env.awsexample
+`SESSION_DOMAIN
+SANCTUM_STATEFUL_DOMAINS`
+//
+
+
 以補習班電子化管理需求設計
-
-
 RWD練習
 
 ![RWD01](https://user-images.githubusercontent.com/71909860/153897173-4e03033b-cb2f-49bf-830c-923cd8dd9cda.gif)
