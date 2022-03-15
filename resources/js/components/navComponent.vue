@@ -7,7 +7,7 @@
         <div id="nav-bar" class="flex justify-center text-xl shadow">
             <div id="nav-bar-detail" class="flex justify-between w-full text-center p-6 lg:px-12 pb-0 items-baseline">
                 <div id="nav-bar-icon" class="block pb-0 relative">
-                    <router-link to="/" tag="a"><i class="bx bxs-home text-3xl cursor-pointer"  @click="selected()"> 首頁 </i>
+                    <router-link to="/" tag="a"><i class="bx bxs-home text-3xl cursor-pointer" @click="selected()"> 首頁 </i>
                     </router-link>
                 </div>
                 <ul id="nav-menu" class="flex" v-if="user">
@@ -85,7 +85,7 @@
                         </ul>
                     </li>
                 </ul>
-                <div v-if="!loading" >
+                <div v-if="!loading">
                     <button v-if="user" id="log-out" class="px-2 flex items-center hover:text-gray-300 truncate" @click="logOut()">
                         <i class="bx bx-log-out bx-sm" style=""></i><span class="px-1 "> 登出 ( {{ user.name }} )</span>
                     </button>
@@ -137,7 +137,7 @@ export default {
             }
             this.nav = !this.nav;
         },
-        selected(){
+        selected() {
             document.body.style.overflow = 'auto'
             this.nav = false;
         },
@@ -146,14 +146,16 @@ export default {
             //array不會自動偵測  要使用$set(目標array, 索引index, 欲修改的值value)
         },
         logOut() {
-            localStorage.setItem('isLogged','false')
-            axios.post('/api/logout')
-            this.$router.push('/').then(res=>{
-                this.$router.go()
-            }).catch(err=>{
-                console.log(err)
-                this.$router.go()
+            axios.post('/api/logout').then(() => {
+                localStorage.setItem('isLogged', 'false')
+                this.$router.push('/').then(res => {
+                    this.$router.go()
+                }).catch(err => {
+                    console.log(err)
+                    this.$router.go()
+                })
             })
+
         }
     },
 

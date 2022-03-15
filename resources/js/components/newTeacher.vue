@@ -6,39 +6,55 @@
             <div class="flex justify-center flex-wrap">
                 <div class="mx-2 up-section">
                     <div class="m-1 w-full relative">
-                        <label for="chName" class=" w-full">
-                            <span> Chinese Name </span>
-                            <span class="text-red-600 pointer-events-none absolute top-8 right-2"> {{ formErrors.chName }} </span>
+                        <label for="chName" class="flex flex-col xs:flex-row items-baseline">
+                            <div class="pr-4"> 中文姓名 </div>
+                            <div class="text-red-600 pointer-events-none pr-2" v-show="formErrors.chName !== ''"><i class='bx bx-message-rounded-error text-xs pt-1 sm:text-base'> {{ formErrors.chName }}</i></div>
                         </label>
                     </div>
-                    <input class="px-2 py-1 rounded-md" type="text" id="chName" v-model="formData.chName" required @blur="(event)=>formCheck(/^[^\W^_]+[^\W^_]$/,event)">
+                    <input class="px-2 py-1 rounded-md ring-1 ring-transparent" :class="{ 'ring-red-600': formErrors.chName !== ''}" type="text" id="chName" v-model="formData.chName" required @blur="(event)=>formCheck(/^[\u4e00-\u9fa5]+[\u4e00-\u9fa5]$/,event)">
                     <div class="m-1">
-                        <label for="enName">English Name</label>
+                        <label for="enName" class="flex flex-col xs:flex-row items-baseline">
+                            <div class="pr-4"> 英文姓名 </div>
+                            <div class="text-red-600 pointer-events-none pr-2" v-show="formErrors.enName !== ''"><i class='bx bx-message-rounded-error text-xs pt-1 sm:text-base'> {{ formErrors.enName }}</i></div>
+                        </label>
                     </div>
-                    <input class="px-2 py-1 rounded-md" type="text" id="enName" v-model="formData.enName">
+                    <input class="px-2 py-1 rounded-md ring-1 ring-transparent" :class="{ 'ring-red-600': formErrors.enName !== ''}" type="text" id="enName" v-model="formData.enName" required @blur="(event)=>formCheck(/^[A-Z][a-z]{3,}$/,event)">
+                    <div class="m-1">
+                        <label for="birth" >生日</label>
+                    </div>
+                    <input class="px-2 py-1 rounded-md" type="date" id="birth" v-model="formData.birth" required>
                 </div>
                 <div class="mx-2 up-section">
                     <div class="m-1">
-                        <label for="birth">Birth</label>
+                        <label for="idNumber" class="flex flex-col xs:flex-row items-baseline">
+                            <div class="pr-4" > 身分證字號 </div>
+                            <div class="text-red-600 pointer-events-none pr-2" v-show="formErrors.idNumber !== ''"> <i class='bx bx-message-rounded-error text-xs pt-1 sm:text-base'> {{ formErrors.idNumber }}</i></div>
+                        </label>
                     </div>
-                    <input class="px-2 py-1 rounded-md" type="date" id="birth" v-model="formData.birth">
+                    <input class="px-2 py-1 rounded-md ring-1 ring-transparent" :class="{ 'ring-red-600': formErrors.idNumber !== ''}" type="text" id="idNumber" v-model="formData.idNumber" required @blur="(event)=>formCheck(/^[A-Z][1,2][0-9]{8}$/,event)">
                     <div class="m-1">
-                        <label for="idNumber">Identity Number</label>
+                        <label for="phone" class="flex flex-col xs:flex-row items-baseline">
+                            <div class="pr-4"> 手機號碼 </div>
+                            <div class="text-red-600 pointer-events-none pr-2" v-show="formErrors.phone !== ''"> <i class='bx bx-message-rounded-error text-xs pt-1 sm:text-base'> {{ formErrors.phone }}</i></div>
+                        </label>
                     </div>
-                    <input class="px-2 py-1 rounded-md" type="text" id="idNumber" v-model="formData.idNumber">
+                    <input class="px-2 py-1 rounded-md ring-1 ring-transparent" :class="{ 'ring-red-600': formErrors.phone !== ''}" type="text" id="phone" v-model="formData.phone" required @blur="(event)=>formCheck(/^09[0-9]{8}$/,event)">
+                    <div class="m-1">
+                        <label for="address">通訊地址</label>
+                    </div>
+                    <input class="px-2 py-1 rounded-md" type="text" id="address" v-model="formData.address" required>
                 </div>
-                <div class="mx-2 up-section">
-                    <div class="m-1">
-                        <label for="phone">Phone</label>
-                    </div>
-                    <input class="px-2 py-1 rounded-md" type="text" id="phone" v-model="formData.phone">
-                    <div class="m-1">
-                        <label for="address">Address</label>
-                    </div>
-                    <input class="px-2 py-1 rounded-md" type="text" id="address" v-model="formData.address">
+                <div class="w-full h-2">
+
                 </div>
-                <div class="w-full h-2"></div>
-                <imgedit ref="canvas"></imgedit>
+                <div class="w-full">
+                    <div class="text-center text-xl font-medium cursor-pointer" @click="canvasLoad()">
+                        上傳照片
+                    </div>
+                    <div>
+                        <imgedit ref="canvas"></imgedit>
+                    </div>
+                </div>
 
             </div>
             <div class="grid sm:grid-cols-3 mx-6 my-4 gap-4 grid-rows-3 sm:grid-rows-1">
@@ -69,7 +85,7 @@ export default {
                 phone: "",
                 address: "",
             },
-            formErrors:{
+            formErrors: {
                 chName: "",
                 enName: "",
                 birth: "",
@@ -101,23 +117,37 @@ export default {
             this.$refs.canvas.loadImg();
             this.img_onload = true;
         },
-        formCheck(regexp,event) {
-            
-            if(regexp.test(event.currentTarget.value)){
+        formCheck(regexp, event) {
+
+            if (regexp.test(event.currentTarget.value)) {
                 console.log(event.currentTarget.id)
-                switch (event.currentTarget.id ){
+                switch (event.currentTarget.id) {
                     case 'chName':
                         this.formErrors.chName = "";
                         return
+                    case 'enName':
+                        this.formErrors.enName = ""
+                        return
+                    case 'idNumber':
+                        this.formErrors.idNumber = ""
+                        return
+                    case 'phone':
+                        this.formErrors.phone = ""
+                        return
                 }
-            }else{
-                switch (event.currentTarget.id){
+            } else {
+                switch (event.currentTarget.id) {
                     case 'chName':
-                        this.formErrors.chName = "最少兩個字元，不包含特殊符號";
-                        event.currentTarget.focus();
-                        setTimeout(() => {
-                            this.formErrors.chName = "";
-                        }, 1500);
+                        this.formErrors.chName = "最少兩個中文字元";
+                        return
+                    case 'enName':
+                        this.formErrors.enName = "字首大寫，最少四個英文字元"
+                        return
+                    case 'idNumber':
+                        this.formErrors.idNumber = "字首英文大寫"
+                        return
+                    case 'phone':
+                        this.formErrors.phone = "09開頭十位數字"
                         return
                 }
             }
@@ -145,11 +175,17 @@ export default {
         }
 
         div.up-section {
-            width: 30%;
+            width: 48%;
 
             input,
             div {
                 width: 100%;
+
+                label {
+                    div {
+                        width: auto;
+                    }
+                }
             }
         }
 
@@ -169,14 +205,6 @@ export default {
             div.up-section {
                 width: 90%
             }
-        }
-    }
-}
-
-@media (max-width:500px) {
-    #newTeacherForm {
-        div:nth-child(2) {
-            button {}
         }
     }
 }

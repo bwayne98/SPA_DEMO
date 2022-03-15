@@ -6611,14 +6611,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     logOut: function logOut() {
       var _this2 = this;
 
-      localStorage.setItem('isLogged', 'false');
-      axios.post('/api/logout');
-      this.$router.push('/').then(function (res) {
-        _this2.$router.go();
-      })["catch"](function (err) {
-        console.log(err);
+      axios.post('/api/logout').then(function () {
+        localStorage.setItem('isLogged', 'false');
 
-        _this2.$router.go();
+        _this2.$router.push('/').then(function (res) {
+          _this2.$router.go();
+        })["catch"](function (err) {
+          console.log(err);
+
+          _this2.$router.go();
+        });
       });
     }
   }
@@ -7120,6 +7122,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -7168,8 +7186,6 @@ __webpack_require__.r(__webpack_exports__);
       this.img_onload = true;
     },
     formCheck: function formCheck(regexp, event) {
-      var _this = this;
-
       if (regexp.test(event.currentTarget.value)) {
         console.log(event.currentTarget.id);
 
@@ -7177,15 +7193,35 @@ __webpack_require__.r(__webpack_exports__);
           case 'chName':
             this.formErrors.chName = "";
             return;
+
+          case 'enName':
+            this.formErrors.enName = "";
+            return;
+
+          case 'idNumber':
+            this.formErrors.idNumber = "";
+            return;
+
+          case 'phone':
+            this.formErrors.phone = "";
+            return;
         }
       } else {
         switch (event.currentTarget.id) {
           case 'chName':
-            this.formErrors.chName = "最少兩個字元，不包含特殊符號";
-            event.currentTarget.focus();
-            setTimeout(function () {
-              _this.formErrors.chName = "";
-            }, 1500);
+            this.formErrors.chName = "最少兩個中文字元";
+            return;
+
+          case 'enName':
+            this.formErrors.enName = "字首大寫，最少四個英文字元";
+            return;
+
+          case 'idNumber':
+            this.formErrors.idNumber = "字首英文大寫";
+            return;
+
+          case 'phone':
+            this.formErrors.phone = "09開頭十位數字";
             return;
         }
       }
@@ -13174,7 +13210,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "#newTeacherForm div button[data-v-4843a5ad] {\n  box-shadow: 1px 2px black, 3px 5px black;\n  border-style: solid;\n  border-width: 0 1px 1px 0;\n  border-color: transparent;\n}\n#newTeacherForm div button[data-v-4843a5ad]:hover {\n  border-color: white;\n}\n#newTeacherForm div button[data-v-4843a5ad]:active {\n  color: black;\n}\n#newTeacherForm div div.up-section[data-v-4843a5ad] {\n  width: 30%;\n}\n#newTeacherForm div div.up-section input[data-v-4843a5ad],\n#newTeacherForm div div.up-section div[data-v-4843a5ad] {\n  width: 100%;\n}\n@media (max-width: 1024px) {\n#newTeacherForm div div.up-section[data-v-4843a5ad] {\n    width: 90%;\n}\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "#newTeacherForm div button[data-v-4843a5ad] {\n  box-shadow: 1px 2px black, 3px 5px black;\n  border-style: solid;\n  border-width: 0 1px 1px 0;\n  border-color: transparent;\n}\n#newTeacherForm div button[data-v-4843a5ad]:hover {\n  border-color: white;\n}\n#newTeacherForm div button[data-v-4843a5ad]:active {\n  color: black;\n}\n#newTeacherForm div div.up-section[data-v-4843a5ad] {\n  width: 48%;\n}\n#newTeacherForm div div.up-section input[data-v-4843a5ad],\n#newTeacherForm div div.up-section div[data-v-4843a5ad] {\n  width: 100%;\n}\n#newTeacherForm div div.up-section input label div[data-v-4843a5ad],\n#newTeacherForm div div.up-section div label div[data-v-4843a5ad] {\n  width: auto;\n}\n@media (max-width: 1024px) {\n#newTeacherForm div div.up-section[data-v-4843a5ad] {\n    width: 90%;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35851,186 +35887,350 @@ var render = function () {
             },
           },
           [
-            _c(
-              "div",
-              { staticClass: "flex justify-center flex-wrap" },
-              [
-                _c("div", { staticClass: "mx-2 up-section" }, [
-                  _c("div", { staticClass: "m-1 w-full relative" }, [
-                    _c(
-                      "label",
-                      { staticClass: " w-full", attrs: { for: "chName" } },
-                      [
-                        _c("span", [_vm._v(" Chinese Name ")]),
-                        _vm._v(" "),
-                        _c(
-                          "span",
-                          {
-                            staticClass:
-                              "text-red-600 pointer-events-none absolute top-8 right-2",
-                          },
-                          [_vm._v(" " + _vm._s(_vm.formErrors.chName) + " ")]
-                        ),
-                      ]
+            _c("div", { staticClass: "flex justify-center flex-wrap" }, [
+              _c("div", { staticClass: "mx-2 up-section" }, [
+                _c("div", { staticClass: "m-1 w-full relative" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "flex flex-col xs:flex-row items-baseline",
+                      attrs: { for: "chName" },
+                    },
+                    [
+                      _c("div", { staticClass: "pr-4" }, [
+                        _vm._v(" 中文姓名 "),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.formErrors.chName !== "",
+                              expression: "formErrors.chName !== ''",
+                            },
+                          ],
+                          staticClass: "text-red-600 pointer-events-none pr-2",
+                        },
+                        [
+                          _c(
+                            "i",
+                            {
+                              staticClass:
+                                "bx bx-message-rounded-error text-xs pt-1 sm:text-base",
+                            },
+                            [_vm._v(" " + _vm._s(_vm.formErrors.chName))]
+                          ),
+                        ]
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.chName,
+                      expression: "formData.chName",
+                    },
+                  ],
+                  staticClass: "px-2 py-1 rounded-md ring-1 ring-transparent",
+                  class: { "ring-red-600": _vm.formErrors.chName !== "" },
+                  attrs: { type: "text", id: "chName", required: "" },
+                  domProps: { value: _vm.formData.chName },
+                  on: {
+                    blur: function (event) {
+                      return _vm.formCheck(
+                        /^[\u4e00-\u9fa5]+[\u4e00-\u9fa5]$/,
+                        event
+                      )
+                    },
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "chName", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "m-1" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "flex flex-col xs:flex-row items-baseline",
+                      attrs: { for: "enName" },
+                    },
+                    [
+                      _c("div", { staticClass: "pr-4" }, [
+                        _vm._v(" 英文姓名 "),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.formErrors.enName !== "",
+                              expression: "formErrors.enName !== ''",
+                            },
+                          ],
+                          staticClass: "text-red-600 pointer-events-none pr-2",
+                        },
+                        [
+                          _c(
+                            "i",
+                            {
+                              staticClass:
+                                "bx bx-message-rounded-error text-xs pt-1 sm:text-base",
+                            },
+                            [_vm._v(" " + _vm._s(_vm.formErrors.enName))]
+                          ),
+                        ]
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.enName,
+                      expression: "formData.enName",
+                    },
+                  ],
+                  staticClass: "px-2 py-1 rounded-md ring-1 ring-transparent",
+                  class: { "ring-red-600": _vm.formErrors.enName !== "" },
+                  attrs: { type: "text", id: "enName", required: "" },
+                  domProps: { value: _vm.formData.enName },
+                  on: {
+                    blur: function (event) {
+                      return _vm.formCheck(/^[A-Z][a-z]{3,}$/, event)
+                    },
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "enName", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(0),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.birth,
+                      expression: "formData.birth",
+                    },
+                  ],
+                  staticClass: "px-2 py-1 rounded-md",
+                  attrs: { type: "date", id: "birth", required: "" },
+                  domProps: { value: _vm.formData.birth },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "birth", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mx-2 up-section" }, [
+                _c("div", { staticClass: "m-1" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "flex flex-col xs:flex-row items-baseline",
+                      attrs: { for: "idNumber" },
+                    },
+                    [
+                      _c("div", { staticClass: "pr-4" }, [
+                        _vm._v(" 身分證字號 "),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.formErrors.idNumber !== "",
+                              expression: "formErrors.idNumber !== ''",
+                            },
+                          ],
+                          staticClass: "text-red-600 pointer-events-none pr-2",
+                        },
+                        [
+                          _c(
+                            "i",
+                            {
+                              staticClass:
+                                "bx bx-message-rounded-error text-xs pt-1 sm:text-base",
+                            },
+                            [_vm._v(" " + _vm._s(_vm.formErrors.idNumber))]
+                          ),
+                        ]
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.idNumber,
+                      expression: "formData.idNumber",
+                    },
+                  ],
+                  staticClass: "px-2 py-1 rounded-md ring-1 ring-transparent",
+                  class: { "ring-red-600": _vm.formErrors.idNumber !== "" },
+                  attrs: { type: "text", id: "idNumber", required: "" },
+                  domProps: { value: _vm.formData.idNumber },
+                  on: {
+                    blur: function (event) {
+                      return _vm.formCheck(/^[A-Z][1,2][0-9]{8}$/, event)
+                    },
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "idNumber", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "m-1" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "flex flex-col xs:flex-row items-baseline",
+                      attrs: { for: "phone" },
+                    },
+                    [
+                      _c("div", { staticClass: "pr-4" }, [
+                        _vm._v(" 手機號碼 "),
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.formErrors.phone !== "",
+                              expression: "formErrors.phone !== ''",
+                            },
+                          ],
+                          staticClass: "text-red-600 pointer-events-none pr-2",
+                        },
+                        [
+                          _c(
+                            "i",
+                            {
+                              staticClass:
+                                "bx bx-message-rounded-error text-xs pt-1 sm:text-base",
+                            },
+                            [_vm._v(" " + _vm._s(_vm.formErrors.phone))]
+                          ),
+                        ]
+                      ),
+                    ]
+                  ),
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.phone,
+                      expression: "formData.phone",
+                    },
+                  ],
+                  staticClass: "px-2 py-1 rounded-md ring-1 ring-transparent",
+                  class: { "ring-red-600": _vm.formErrors.phone !== "" },
+                  attrs: { type: "text", id: "phone", required: "" },
+                  domProps: { value: _vm.formData.phone },
+                  on: {
+                    blur: function (event) {
+                      return _vm.formCheck(/^09[0-9]{8}$/, event)
+                    },
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "phone", $event.target.value)
+                    },
+                  },
+                }),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.formData.address,
+                      expression: "formData.address",
+                    },
+                  ],
+                  staticClass: "px-2 py-1 rounded-md",
+                  attrs: { type: "text", id: "address", required: "" },
+                  domProps: { value: _vm.formData.address },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.formData, "address", $event.target.value)
+                    },
+                  },
+                }),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "w-full h-2" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "w-full" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "text-center text-xl font-medium cursor-pointer",
+                    on: {
+                      click: function ($event) {
+                        return _vm.canvasLoad()
+                      },
+                    },
+                  },
+                  [
+                    _vm._v(
+                      "\r\n                        上傳照片\r\n                    "
                     ),
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.chName,
-                        expression: "formData.chName",
-                      },
-                    ],
-                    staticClass: "px-2 py-1 rounded-md",
-                    attrs: { type: "text", id: "chName", required: "" },
-                    domProps: { value: _vm.formData.chName },
-                    on: {
-                      blur: function (event) {
-                        return _vm.formCheck(/^[^\W^_]+[^\W^_]$/, event)
-                      },
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formData, "chName", $event.target.value)
-                      },
-                    },
-                  }),
-                  _vm._v(" "),
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.enName,
-                        expression: "formData.enName",
-                      },
-                    ],
-                    staticClass: "px-2 py-1 rounded-md",
-                    attrs: { type: "text", id: "enName" },
-                    domProps: { value: _vm.formData.enName },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formData, "enName", $event.target.value)
-                      },
-                    },
-                  }),
-                ]),
+                  ]
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "mx-2 up-section" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.birth,
-                        expression: "formData.birth",
-                      },
-                    ],
-                    staticClass: "px-2 py-1 rounded-md",
-                    attrs: { type: "date", id: "birth" },
-                    domProps: { value: _vm.formData.birth },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formData, "birth", $event.target.value)
-                      },
-                    },
-                  }),
-                  _vm._v(" "),
-                  _vm._m(2),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.idNumber,
-                        expression: "formData.idNumber",
-                      },
-                    ],
-                    staticClass: "px-2 py-1 rounded-md",
-                    attrs: { type: "text", id: "idNumber" },
-                    domProps: { value: _vm.formData.idNumber },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formData, "idNumber", $event.target.value)
-                      },
-                    },
-                  }),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "mx-2 up-section" }, [
-                  _vm._m(3),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.phone,
-                        expression: "formData.phone",
-                      },
-                    ],
-                    staticClass: "px-2 py-1 rounded-md",
-                    attrs: { type: "text", id: "phone" },
-                    domProps: { value: _vm.formData.phone },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formData, "phone", $event.target.value)
-                      },
-                    },
-                  }),
-                  _vm._v(" "),
-                  _vm._m(4),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formData.address,
-                        expression: "formData.address",
-                      },
-                    ],
-                    staticClass: "px-2 py-1 rounded-md",
-                    attrs: { type: "text", id: "address" },
-                    domProps: { value: _vm.formData.address },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formData, "address", $event.target.value)
-                      },
-                    },
-                  }),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "w-full h-2" }),
-                _vm._v(" "),
-                _c("imgedit", { ref: "canvas" }),
-              ],
-              1
-            ),
+                _c("div", [_c("imgedit", { ref: "canvas" })], 1),
+              ]),
+            ]),
             _vm._v(" "),
             _c(
               "div",
@@ -36097,7 +36297,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "m-1" }, [
-      _c("label", { attrs: { for: "enName" } }, [_vm._v("English Name")]),
+      _c("label", { attrs: { for: "birth" } }, [_vm._v("生日")]),
     ])
   },
   function () {
@@ -36105,31 +36305,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "m-1" }, [
-      _c("label", { attrs: { for: "birth" } }, [_vm._v("Birth")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "m-1" }, [
-      _c("label", { attrs: { for: "idNumber" } }, [_vm._v("Identity Number")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "m-1" }, [
-      _c("label", { attrs: { for: "phone" } }, [_vm._v("Phone")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "m-1" }, [
-      _c("label", { attrs: { for: "address" } }, [_vm._v("Address")]),
+      _c("label", { attrs: { for: "address" } }, [_vm._v("通訊地址")]),
     ])
   },
 ]
