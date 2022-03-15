@@ -11,20 +11,32 @@
 AWS
 http://spademo-env.eba-hji6v9g3.ap-northeast-1.elasticbeanstalk.com/
 
-// NewsController 要改用 python3 執行 (初次啟用要安裝python套件)
+    fgoyette@example.com
+    password
 
-// touch /etc/nginx/conf.d/elasticbeanstalk/laravel.conf
-// vim /etc/nginx/conf.d/elasticbeanstalk/laravel.conf
-`location / {
-      try_files $uri $uri/ /index.php?$query_string;
-      gzip_static on;
-}`
-//
+NewsController 要改用 python3 執行 (初次啟用要安裝python套件)
 
-//vim .env 或 cp /.env.awsexample
-`SESSION_DOMAIN
-SANCTUM_STATEFUL_DOMAINS`
-//
+    system('python ../resources/py/main.py');
+
+Ngnix添加 laravel設定檔
+
+    touch /etc/nginx/conf.d/elasticbeanstalk/laravel.conf
+    vim /etc/nginx/conf.d/elasticbeanstalk/laravel.conf
+laravel.conf內容
+
+    location / {
+    	try_files $uri $uri/ /index.php?$query_string;
+    	gzip_static on;
+    }
+重新啟動
+
+    nginx -s reload
+
+laravel內部設定 vim .env 或 cp /.env.awsexample
+
+    SESSION_DOMAIN
+    SANCTUM_STATEFUL_DOMAINS
+
 
 
 以補習班電子化管理需求設計
