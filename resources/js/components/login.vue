@@ -16,8 +16,8 @@
 
     <div v-else id="login" class="w-96 shadow rounded-xl text-center p-5 pb-0">
         <h1 class="my-5 text-4xl font-bold">Login</h1>
-        <p>Lorem ipsum dolor sit amet.</p>
-        <p class="text-red-600">{{ meg }}</p>
+        <p v-if="meg !== ''" class="text-xl text-red-600">{{ meg }}</p>
+        <p v-else class="text-xl font-light">請登入使用者</p>
         <div class="p-5 px-12">
             <form action="" v-on:submit.prevent>
                 <div>

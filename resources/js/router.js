@@ -18,8 +18,6 @@ import axios from "axios";
 // 使用 Vue Router
 Vue.use(VueRouter);
 
-let meg = "請登入使用者"
-
 // Route 設定
 export const routes = [
     {
@@ -81,7 +79,7 @@ export const routes = [
     },
 
     { path: "/newuser", component: newuser, name: "newuser" },
-    { path: "/login" , props:{meg:meg}, component: login, name: "login" },
+    { path: "/login" , component: login, name: "login" },
 
     {
         path: "/",

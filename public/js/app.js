@@ -8046,8 +8046,7 @@ __webpack_require__.r(__webpack_exports__);
 
  // 使用 Vue Router
 
-vue__WEBPACK_IMPORTED_MODULE_12__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_13__["default"]);
-var meg = "請登入使用者"; // Route 設定
+vue__WEBPACK_IMPORTED_MODULE_12__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_13__["default"]); // Route 設定
 
 var routes = [{
   path: "/newteacher",
@@ -8104,9 +8103,6 @@ var routes = [{
   name: "newuser"
 }, {
   path: "/login",
-  props: {
-    meg: meg
-  },
   component: _components_login_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
   name: "login"
 }, {
@@ -34774,11 +34770,13 @@ var render = function () {
                 _vm._v("Login"),
               ]),
               _vm._v(" "),
-              _c("p", [_vm._v("Lorem ipsum dolor sit amet.")]),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-red-600" }, [
-                _vm._v(_vm._s(_vm.meg)),
-              ]),
+              _vm.meg !== ""
+                ? _c("p", { staticClass: "text-xl text-red-600" }, [
+                    _vm._v(_vm._s(_vm.meg)),
+                  ])
+                : _c("p", { staticClass: "text-xl font-light" }, [
+                    _vm._v("請登入使用者"),
+                  ]),
               _vm._v(" "),
               _c("div", { staticClass: "p-5 px-12" }, [
                 _c(
