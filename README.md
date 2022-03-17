@@ -11,7 +11,7 @@
 AWS
 http://spademo-env.eba-hji6v9g3.ap-northeast-1.elasticbeanstalk.com/
 
-    fgoyette@example.com
+    vwaters@example.com
     password
 
 NewsController 要改用 python3 執行 (初次啟用要安裝python套件)
@@ -38,6 +38,20 @@ laravel內部設定 vim .env 或 cp /.env.awsexample
     SANCTUM_STATEFUL_DOMAINS
 
 
+MySQL
+GPG keys error
+
+    The updated MySQL GPG will need to be installed. For existing systems, the MySQL repository file in /etc/yum.repos.d/ will need to have its 'gpgkey' line adjusted to:
+
+    gpgkey=https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+
+    Or gpgcheck=0
+
+Root 預設密碼
+    
+    /var/log/mysqld.log
+
+    SET PASSWORD = PASSWORD('newpassword')
 
 以補習班電子化管理需求設計
 RWD練習
