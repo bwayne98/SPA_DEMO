@@ -6869,10 +6869,102 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["form", 'days'],
   data: function data() {
-    return {};
+    return {
+      level: 1,
+      rooms: ['請先選擇時段'],
+      room: '請先選擇時段',
+      teachers: [{
+        id: 'choose',
+        enName: '請先選擇時段'
+      }],
+      teacher_id: 'choose',
+      period: '',
+      checking: false
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    var period_select = document.getElementById('period');
+    period_select.addEventListener('change', function (e) {
+      _this.checking = true;
+      _this.period = e.target.value;
+      _this.teachers = [{
+        id: 'choose',
+        enName: '請先選擇時段'
+      }];
+      _this.teacher_id = 'choose';
+      _this.rooms = ['請先選擇時段'];
+      _this.room = '請先選擇時段';
+
+      if (e.target.value === '') {
+        _this.checking = false;
+        return;
+      }
+
+      axios.post('/api/checknewlesson', {
+        dates: _this.form,
+        days: _this.days.text,
+        period: _this.period
+      }).then(function (e) {
+        e.data[1].map(function (teacher) {
+          return _this.teachers.push(teacher);
+        });
+        var rooms = Object.keys(e.data[2]).map(function (key) {
+          return e.data[2][key];
+        });
+        rooms.map(function (room) {
+          return _this.rooms.push(room);
+        });
+      })["catch"](function (err) {
+        console.log(err);
+      }).then(function () {
+        _this.checking = false;
+      });
+    });
+  },
+  methods: {
+    filterTeacher: function filterTeacher() {},
+    checkLevel: function checkLevel() {
+      if (parseInt(this.level) > 12) {
+        this.level = 12;
+        return;
+      }
+
+      if (parseInt(this.level) < 1) {
+        this.level = 1;
+        return;
+      }
+
+      this.level = parseInt(this.level) ? parseInt(this.level) : 1;
+    }
   }
 });
 
@@ -13184,6 +13276,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "[data-v-20626d86]::-webkit-calendar-picker-indicator {\n  margin-left: 0px;\n}\n[data-v-20626d86]::-webkit-datetime-edit {\n  text-align: center;\n}\n#checkform div.date-create[data-v-20626d86] {\n  padding: 4px 8px 12px 8px;\n}\n#checkform div.date-create div[data-v-20626d86] {\n  width: 100%;\n  margin: 1px;\n  margin-top: 6px;\n  text-align: center;\n}\n#checkform div.date-create div label[data-v-20626d86] {\n  font-size: 1.2em;\n}\n#checkform div.date-create input[data-v-20626d86] {\n  padding: 2px 5px 2px 5px;\n  width: 100%;\n  font-size: 1.2em;\n  border-radius: 3px;\n}\ndiv.guild[data-v-20626d86] {\n  text-align: center;\n  margin: 10px;\n  font-size: 1.2em;\n  font-weight: 200;\n}\n.checkbotton button[data-v-20626d86] {\n  color: white;\n  box-shadow: 4px 5px black;\n  border-style: solid;\n  border-width: 1px;\n  border-color: black;\n  border-radius: 5px;\n  width: 50%;\n  background-color: #2E86AB;\n  font-size: 1.2em;\n}\n.checkbotton button[data-v-20626d86]:hover {\n  border-color: transparent white white transparent;\n}\n.checkbotton button[data-v-20626d86]:active {\n  transform: translateX(2px) translateY(3px);\n  box-shadow: 2px 3px black;\n}\n.checkbotton button[data-v-20626d86]:disabled {\n  transform: translateX(2px) translateY(3px);\n  box-shadow: 2px 3px black;\n  opacity: 0.6;\n}\n.date-set[data-v-20626d86] {\n  display: grid;\n  text-align: center;\n}\n.date-set .dates[data-v-20626d86] {\n  display: grid;\n  grid-template-columns: 50px 1fr 30px;\n  -moz-column-gap: 3px;\n       column-gap: 3px;\n  margin: 5px 0 5px 0;\n}\n.date-set .dates div[data-v-20626d86]:nth-child(1) {\n  padding: 5px;\n  text-align: right;\n  font-weight: 600;\n  place-self: center;\n}\n.date-set .dates div:nth-child(1) span[data-v-20626d86] {\n  position: relative;\n  margin-right: 10px;\n  color: white;\n  background-color: #565554;\n  padding: 5px;\n}\n.date-set .dates div:nth-child(1) span[data-v-20626d86]:after {\n  position: absolute;\n  content: \"\";\n  border-style: solid;\n  border-width: 15px;\n  border-color: transparent transparent transparent #565554;\n  top: 0;\n  right: -30px;\n  width: 30px;\n  height: 100%;\n}\n.date-set .dates[data-v-20626d86] :nth-child(2) {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background-color: white;\n  padding: 0 3px 0 3px;\n  border-radius: 3px;\n  font-size: 1.2em;\n  width: 100%;\n  position: relative;\n}\n.date-set .dates .edit[data-v-20626d86] {\n  grid-column: 2/-1;\n  position: relative;\n  display: block;\n}\n.date-set .dates .edit input[data-v-20626d86] {\n  width: 100%;\n  height: 100%;\n  padding: 4px 0 4px 0;\n}\n.date-set .dates .edit div[data-v-20626d86] {\n  pointer-events: none;\n}\n.date-set .dates .edit button[data-v-20626d86] {\n  position: absolute;\n  color: #2E86AB;\n  background-color: rgba(0, 0, 0, 0.1);\n  border-radius: 3px 0 0 3px;\n  top: -100%;\n  height: 100%;\n  width: 50%;\n  left: 0px;\n  z-index: 10;\n  opacity: 0;\n  pointer-events: none;\n}\n.date-set .dates .edit button[data-v-20626d86]:nth-child(4) {\n  border-radius: 0 3px 3px 0;\n  left: auto;\n  right: 0px;\n  color: red;\n}\n.date-set .dates .edit:hover button[data-v-20626d86] {\n  pointer-events: all;\n  opacity: 1;\n  transition: all 0.5s;\n}\n.date-set .dates .edit:hover button[data-v-20626d86]:hover {\n  border-radius: 3px;\n  width: 100%;\n  z-index: 15;\n  background-color: #2E86AB;\n  color: white;\n  transition: all 0.3s;\n}\n.date-set .dates .edit:hover button[data-v-20626d86]:hover:nth-child(4) {\n  background-color: red;\n}\n.date-set .dates :nth-child(3) button[data-v-20626d86] {\n  font-size: 30px;\n  cursor: pointer;\n  margin-top: 5px;\n}\n.date-set .dates :nth-child(3) button[data-v-20626d86]:hover {\n  color: #2E86AB;\n}\n.date-set .dates :nth-child(3) button[data-v-20626d86]:disabled {\n  cursor: auto;\n  opacity: 0.5;\n}\n.date-set .dates :nth-child(3) button[data-v-20626d86]:disabled:hover {\n  color: black;\n}\n.checkbotton[data-v-20626d86] {\n  padding-bottom: 16px;\n  border-style: solid;\n  border-width: 0 0 1px 0;\n  border-color: black;\n}\n.detail-set[data-v-20626d86] {\n  margin-top: 10px;\n  font-size: 1.2em;\n}\n@media (max-width: 1024px) {\n.date-set[data-v-20626d86] {\n    grid-template-columns: repeat(2, 1fr);\n    grid-template-rows: repeat(13, 1fr);\n    grid-auto-flow: column;\n}\n.date-set[data-v-20626d86] :nth-child(25) {\n    grid-row: 13;\n    grid-column: 1/span 2;\n}\n}\n@media (max-width: 400px) {\n.dates[data-v-20626d86] :nth-child(2) {\n    font-size: 1em !important;\n}\n}", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newLessonDetail.vue?vue&type=style&index=0&id=602fdd6e&lang=scss&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newLessonDetail.vue?vue&type=style&index=0&id=602fdd6e&lang=scss&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "h2[data-v-602fdd6e] {\n  text-align: center;\n  font-size: 2em;\n  font-weight: 400;\n}\n.detail-set[data-v-602fdd6e] {\n  display: grid;\n  grid-template-columns: 1fr;\n  row-gap: 5px;\n  padding: 0 10px 0 10px;\n  width: 100%;\n}\n.detail-set .input-gird[data-v-602fdd6e] {\n  display: grid;\n  grid-template-columns: 100px 1fr;\n}\n.detail-set .input-gird .period-gird[data-v-602fdd6e] {\n  display: grid;\n  grid-template-columns: 100px 100px;\n}\n.detail-set .input-gird .name-grid[data-v-602fdd6e] {\n  display: grid;\n  -moz-column-gap: 5px;\n       column-gap: 5px;\n  grid-template-columns: repeat(3, 60px);\n}\n.select-arrow[data-v-602fdd6e] {\n  text-align: center;\n  font-weight: 400;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n}\n.input-box[data-v-602fdd6e] {\n  border-radius: 3px;\n}\n.input-number[data-v-602fdd6e] {\n  text-align: center;\n  font-weight: 400;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -31647,6 +31763,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newLessonDetail.vue?vue&type=style&index=0&id=602fdd6e&lang=scss&scoped=true&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newLessonDetail.vue?vue&type=style&index=0&id=602fdd6e&lang=scss&scoped=true& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_newLessonDetail_vue_vue_type_style_index_0_id_602fdd6e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./newLessonDetail.vue?vue&type=style&index=0&id=602fdd6e&lang=scss&scoped=true& */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newLessonDetail.vue?vue&type=style&index=0&id=602fdd6e&lang=scss&scoped=true&");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_newLessonDetail_vue_vue_type_style_index_0_id_602fdd6e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_1__["default"], options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_newLessonDetail_vue_vue_type_style_index_0_id_602fdd6e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_1__["default"].locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newTeacher.vue?vue&type=style&index=0&id=4843a5ad&lang=scss&scoped=true&":
 /*!************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newTeacher.vue?vue&type=style&index=0&id=4843a5ad&lang=scss&scoped=true& ***!
@@ -32469,15 +32615,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _newLessonDetail_vue_vue_type_template_id_602fdd6e_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./newLessonDetail.vue?vue&type=template&id=602fdd6e&scoped=true& */ "./resources/js/components/newLessonDetail.vue?vue&type=template&id=602fdd6e&scoped=true&");
 /* harmony import */ var _newLessonDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./newLessonDetail.vue?vue&type=script&lang=js& */ "./resources/js/components/newLessonDetail.vue?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _newLessonDetail_vue_vue_type_style_index_0_id_602fdd6e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./newLessonDetail.vue?vue&type=style&index=0&id=602fdd6e&lang=scss&scoped=true& */ "./resources/js/components/newLessonDetail.vue?vue&type=style&index=0&id=602fdd6e&lang=scss&scoped=true&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
+;
 
 
 /* normalize component */
-;
-var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _newLessonDetail_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _newLessonDetail_vue_vue_type_template_id_602fdd6e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.render,
   _newLessonDetail_vue_vue_type_template_id_602fdd6e_scoped_true___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
@@ -32986,6 +33134,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_newLesson_vue_vue_type_style_index_0_id_20626d86_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./newLesson.vue?vue&type=style&index=0&id=20626d86&lang=scss&scoped=true& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newLesson.vue?vue&type=style&index=0&id=20626d86&lang=scss&scoped=true&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/newLessonDetail.vue?vue&type=style&index=0&id=602fdd6e&lang=scss&scoped=true&":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/newLessonDetail.vue?vue&type=style&index=0&id=602fdd6e&lang=scss&scoped=true& ***!
+  \***************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_2_node_modules_sass_loader_dist_cjs_js_clonedRuleSet_12_0_rules_0_use_3_node_modules_vue_loader_lib_index_js_vue_loader_options_newLessonDetail_vue_vue_type_style_index_0_id_602fdd6e_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!../../../node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./newLessonDetail.vue?vue&type=style&index=0&id=602fdd6e&lang=scss&scoped=true& */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[1]!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[2]!./node_modules/sass-loader/dist/cjs.js??clonedRuleSet-12[0].rules[0].use[3]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/newLessonDetail.vue?vue&type=style&index=0&id=602fdd6e&lang=scss&scoped=true&");
 
 
 /***/ }),
@@ -35493,10 +35654,76 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("h2", [_vm._v("課程設定選項")]),
+    _vm._v(" "),
     _c("form", { staticClass: "detail-set", attrs: { action: "#" } }, [
-      _vm._m(0),
+      _c("div", { staticClass: "input-gird" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("課程名稱")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "name-grid" }, [
+          _c(
+            "select",
+            {
+              staticClass: "input-box select-arrow",
+              attrs: { name: "", id: "", disabled: _vm.checking },
+            },
+            [
+              _c("option", { attrs: { value: "Y" } }, [_vm._v("Y")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "R" } }, [_vm._v("R")]),
+            ]
+          ),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.level,
+                expression: "level",
+              },
+            ],
+            staticClass: "input-box input-number",
+            attrs: {
+              id: "level",
+              type: "number",
+              value: "1",
+              min: "1",
+              max: "12",
+              disabled: _vm.checking,
+            },
+            domProps: { value: _vm.level },
+            on: {
+              blur: function ($event) {
+                return _vm.checkLevel()
+              },
+              input: function ($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.level = $event.target.value
+              },
+            },
+          }),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              staticClass: "input-box select-arrow",
+              attrs: { name: "", id: "", disabled: _vm.checking },
+            },
+            [
+              _c("option", { attrs: { value: "X" } }, [_vm._v("X")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "Y" } }, [_vm._v("Y")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "Z" } }, [_vm._v("Z")]),
+            ]
+          ),
+        ]),
+      ]),
       _vm._v(" "),
-      _c("div", [
+      _c("div", { staticClass: "input-gird" }, [
         _c("label", { attrs: { for: "" } }, [_vm._v("課程時間")]),
         _vm._v(" "),
         _c("span", [
@@ -35504,56 +35731,141 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _c("div", [
+      _c("div", { staticClass: "input-gird" }, [
         _c("label", { attrs: { for: "" } }, [_vm._v("課程時段")]),
         _vm._v(" "),
-        _c("span", [_vm._v(" " + _vm._s(_vm.days.text))]),
-        _vm._v(" "),
-        _vm._m(1),
+        _c("div", { staticClass: "period-gird" }, [
+          _c("span", [_vm._v(" " + _vm._s(_vm.days.text))]),
+          _vm._v(" "),
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.period,
+                  expression: "period",
+                },
+              ],
+              staticClass: "input-box select-arrow",
+              attrs: { name: "", id: "period", disabled: _vm.checking },
+              on: {
+                change: function ($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function (o) {
+                      return o.selected
+                    })
+                    .map(function (o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.period = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                },
+              },
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("請選擇")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "18:" } }, [_vm._v("18:00")]),
+              _vm._v(" "),
+              _c("option", { attrs: { value: "20" } }, [_vm._v("20:00")]),
+            ]
+          ),
+        ]),
       ]),
       _vm._v(" "),
-      _vm._m(2),
+      _c("div", { staticClass: "input-gird" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("授課老師")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.teacher_id,
+                expression: "teacher_id",
+              },
+            ],
+            staticClass: "input-box select-arrow",
+            attrs: { name: "", id: "", disabled: _vm.checking },
+            on: {
+              change: function ($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function (o) {
+                    return o.selected
+                  })
+                  .map(function (o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.teacher_id = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+            },
+          },
+          _vm._l(_vm.teachers, function (teacher) {
+            return _c(
+              "option",
+              { key: teacher.id, domProps: { value: teacher.id } },
+              [_vm._v(_vm._s(teacher.enName))]
+            )
+          }),
+          0
+        ),
+      ]),
       _vm._v(" "),
-      _vm._m(3),
+      _c("div", { staticClass: "input-gird" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("教室")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.room,
+                expression: "room",
+              },
+            ],
+            staticClass: "input-box select-arrow",
+            attrs: { name: "", id: "", disabled: _vm.checking },
+            on: {
+              change: function ($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function (o) {
+                    return o.selected
+                  })
+                  .map(function (o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.room = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              },
+            },
+          },
+          _vm._l(_vm.rooms, function (room, index) {
+            return _c(
+              "option",
+              { key: "room" + index, domProps: { value: room } },
+              [_vm._v(_vm._s(room))]
+            )
+          }),
+          0
+        ),
+      ]),
     ]),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("label", { attrs: { for: "" } }, [_vm._v("課程名稱")]),
-      _vm._v(" "),
-      _c("input", { attrs: { type: "text" } }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("select", { attrs: { name: "", id: "" } }, [
-      _c("option", { attrs: { value: "" } }, [_vm._v("18:00")]),
-      _vm._v(" "),
-      _c("option", { attrs: { value: "" } }, [_vm._v("20:00")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("label", { attrs: { for: "" } }, [_vm._v("授課老師")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("label", { attrs: { for: "" } }, [_vm._v("教室")])])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

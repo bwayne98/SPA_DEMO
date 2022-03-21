@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\LoginController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\CheckNewLessonController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\pageController;
 use App\Http\Controllers\ShowLessonCurrentController;
@@ -37,6 +39,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/student/{id}/showstudentlessons', ShowStudenLessonsController::class);
     Route::resource('lesson', LessonController::class)->only(['index']);
     Route::resource('teacher', TeacherController::class)->only(['index']);
+
+    Route::post('/checknewlesson',CheckNewLessonController::class);
 });
 Route::get('sanctum/csrf-dookie', [CsrfCookieController::class, 'show']);
 Route::get('/news', NewsController::class);
