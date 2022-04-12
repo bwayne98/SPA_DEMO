@@ -19,14 +19,15 @@
             </div>
 
         </div>
-        <div class="input-gird">
+        <div class="input-gird ">
             <label for="">課程時間</label>
-            <span>{{form[1]}} ~ {{form[24]}}</span>
+            <div class="flex justify-between" ><span>{{form[1]}}</span> <span>~</span> <span>{{form[24]}}</span></div>
+
         </div>
         <div class="input-gird">
             <label for="">課程時段</label>
-            <div class="period-gird">
-                <span> {{ days.text }}</span>
+            <div class="period-gird text-center">
+                <span>{{ days.text }}</span>
                 <select class="input-box select-arrow" name="" id="period" v-model="period" :disabled="checking">
                     <option value="">請選擇</option>
                     <option value="18:">18:00</option>
@@ -97,9 +98,9 @@ export default {
                 }).then((e) => {
                     e.data[1].map(teacher => this.teachers.push(teacher));
                     let rooms = Object.keys(e.data[2])
-                            .map(function (key) {
-                                return e.data[2][key];
-                            });
+                        .map(function (key) {
+                            return e.data[2][key];
+                        });
                     rooms.map(room => this.rooms.push(room));
                 }).catch((err) => {
                     console.log(err)
@@ -150,13 +151,13 @@ h2 {
 
         .period-gird {
             display: grid;
-            grid-template-columns: 100px 100px;
+            grid-template-columns: 1fr 1fr;
         }
 
         .name-grid {
             display: grid;
             column-gap: 5px;
-            grid-template-columns: repeat(3, 60px);
+            grid-template-columns: repeat(3, 1fr);
         }
     }
 }

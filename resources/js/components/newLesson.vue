@@ -1,5 +1,5 @@
 <template>
-<div class="flex justify-center items-center">
+<div class="flex justify-center items-center pb-8">
     <div class="md:w-3/5 w-full">
         <h1 class="mt-12 text-3xl font-black text-center">New Lesson create.</h1>
 

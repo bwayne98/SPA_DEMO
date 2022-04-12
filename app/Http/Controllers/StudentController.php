@@ -16,6 +16,8 @@ class StudentController extends Controller
     public function index()
     {
         return Student::all("id","chName","enName", "phone");
+
+        // return Student::where('enName', 'like', '%Lynn%')->get();
     }
 
     /**

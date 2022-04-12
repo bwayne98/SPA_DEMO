@@ -6893,6 +6893,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["form", 'days'],
   data: function data() {
@@ -7951,6 +7952,8 @@ __webpack_require__.r(__webpack_exports__);
       if (_this2.findStudents.length > _this2.perpageItem) {
         _this2.totalPage = Math.ceil(_this2.findStudents.length / _this2.perpageItem);
         _this2.studentList = _this2.findStudents.slice(0, _this2.perpageItem);
+      } else {
+        _this2.studentList = response.data;
       }
     }).then(function (res) {
       setTimeout(function () {
@@ -13299,7 +13302,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "h2[data-v-602fdd6e] {\n  text-align: center;\n  font-size: 2em;\n  font-weight: 400;\n}\n.detail-set[data-v-602fdd6e] {\n  display: grid;\n  grid-template-columns: 1fr;\n  row-gap: 5px;\n  padding: 0 10px 0 10px;\n  width: 100%;\n}\n.detail-set .input-gird[data-v-602fdd6e] {\n  display: grid;\n  grid-template-columns: 100px 1fr;\n}\n.detail-set .input-gird .period-gird[data-v-602fdd6e] {\n  display: grid;\n  grid-template-columns: 100px 100px;\n}\n.detail-set .input-gird .name-grid[data-v-602fdd6e] {\n  display: grid;\n  -moz-column-gap: 5px;\n       column-gap: 5px;\n  grid-template-columns: repeat(3, 60px);\n}\n.select-arrow[data-v-602fdd6e] {\n  text-align: center;\n  font-weight: 400;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n}\n.input-box[data-v-602fdd6e] {\n  border-radius: 3px;\n}\n.input-number[data-v-602fdd6e] {\n  text-align: center;\n  font-weight: 400;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "h2[data-v-602fdd6e] {\n  text-align: center;\n  font-size: 2em;\n  font-weight: 400;\n}\n.detail-set[data-v-602fdd6e] {\n  display: grid;\n  grid-template-columns: 1fr;\n  row-gap: 5px;\n  padding: 0 10px 0 10px;\n  width: 100%;\n}\n.detail-set .input-gird[data-v-602fdd6e] {\n  display: grid;\n  grid-template-columns: 100px 1fr;\n}\n.detail-set .input-gird .period-gird[data-v-602fdd6e] {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n}\n.detail-set .input-gird .name-grid[data-v-602fdd6e] {\n  display: grid;\n  -moz-column-gap: 5px;\n       column-gap: 5px;\n  grid-template-columns: repeat(3, 1fr);\n}\n.select-arrow[data-v-602fdd6e] {\n  text-align: center;\n  font-weight: 400;\n  -webkit-appearance: none;\n  -moz-appearance: none;\n  appearance: none;\n}\n.input-box[data-v-602fdd6e] {\n  border-radius: 3px;\n}\n.input-number[data-v-602fdd6e] {\n  text-align: center;\n  font-weight: 400;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -35430,7 +35433,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "flex justify-center items-center" }, [
+  return _c("div", { staticClass: "flex justify-center items-center pb-8" }, [
     _c("div", { staticClass: "md:w-3/5 w-full" }, [
       _c("h1", { staticClass: "mt-12 text-3xl font-black text-center" }, [
         _vm._v("New Lesson create."),
@@ -35723,19 +35726,23 @@ var render = function () {
         ]),
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "input-gird" }, [
+      _c("div", { staticClass: "input-gird " }, [
         _c("label", { attrs: { for: "" } }, [_vm._v("課程時間")]),
         _vm._v(" "),
-        _c("span", [
-          _vm._v(_vm._s(_vm.form[1]) + " ~ " + _vm._s(_vm.form[24])),
+        _c("div", { staticClass: "flex justify-between" }, [
+          _c("span", [_vm._v(_vm._s(_vm.form[1]))]),
+          _vm._v(" "),
+          _c("span", [_vm._v("~")]),
+          _vm._v(" "),
+          _c("span", [_vm._v(_vm._s(_vm.form[24]))]),
         ]),
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "input-gird" }, [
         _c("label", { attrs: { for: "" } }, [_vm._v("課程時段")]),
         _vm._v(" "),
-        _c("div", { staticClass: "period-gird" }, [
-          _c("span", [_vm._v(" " + _vm._s(_vm.days.text))]),
+        _c("div", { staticClass: "period-gird text-center" }, [
+          _c("span", [_vm._v(_vm._s(_vm.days.text))]),
           _vm._v(" "),
           _c(
             "select",

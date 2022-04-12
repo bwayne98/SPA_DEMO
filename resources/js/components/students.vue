@@ -146,11 +146,13 @@ export default {
             if (this.findStudents.length > this.perpageItem) {
                 this.totalPage = Math.ceil(this.findStudents.length / this.perpageItem);
                 this.studentList = this.findStudents.slice(0, this.perpageItem);
+            }else{
+                this.studentList = response.data
             }
-        }, ).then(res=>
+        }, ).then(()=>
         {
             setTimeout(() => {
-            this.loading = false;
+            this.loading = false;D
         }, 500);
         });
         
