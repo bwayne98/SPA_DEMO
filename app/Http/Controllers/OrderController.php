@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Lesson;
-use App\Models\Teacher;
+use App\Models\LessonDetail;
+use App\Models\Order;
+use Carbon\Carbon;
+use Facade\FlareClient\Http\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
-class LessonController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,10 +20,6 @@ class LessonController extends Controller
     public function index()
     {
         //
-        $lessons = Lesson::orderBy('start')->orderBy('room')->addSelect(['teacher' => Teacher::select('chName')->whereColumn('id','lessons.teacher_id')])->get();
-
-
-        return $lessons;
     }
 
     /**
@@ -40,7 +40,25 @@ class LessonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //確認報名人數
+        $student_count = LessonDetail::where('lesson_id', $request->lesson_id)->count() + Order::where('lesson_id', $request->lesson_id)->where('paid', true)->where('check_in', false)->count();
+
+        if ($student_count >= 20) {
+            return response()->json([
+                'state' => 422,
+                'meg' => '人數已滿，請選擇其他課程'
+            ], 422);
+        } else {
+            $order = new Order();
+            $order->name = 'test' . '123';
+            $order->email = 'test@gmail.com';
+            $order->phone = '0912345678';
+            $order->lesson_id = $request->lesson_id;
+            // $order->paid = true;
+            $order->save();
+
+            return $order->id;
+        }
     }
 
     /**
@@ -52,7 +70,7 @@ class LessonController extends Controller
     public function show($id)
     {
         //
-        return Lesson::where('id' , $id)->addSelect(['teacher' => Teacher::select('chName')->whereColumn('id','lessons.teacher_id')])->get();
+        return Order::find($id);
     }
 
     /**
@@ -76,6 +94,9 @@ class LessonController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+
+
     }
 
     /**

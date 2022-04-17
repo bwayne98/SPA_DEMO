@@ -21,7 +21,7 @@
                         <div class="col-span-5 text-center">--{{lesson.name}}--</div>
                         <div id="lessson-content" class="row-start-2 col-span-5 row-span-4 bg-cyan-600 bg-opacity-10 text-cyan-800 mx-2 rounded shadow-md relative overflow-hidden">
                             <div id="lessson-sign" class="absolute w-full h-full bg-gray-400 bg-opacity-50 text-center pt-4 text-2xl">
-                                <button class="bg-white bg-opacity-60 text-gray-600 px-16 active:bg-opacity-80">點擊報名</button>
+                                <router-link class="bg-white bg-opacity-60 text-gray-600 px-16 active:bg-opacity-80" :to="{name:'neworder',params:{id:lesson.id}}">點擊報名</router-link>
                             </div>
                             <div class="text-center pt-1  font-semibold text-xl">課程資訊</div>
                             <hr>

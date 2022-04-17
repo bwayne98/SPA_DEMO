@@ -17,6 +17,11 @@ use Illuminate\Http\Request;
 */
 use App\Http\Controllers\pageController;
 
+Route::get('/php',function(){
+    return phpinfo();
+});
+
+
 Route::get('/{any?}', function () {
     return view('welcome');
 })->where('any', '^(?!api\/)[\/\w\.\,-]*');

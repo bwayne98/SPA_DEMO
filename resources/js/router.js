@@ -13,7 +13,9 @@ import nav from "./components/navComponent.vue";
 import login from "./components/login.vue";
 import newuser from "./components/newuser.vue";
 import newstudent from "./components/newStudent.vue";
-import axios from "axios";
+import neworder from "./components/NewOrderView.vue"
+import orderstate from "./components/OrderStateView.vue"
+// import axios from "axios";
 
 // 使用 Vue Router
 Vue.use(VueRouter);
@@ -82,6 +84,24 @@ export const routes = [
     { path: "/login" , component: login, name: "login" },
 
     {
+        path: "/neworder/:id",
+        components: {
+            default: neworder,
+            nav: nav,
+        },
+        name: "neworder",
+    },
+
+    {
+        path: "/orderstate/:id",
+        components: {
+            default: orderstate,
+            nav: nav,
+        },
+        name: "orderstate",
+    },
+
+    {
         path: "/",
         components: {
             default: ExampleComponent,
@@ -98,8 +118,11 @@ const router = new VueRouter({
     routes,
 });
 
+const permise = ['login','index','neworder','orderstate'];
+
 router.beforeEach((to, from, next) => {
-    if (to.name != "login" && to.name != "index") {
+    
+    if (!permise.includes(to.name)) {
         if (
             localStorage.getItem("isLogged") == "false" ||
             localStorage.getItem("isLogged") == null
