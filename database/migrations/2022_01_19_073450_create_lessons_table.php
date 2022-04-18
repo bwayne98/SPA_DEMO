@@ -21,6 +21,8 @@ class CreateLessonsTable extends Migration
             $table->date('end');
             $table->json('date');
             
+            $table->integer('order_count')->default('50');
+
             $table->string('room');
             $table->string('period');
             $table->foreignUuid('teacher_id')->constrained('teachers');

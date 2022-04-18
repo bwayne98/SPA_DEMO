@@ -44,11 +44,11 @@ class GreenWorldController extends Controller
     public function createOrder(Request $request)
     {
 
-        $student_count = Lesson::studentCount($request->lesson_id);
+        // $student_count = Lesson::studentCount($request->lesson_id);
 
-        if ($student_count > 20) {
-            return response('班級人數已滿，請重新報名課程', 422);
-        }
+        // if ($student_count > 20) {
+        //     return response('班級人數已滿，請重新報名課程', 422);
+        // }
 
         // $response = $this->geteway->purchase([
         //     'MerchantTradeNo' => $request->id, //訂單編號

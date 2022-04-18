@@ -5554,9 +5554,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5714,7 +5711,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         } else {
           _this.err_meg = err.response.data;
         }
-      }).then(function () {// document.getElementById("ecpay-form").submit()
+      }).then(function () {
+        document.getElementById("ecpay-form").submit();
       });
     }
   },
@@ -13550,7 +13548,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".order-container[data-v-a6d08884] {\n  width: 1000px;\n  max-width: 100vw;\n  height: 100vh;\n  margin: 0 auto;\n  text-align: center;\n  padding: 30px 50px;\n}\n.order-container > button[data-v-a6d08884] {\n  font-weight: 100;\n  margin-top: 20px;\n  width: 120px;\n  height: 55px;\n  background-color: gray;\n  color: white;\n  border-radius: 3px;\n}\n.order-container P[data-v-a6d08884] {\n  margin: 10px;\n  color: palevioletred;\n}\n.lesson[data-v-a6d08884], .form[data-v-a6d08884] {\n  display: grid;\n  grid-template-columns: 0.4fr 1fr;\n  font-size: 20px;\n  line-height: 28px;\n  row-gap: 10px;\n  border-style: none none solid none;\n  border-width: 1px;\n  border-color: darkcyan;\n}\n.lesson > h5[data-v-a6d08884], .form > h5[data-v-a6d08884] {\n  grid-column: 1/3;\n  font-size: 32px;\n  line-height: 40px;\n  margin: 15px 0;\n}\n.lesson > input[data-v-a6d08884], .form > input[data-v-a6d08884] {\n  min-width: 10px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".order-container[data-v-a6d08884] {\n  width: 1000px;\n  max-width: 100vw;\n  height: 100vh;\n  margin: 0 auto;\n  text-align: center;\n  padding: 30px 50px;\n}\n.order-container > button[data-v-a6d08884] {\n  font-weight: 100;\n  margin-top: 20px;\n  width: 120px;\n  height: 55px;\n  background-color: gray;\n  color: white;\n  border-radius: 3px;\n}\n.order-container P[data-v-a6d08884] {\n  margin: 10px;\n  color: palevioletred;\n}\n.lesson[data-v-a6d08884],\n.form[data-v-a6d08884] {\n  display: grid;\n  grid-template-columns: 0.4fr 1fr;\n  font-size: 20px;\n  line-height: 28px;\n  row-gap: 10px;\n  border-style: none none solid none;\n  border-width: 1px;\n  border-color: darkcyan;\n}\n.lesson > h5[data-v-a6d08884],\n.form > h5[data-v-a6d08884] {\n  grid-column: 1/3;\n  font-size: 32px;\n  line-height: 40px;\n  margin: 15px 0;\n}\n.lesson > input[data-v-a6d08884],\n.form > input[data-v-a6d08884] {\n  min-width: 10px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

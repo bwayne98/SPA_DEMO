@@ -1,7 +1,6 @@
 <template>
 <div class="order-container">
 
-    
     <div class="lesson" v-if="lesson">
         <h5>課程資訊</h5>
         <label for="">課程名稱</label>
@@ -17,8 +16,6 @@
         <label for="">課程費用</label>
         <div>NT$ 3600</div>
     </div>
-    
-    
 
     <div class="form">
         <h5>報名資訊</h5>
@@ -46,16 +43,23 @@
 export default {
     data() {
         return {
-            lesson:{},
-            err_meg:''
+            lesson: {},
+            err_meg: ''
         }
     },
     methods: {
-        async clickButton(){
-            await axios.post('/api/neworder',{lesson_id:this.lesson.id}).then(res => {
-                this.$router.push({name:'orderstate',params:{id:res.data}})
+        async clickButton() {
+            await axios.post('/api/neworder', {
+                    lesson_id: this.lesson.id
+                }).then(res => {
+                    this.$router.push({
+                        name: 'orderstate',
+                        params: {
+                            id: res.data
+                        }
+                    })
                 })
-                .catch(err=> this.err_meg = err.response.data.meg)
+                .catch(err => this.err_meg = err.response.data.meg)
         }
     },
     async beforeMount() {
@@ -78,38 +82,42 @@ export default {
     // background-color: gray;
     text-align: center;
     padding: 30px 50px;
-    >button{
+
+    >button {
         font-weight: 100;
-        margin-top:20px;
+        margin-top: 20px;
         width: 120px;
         height: 55px;
         background-color: gray;
-        color:white;
+        color: white;
         border-radius: 3px;
     }
-    P{
-        margin:10px;
-        color:palevioletred;
+
+    P {
+        margin: 10px;
+        color: palevioletred;
     }
 }
 
-.lesson, .form{
-    display:grid;
+.lesson,
+.form {
+    display: grid;
     grid-template-columns: .4fr 1fr;
-    font-size:20px;
+    font-size: 20px;
     line-height: 28px;
     row-gap: 10px;
     border-style: none none solid none;
     border-width: 1px;
     border-color: darkcyan;
-    >h5{
+
+    >h5 {
         grid-column: 1/3;
         font-size: 32px;
         line-height: 40px;
-        margin:15px 0;
+        margin: 15px 0;
     }
 
-    >input{
+    >input {
         min-width: 10px;
     }
 }
