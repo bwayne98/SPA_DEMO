@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Lesson;
 use App\Models\LessonDetail;
 use App\Models\Order;
 use Carbon\Carbon;
@@ -41,7 +42,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //確認報名人數
-        $student_count = LessonDetail::where('lesson_id', $request->lesson_id)->count() + Order::where('lesson_id', $request->lesson_id)->where('paid', true)->where('check_in', false)->count();
+        $student_count = Lesson::studentCount($request->lesson_id);
 
         if ($student_count >= 20) {
             return response()->json([
@@ -54,6 +55,7 @@ class OrderController extends Controller
             $order->email = 'test@gmail.com';
             $order->phone = '0912345678';
             $order->lesson_id = $request->lesson_id;
+            // $order->CheckMacValue = Str::random();
             // $order->paid = true;
             $order->save();
 

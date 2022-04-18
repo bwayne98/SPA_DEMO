@@ -35,8 +35,9 @@
 
         <label for=""></label>
     </div>
-
-    <button @click="clickButton()" :disabled="order.paid === 1">前往付款</button>
+    <!-- <form action="/api/greenworldcredit" method="POST"> -->
+    <button @click="clickButton" :disabled="order.paid === 1">前往付款</button>
+    <!-- </form> -->
 
     <p v-if="err_meg !== ''">{{err_meg}}</p>
 
@@ -54,16 +55,34 @@ export default {
     },
     methods: {
         clickButton() {
-            axios.post('/api/greenworldcredit',{
-                id:this.order.id,
-                lesson_id:this.order.lesson_id
-            }).then(res=>console.log(res.data)).catch(err=> console.log(err.response.data.meg))
+
+            axios.post('/api/greenworldcredit', {
+                id: this.order.id,
+                lesson_id: this.order.lesson_id
+            }).then(res => {
+                console.log(res.data)
+                let win = window.open("", '_blank', "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=600,top=" + (screen.height - 200) + ",left=" + (screen.width - 240));
+                // setTimeout(() => {
+                //     win.document.getElementById("ecpay-form").submit()
+                // }, 1000);
+                win.document.body.innerHTML = res.data;
+                console.log(win.document.getElementsByName('CheckMacValue')[0].value);
+                return win;
+            }).catch(err => {
+                if (err.response.data.message === 'Undefined array key 0') {
+                    this.err_meg = '不存在的訂單，請重新下單';
+                }else{
+                    this.err_meg = err.response.data;
+                }
+            }).then((res)=>{
+                 res.document.getElementById("ecpay-form").submit()
+            })
         }
     },
     async beforeMount() {
         console.log(this.$route.params.id)
 
-        await axios.get('/api/orderstate/' + this.$route.params.id)
+        await axios.get('/api/order/' + this.$route.params.id)
             .then(res => this.order = res.data)
             .then(() => {
                 axios.get('/api/lesson/' + this.order.lesson_id).then(res => this.lesson = res.data[0])

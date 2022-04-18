@@ -26,7 +26,7 @@ class CreateOrdersTable extends Migration
 
             $table->string("MerchantTradeNo")->nullable();
             $table->string("TradeNo")->nullable();
-
+            
             $table->timestamps();
         });
     }

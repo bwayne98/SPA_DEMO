@@ -38,8 +38,9 @@ Route::get('/news', NewsController::class);
 Route::get('/lesson/current', ShowLessonCurrentController::class);
 Route::get('lesson/{id}', [LessonController::class,'show']);
 Route::post('/neworder',[OrderController::class, 'store']);
-Route::get('/orderstate/{id}',[OrderController::class, 'show']);
+Route::get('/order/{id}',[OrderController::class, 'show']);
 Route::post('/greenworldcredit',[GreenWorldController::class,'createOrder']);
+Route::post('/greenworldcallback',[GreenWorldController::class,'orderCallback']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
