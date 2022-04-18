@@ -5714,8 +5714,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         } else {
           _this.err_meg = err.response.data;
         }
-      }).then(function () {
-        document.getElementById("ecpay-form").submit();
+      }).then(function () {// document.getElementById("ecpay-form").submit()
       });
     }
   },

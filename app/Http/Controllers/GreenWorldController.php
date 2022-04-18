@@ -13,8 +13,12 @@ use Illuminate\Support\Facades\Log;
 use Ecpay\Sdk\Factories\Factory;
 use Ecpay\Sdk\Services\UrlService;
 use Ecpay\Sdk\Exceptions\RtnException;
-use Omnipay\Omnipay;
-use Illuminate\Support\Str;
+use Ecpay\Sdk\Services\CheckMacValueService;
+use PHPUnit\Util\Json;
+
+// use Omnipay\Omnipay;
+// use Illuminate\Support\Str;
+// use TsaiYiHua\ECPay\Libs\ECPay_Invoice_CheckMacValue;
 
 class GreenWorldController extends Controller
 {
@@ -23,14 +27,17 @@ class GreenWorldController extends Controller
     public function __construct()
 
     {
-        $this->geteway = Omnipay::create('ECPay');
-        $this->geteway->initialize([
-            'hashKey' => '5294y06JbISpM5x9',
-            'hashIv' => 'v77hoKGq4kWxNNIS',
-            'MerchantID' => '2000132', //商店編碼
-            'EncryptType' => 1, //加密設定
-            'testMode' => true,
-        ]);
+        // $this->geteway = Omnipay::create('ECPay');
+        // $this->geteway->initialize([
+        //     'hashKey' => '5294y06JbISpM5x9',
+        //     'hashIv' => 'v77hoKGq4kWxNNIS',
+        //     'MerchantID' => '2000132', //商店編碼
+        //     'EncryptType' => 1, //加密設定
+        //     'testMode' => true,
+        // ]);
+
+        $this->hashKey = '5294y06JbISpM5x9';
+        $this->hashIv = 'v77hoKGq4kWxNNIS';
     }
 
 
@@ -62,42 +69,10 @@ class GreenWorldController extends Controller
         // dump($response);
         // return $response->redirect();
 
-
-        // $url = 'https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5';
-
-
-        // $request = Http::withHeaders([
-        //     'Content-Type' => 'application/x-www-form-urlencoded'
-        // ])->post($url, [
-        //     'MerchantID' => '2000132', //商店編碼
-        //     'MerchantTradeNo' => $request->id, //訂單編號
-        //     'StoreID' => 'LaraJoy', //自訂分店代碼
-        //     'MerchantTradeDate' => Carbon::now(), //交易時間
-
-        //     'hashKey' => '5294y06JbISpM5x9',
-        //     'hashIv' => 'v77hoKGq4kWxNNIS',
-
-        //     'TotalAmount' => 3600, //交易金額
-        //     'TradeDesc' => 'LaraJoy', //交易描述
-        //     'ItemName' => 'lesson' . $request->lesson_id, //商品名稱
-        //     'ReturnURL' => 'http://36.233.30.126/orderstate/api/GreenWorldResponse', //綠界回傳SERVER的地址
-        //     'ChoosePayment' => 'Credit',    //交易方式
-
-        //     'CheckMacValue' => 95833941, //檢查碼
-        //     'ClientBackURL' => 'http://36.233.30.126/orderstate/' . $request->id, //CLIENT端倒回頁面
-        //     'EncryptType' => 1, //加密設定
-
-        //     //Credit
-        //     'BindingCard' => 0, //記憶信用卡 
-        // ]);
-
-        // return $request;
-
-
         try {
             $factory = new Factory([
-                'hashKey' => '5294y06JbISpM5x9',
-                'hashIv' => 'v77hoKGq4kWxNNIS',
+                'hashKey' => $this->hashKey,
+                'hashIv' => $this->hashIv,
             ]);
             $autoSubmitFormService = $factory->create('AutoSubmitFormWithCmvService');
 
@@ -125,18 +100,18 @@ class GreenWorldController extends Controller
 
     function orderCallback(Request $request)
     {
-        $notification = $this->geteway->acceptNotification($request->all());
+        // $notification = $this->geteway->acceptNotification($request->all());
 
-        $order = Order::where('id', $request->MerchantTradeNo);
+        $CheckMacValueService = new CheckMacValueService($this->hashKey,$this->hashIv,'sha256');
+        $CheckMacValue = $CheckMacValueService->generate($request->all());
 
-        $order->update([
-            'MerchantTradeNo' => $request->CheckMacValue,
-            'TradeNo' => $request->TradeNo,
-            'paid' => true
-        ]);
-
-
-
+        if ($CheckMacValue === $request->CheckMacValue){
+            Order::where('id', $request->MerchantTradeNo)->update([
+                'MerchantTradeNo' => json_encode($request->all()),
+                'TradeNo' => $request->CheckMacValue,
+                'paid' => true
+            ]);
+        }
 
         return  '';
     }

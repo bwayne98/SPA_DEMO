@@ -24,7 +24,7 @@ class CreateOrdersTable extends Migration
             
             $table->foreignId("lesson_id")->constrained("lessons");
 
-            $table->string("MerchantTradeNo")->nullable();
+            $table->json("MerchantTradeNo")->nullable();
             $table->string("TradeNo")->nullable();
             
             $table->timestamps();
