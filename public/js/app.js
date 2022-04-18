@@ -5703,22 +5703,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         id: this.order.id,
         lesson_id: this.order.lesson_id
       }).then(function (res) {
-        console.log(res.data);
-        var win = window.open("", '_blank', "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=600,top=" + (screen.height - 200) + ",left=" + (screen.width - 240)); // setTimeout(() => {
-        //     win.document.getElementById("ecpay-form").submit()
-        // }, 1000);
-
-        win.document.body.innerHTML = res.data;
-        console.log(win.document.getElementsByName('CheckMacValue')[0].value);
-        return win;
+        // console.log(res.data)
+        // let win = window.open("", '_blank', "toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=800,height=600,top=" + (screen.height - 200) + ",left=" + (screen.width - 240));
+        // console.log(win.document.getElementsByName('CheckMacValue')[0].value);
+        // return win;
+        document.body.innerHTML = res.data;
       })["catch"](function (err) {
         if (err.response.data.message === 'Undefined array key 0') {
           _this.err_meg = '不存在的訂單，請重新下單';
         } else {
           _this.err_meg = err.response.data;
         }
-      }).then(function (res) {
-        res.document.getElementById("ecpay-form").submit();
+      }).then(function () {
+        document.getElementById("ecpay-form").submit();
       });
     }
   },
