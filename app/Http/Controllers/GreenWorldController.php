@@ -125,7 +125,6 @@ class GreenWorldController extends Controller
 
     function orderCallback(Request $request)
     {
-        $notification = $this->geteway->acceptNotification($request->all());
 
         $order = Order::where('id', $request->MerchantTradeNo);
 
