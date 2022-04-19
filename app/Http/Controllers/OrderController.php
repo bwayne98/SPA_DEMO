@@ -43,78 +43,46 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //確認報名人數
-
-        // dd(Lesson::studentCount($request->lesson_id));
-
-        // return DB::transaction(function () use ($request) {
-        //     return DB::table('orders')->lockForUpdate()->when((Lesson::studentCount($request->lesson_id) >= 50),
-        //         function () {
-        //             DB::rollBack();
-        //             return response()->json([
-        //                 'state' => 422,
-        //                 'meg' => '人數已滿，請選擇其他課程'
-        //             ], 422);
-        //         },
-        //         function () use ($request) {
-        //             $order = new Order();
-        //             $order->name = 'test' . '123';
-        //             $order->email = 'test@gmail.com';
-        //             $order->phone = '0912345678';
-        //             $order->lesson_id = $request->lesson_id;
-        //             $order->save();
-
-        //             return $order->id;
-        //         }
-        //     );
-        // });
-
         DB::beginTransaction();
 
-        $i = 0;
-        while ($i < 3) {
-            try {
+        try {
+            $result = DB::transaction(function () use ($request) {
                 $lesson = Lesson::where('id', $request->lesson_id)->lockForUpdate()->first();
-                if ($lesson->order_count > 0) {
+                if ($lesson->order_count > 0) { //or > 訂單數量
 
                     $lesson->order_count--;
                     $lesson->save();
 
-                    $order = new Order();
-                    $order->name = 'test' . '123';
-                    $order->email = 'test@gmail.com';
-                    $order->phone = '0912345678';
-                    $order->lesson_id = $request->lesson_id;
-                    $order->save();
-
-                    DB::commit();
-
-                    return $order->id;
+                    return true;  //單筆商品，多筆商品考慮用array去包
                 } else {
-                    DB::rollBack();
-                    return response()->json([
-                        'state' => 422,
-                        'meg' => '人數已滿，請選擇其他課程'
-                    ], 422);
+                    return false;
                 }
-            } catch (Exception $e) {
-                sleep(5);
-                $i++;
-                continue;
-            }
+            }, 3); //嘗試次數
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'state' => 400,
+                'meg' => '連線逾時，請重新下單'
+            ], 400);
         }
 
-        return response()->json([
-            'state' => 400,
-            'meg' => '連線逾時，請重新下單'
-        ], 400);
+        if ($result) { //單筆商品，多筆商品考慮用array的長度判斷
+            $order = new Order();
+            $order->name = 'test' . '123';
+            $order->email = 'test@gmail.com';
+            $order->phone = '0912345678';
+            $order->lesson_id = $request->lesson_id;
+            $order->save();
 
-
-        // if (Lesson::studentCount($request->lesson_id) > 100) {
-
-        // } else {
-
-        // }
+            DB::commit();
+            return $order->id;
+        } else {
+            DB::rollBack();
+            return response()->json([
+                'state' => 422,
+                'meg' => '人數已滿，請選擇其他課程'
+            ], 422);
+        }
     }
 
     /**
