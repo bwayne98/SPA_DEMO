@@ -26,6 +26,8 @@ class CheckNewLessonController extends Controller
          * 'period' => 18 or 20
          * ]
          */
+
+         
         $start = Carbon::parse($request->dates['1']);
         $end = Carbon::parse($request->dates['24']);
 
