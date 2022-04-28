@@ -45,8 +45,6 @@ class OrderController extends Controller
     {
         DB::beginTransaction();
 
-
-        
         try {
             $result = DB::transaction(function () use ($request) {
                 $lesson = Lesson::where('id', $request->lesson_id)->lockForUpdate()->first();
